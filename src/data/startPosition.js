@@ -1,0 +1,77 @@
+import Position from "../models/position";
+
+const START_POSITION = [
+  new Position("A1", "wr"),
+  new Position("B1", "wn"),
+  new Position("C1", "wb"),
+  new Position("D1", "wq"),
+  new Position("E1", "wk"),
+  new Position("F1", "wb"),
+  new Position("G1", "wn"),
+  new Position("H1", "wr"),
+
+  new Position("A2", "wp"),
+  new Position("B2", "wp"),
+  new Position("C2", "wp"),
+  new Position("D2", "wp"),
+  new Position("E2", "wp"),
+  new Position("F2", "wp"),
+  new Position("G2", "wp"),
+  new Position("H2", "wp"),
+
+  new Position("A3", ""),
+  new Position("B3", ""),
+  new Position("C3", ""),
+  new Position("D3", ""),
+  new Position("E3", ""),
+  new Position("F3", ""),
+  new Position("G3", ""),
+  new Position("H3", ""),
+
+  new Position("A4", ""),
+  new Position("B4", ""),
+  new Position("C4", ""),
+  new Position("D4", ""),
+  new Position("E4", ""),
+  new Position("F4", ""),
+  new Position("G4", ""),
+  new Position("H4", ""),
+
+  new Position("A5", ""),
+  new Position("B5", ""),
+  new Position("C5", ""),
+  new Position("D5", ""),
+  new Position("E5", ""),
+  new Position("F5", ""),
+  new Position("G5", ""),
+  new Position("H5", ""),
+
+  new Position("A6", ""),
+  new Position("B6", ""),
+  new Position("C6", ""),
+  new Position("D6", ""),
+  new Position("E6", ""),
+  new Position("F6", ""),
+  new Position("G6", ""),
+  new Position("H6", ""),
+
+  new Position("A7", "bp"),
+  new Position("B7", "bp"),
+  new Position("C7", "bp"),
+  new Position("D7", "bp"),
+  new Position("E7", "bp"),
+  new Position("F7", "bp"),
+  new Position("G7", "bp"),
+  new Position("H7", "bp"),
+
+  new Position("A8", "br"),
+  new Position("B8", "bn"),
+  new Position("C8", "bb"),
+  new Position("D8", "bq"),
+  new Position("E8", "bk"),
+  new Position("F8", "bb"),
+  new Position("G8", "bn"),
+  new Position("H8", "br")
+];
+
+export default START_POSITION;
