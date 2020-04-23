@@ -1,12 +1,10 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
-  Text,
   View,
   Dimensions,
   TouchableOpacity,
   Image,
-  Button
 } from "react-native";
 
 const squareSize = Dimensions.get("window").width / 8.5;

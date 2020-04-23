@@ -1,18 +1,16 @@
 import React, { useState } from "react";
-import { useDispatch } from "react-redux";
-import Chessboard from "../components/Chessboard";
-
-import { StyleSheet, Text, View } from "react-native";
-
-import BOARDLAYOUT from "../data/boardLayout";
-import { pieceMove } from "../store/actions/pieceMove";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+import { StyleSheet, View } from "react-native";
 import _ from "lodash";
+import BOARDLAYOUT from "../data/boardLayout";
+import Chessboard from "../components/Chessboard";
+import { pieceMove } from "../store/actions/pieceMove";
+
 const MainBoardScreen = () => {
   const [moveStart, setMoveStart] = useState({});
   const [moveEnd, setMoveEnd] = useState({});
-
   const startingPosition = useSelector(state => state.board.position);
+  const dispatch = useDispatch();
 
   const newBoardLayout = BOARDLAYOUT.map(item => {
     return {
@@ -21,12 +19,7 @@ const MainBoardScreen = () => {
     };
   });
 
-  //  console.log(startingPosition.filter(square => square.id == 'A1')[0]);
-
-  const dispatch = useDispatch();
-
   const handleSquarePress = id => {
-    console.log("START");
     console.log(id);
 
     if (_.isEmpty(moveStart)) {
@@ -36,10 +29,8 @@ const MainBoardScreen = () => {
         ...id,
         piece: moveStart.piece
       };
-
       setMoveEnd(moveEndId);
       setMoveStart({});
-
       return dispatch(pieceMove());
     }
   };
@@ -55,5 +46,3 @@ const MainBoardScreen = () => {
 };
 
 export default MainBoardScreen;
-
-const styles = StyleSheet.create({});

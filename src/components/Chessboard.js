@@ -5,6 +5,7 @@ import Square from "./Square";
 import Colors from "../constants/Colors";
 
 const Chessboard = props => {
+  
   const darkSquare = Colors.dark;
   const lightSquare = Colors.light;
 

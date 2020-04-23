@@ -1,5 +1,4 @@
 import START_POSITION from "../../data/startPosition";
-
 import PIECE_MOVE from "../actions/pieceMove";
 
 const initialState = {
@@ -7,6 +6,5 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
-  return state
-  }
-
+  return state;
+};

@@ -1,11 +1,9 @@
 import React from "react";
 import { StyleSheet, Text, View } from "react-native";
-
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 
 import boardLayout from "./src/store/reducers/boardLayout";
-
 import MainBoardScreen from "./src/screens/MainBoardScreen";
 
 const rootReducer = combineReducers({
