@@ -5,7 +5,7 @@ import { Provider } from "react-redux";
 
 import boardLayout from "./src/store/reducers/boardLayout";
 import MainBoardScreen from "./src/screens/MainBoardScreen";
-
+import OpeningScreen from "./src/screens/OpeningScreen";
 const rootReducer = combineReducers({
   board: boardLayout
 });
@@ -16,16 +16,12 @@ export default function App() {
   return (
     <Provider store={store}>
       <View style={styles.container}>
-        <MainBoardScreen />
+        <OpeningScreen />
       </View>
     </Provider>
   );
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: "center",
-    justifyContent: "center"
-  }
+  container: {}
 });

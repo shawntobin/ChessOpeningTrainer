@@ -47,8 +47,6 @@ export default Chessboard;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    alignItems: "center",
-    justifyContent: "center",
     borderWidth: 0.5
   },
   columnContainer: {
