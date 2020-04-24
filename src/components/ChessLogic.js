@@ -4,17 +4,14 @@ import { View } from "react-native";
 import _ from "lodash";
 import BOARDLAYOUT from "../data/boardLayout";
 import Chessboard from "../components/Chessboard";
-import {
-  pieceMove,
-  selectPiece,
-  resetPieces
-} from "../store/actions/pieces";
+import { pieceMove, selectPiece, resetPieces } from "../store/actions/pieces";
 
 import { notationData } from "../utils/notationLogic";
 
 const ChessLogic = () => {
-  const notationLogic = notationData();
   const userColor = "w";
+  const openingLine = useSelector(state => state.board.opening);
+  const notationLogic = notationData(openingLine);
   const [moveStart, setMoveStart] = useState(true);
   const [userMoveComplete, setUserMoveComplete] = useState(false);
   const currentPosition = useSelector(state => state.board.position);
@@ -35,7 +32,15 @@ const ChessLogic = () => {
   }, []);
 
   useEffect(() => {
-    if (userMoveComplete) computerPieceMove(notationLogic[moveNumber]);
+    if (userMoveComplete) {
+      if (_.isUndefined(notationLogic[moveNumber])) {
+        alert("Line complete!");
+        dispatch(resetPieces());
+        setUserMoveComplete(false);
+      } else {
+        computerPieceMove(notationLogic[moveNumber]);
+      }
+    }
   }, [userMoveComplete]);
 
   const computerPieceMove = id => {
@@ -45,7 +50,6 @@ const ChessLogic = () => {
   };
 
   const handleMove = squarePressed => {
-    console.log(squarePressed)
     const piece = currentPosition.filter(
       square => square.id === squarePressed
     )[0].piece;
@@ -62,17 +66,23 @@ const ChessLogic = () => {
         return;
       }
 
-      if (
-        selectedPiece !== notationLogic[moveNumber].start ||
-        squarePressed !== notationLogic[moveNumber].end
-      ) {
+      const startingSquare = notationLogic[moveNumber].start;
+      const endingSquare = notationLogic[moveNumber].end;
+
+      if (selectedPiece !== startingSquare || squarePressed !== endingSquare) {
         setMoveStart(true);
         console.log("not the currently selected line - try again");
+        console.log("expected sequence:");
+        console.log(startingSquare);
+        console.log(endingSquare);
         return;
       }
 
-      setMoveStart(true);
-      setUserMoveComplete(true);
+      setMoveStart(true);      
+
+      setTimeout(() => {
+        setUserMoveComplete(true);
+      }, 0);
       dispatch(pieceMove(squarePressed));
     }
   };

@@ -1,18 +1,26 @@
+import React from "react";
+import { createDrawerNavigator } from "@react-navigation/drawer";
+import { NavigationContainer } from "@react-navigation/native";
 
-
-import { createDrawerNavigator } from '@react-navigation/drawer';
-
-import MainBoardScreen from "../screens/MainBoardScreen"
+import MainBoardScreen from "../screens/MainBoardScreen";
 import OpeningScreen from "../screens/OpeningScreen";
 
 const Drawer = createDrawerNavigator();
 
-function MyDrawer() {
+const AppNavigator = () => {
   return (
-    <Drawer.Navigator>
-      <Drawer.Screen name="MainScreen" component={MainBoardScreen} />
-      <Drawer.Screen name="OpeningScreen" component={OpeningScreen} />
-    </Drawer.Navigator>
+    <NavigationContainer>
+      <Drawer.Navigator
+      initialRouteName={"Main"}
+        drawerStyle={{
+            backgroundColor: '#c6cbef',
+            width: 240,
+          }}
+      >
+        <Drawer.Screen name="Main" component={MainBoardScreen} />
+        <Drawer.Screen name="Openings" component={OpeningScreen} />
+      </Drawer.Navigator>
+    </NavigationContainer>
   );
-}
-export default createAppContainer(AppNavigator);
+};
+export default AppNavigator;

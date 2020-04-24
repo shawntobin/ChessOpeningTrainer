@@ -7,20 +7,38 @@ import {
   StyleSheet,
   FlatList,
   ScrollView,
-  TouchableOpacity
+  TouchableOpacity,
+  Alert,
+  TextInput
 } from "react-native";
 
 import OPENING_LINES from "../data/openings/openingData";
 
 const OpeningScreen = () => {
+
+
+const handleChooseOpening = () => {
+    
+}
+
+
   return (
     <View style={styles.container}>
       <Text style={styles.header}>Opening Database</Text>
+      <TextInput 
+      placeholder="this is my placeholder"
+      />
+
+
+<View style={styles.line}/>
+
       <ScrollView horizontal={true}>
         <FlatList
           data={OPENING_LINES}
           renderItem={({ item }) => (
-            <TouchableOpacity>
+            <TouchableOpacity
+            onPress={() =>handleChooseOpening(item.id)}
+            >
               <View style={styles.name}>
                 <Text style={styles.item}> {item.name} </Text>
               </View>
@@ -47,7 +65,12 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 28,
     alignItems: "center",
-    marginBottom: 30
+    marginVertical: 15
+  },
+
+  line: {
+      borderWidth: 0.5,
+      marginTop: 20
   }
 });
 

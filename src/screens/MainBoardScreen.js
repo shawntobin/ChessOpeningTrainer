@@ -1,9 +1,10 @@
 import React from "react";
-import { View, Text, TouchableOpacity, StyleSheet } from "react-native";
+import { View, Text, TouchableOpacity, StyleSheet, Alert } from "react-native";
 import ChessLogic from "../components/ChessLogic";
 
 
 const MainBoardScreen = () => {
+  
   return (
     <View style={styles.container}>
       <ChessLogic/>
