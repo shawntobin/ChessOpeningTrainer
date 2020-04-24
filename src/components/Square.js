@@ -4,7 +4,7 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  Image,
+  Image
 } from "react-native";
 
 const squareSize = Dimensions.get("window").width / 8.5;
@@ -39,8 +39,8 @@ const Square = props => {
     }
   };
 
-  const handlePress = id => {
-    props.handleSquarePress(id);
+  const handlePress = square => {
+    props.handleSquarePress(square.id);
   };
 
   return (

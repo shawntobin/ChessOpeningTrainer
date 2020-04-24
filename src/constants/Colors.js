@@ -1,4 +1,4 @@
 export default {
-  dark: "grey",
+  dark: "#b0c8d6",
   light: "white"
 };

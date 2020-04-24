@@ -5,18 +5,28 @@ import Square from "./Square";
 import Colors from "../constants/Colors";
 
 const Chessboard = props => {
-  
   const darkSquare = Colors.dark;
   const lightSquare = Colors.light;
 
-  const letters = ["A", "B", "C", "D", "E", "F", "G", "H"].reverse();
+  const boardOrientation = props.boardOrientation;
+
+  let boardLayout;
+  let letters;
+
+  if (boardOrientation === "b") {
+    boardLayout = props.boardLayout.sort((a, b) => a.seqnnum - b.seqnnum);
+    letters = ["A", "B", "C", "D", "E", "F", "G", "H"].reverse();
+  } else {
+    boardLayout = props.boardLayout.sort((a, b) => b.seqnnum - a.seqnnum);
+    letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  }
 
   return (
     <View style={styles.container}>
       {letters.map(letter => {
         return (
           <View key={letter} style={styles.columnContainer}>
-            {props.boardLayout
+            {boardLayout
               .filter(square => square.file <= 8 && square.rank == letter)
               .map(square => {
                 return (
