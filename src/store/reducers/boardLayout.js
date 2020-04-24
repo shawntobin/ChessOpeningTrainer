@@ -1,5 +1,5 @@
 import START_POSITION from "../../data/startPosition";
-import { PIECE_MOVE, SELECT_PIECE, RESET_PIECES } from "../actions/pieceMove";
+import { PIECE_MOVE, SELECT_PIECE, RESET_PIECES } from "../actions/pieces";
 import Position from "../../models/position";
 
 const initialState = {

@@ -1,5 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View } from "react-native";
 
 import Square from "./Square";
 import Colors from "../constants/Colors";
@@ -8,17 +8,12 @@ const Chessboard = props => {
   const darkSquare = Colors.dark;
   const lightSquare = Colors.light;
 
-  const boardOrientation = props.boardOrientation;
+  let boardLayout = props.boardLayout.sort((a, b) => b.seqnnum - a.seqnnum);
+  let letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
 
-  let boardLayout;
-  let letters;
-
-  if (boardOrientation === "b") {
-    boardLayout = props.boardLayout.sort((a, b) => a.seqnnum - b.seqnnum);
-    letters = ["A", "B", "C", "D", "E", "F", "G", "H"].reverse();
-  } else {
-    boardLayout = props.boardLayout.sort((a, b) => b.seqnnum - a.seqnnum);
-    letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
+  if (props.boardOrientation === "b") {
+    boardLayout = boardLayout.reverse();
+    letters = letters.reverse();
   }
 
   return (

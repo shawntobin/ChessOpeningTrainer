@@ -8,7 +8,7 @@ import {
   pieceMove,
   selectPiece,
   resetPieces
-} from "../store/actions/pieceMove";
+} from "../store/actions/pieces";
 
 import { notationData } from "../utils/notationLogic";
 
@@ -45,6 +45,7 @@ const ChessLogic = () => {
   };
 
   const handleMove = squarePressed => {
+    console.log(squarePressed)
     const piece = currentPosition.filter(
       square => square.id === squarePressed
     )[0].piece;
