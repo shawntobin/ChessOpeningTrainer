@@ -1,6 +1,6 @@
 import OPENING_LINES from "../data/openings/openingData";
 
-export const notationData = (openingId) => {
+export const notationData = openingId => {
   const openingLine = OPENING_LINES[openingId].moves;
   const moves = openingLine.toUpperCase().split(" ");
 

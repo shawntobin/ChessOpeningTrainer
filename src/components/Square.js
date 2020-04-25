@@ -10,6 +10,7 @@ import {
 const squareSize = Dimensions.get("window").width / 8.5;
 
 const Square = props => {
+
   const getPiece = piece => {
     switch (piece) {
       case "wp":
@@ -44,7 +45,7 @@ const Square = props => {
   };
 
   return (
-    <TouchableOpacity onPress={() => handlePress(props.id)}>
+    <TouchableOpacity activeOpacity={0.8} onPress={() => handlePress(props.id)}>
       <View {...props} style={styles.container}>
         <Image source={getPiece(props.id.piece)} style={styles.image} />
       </View>

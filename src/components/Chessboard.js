@@ -32,6 +32,7 @@ const Chessboard = props => {
                       square.color == "dark" ? darkSquare : lightSquare
                     }
                     handleSquarePress={props.handleSquarePress}
+                    activeSquare={props.activeSquare}
                   />
                 );
               })}
