@@ -29,7 +29,7 @@ const OpeningScreen = props => {
   };
 
   const handleChooseOpening = id => {
-    dispatch(selectOpening(id-1));
+    dispatch(selectOpening(id));
     dispatch(resetPieces());
     props.setModalVisible();
   };

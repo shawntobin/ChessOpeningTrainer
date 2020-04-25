@@ -4,7 +4,7 @@ import { View, Alert } from "react-native";
 import _ from "lodash";
 import BOARDLAYOUT from "../data/boardLayout";
 import Chessboard from "../components/Chessboard";
-
+import { Audio } from "expo-av";
 import {
   pieceMove,
   selectPiece,
@@ -25,6 +25,31 @@ const ChessLogic = () => {
   const moveNumber = useSelector(state => state.board.moveNumber);
   const dispatch = useDispatch();
 
+  const moveSound = new Audio.Sound();
+  const captureSound = new Audio.Sound();
+
+  const loadSound = async () => {
+    console.log("sound loaded");
+  };
+
+  const playSound = async sound => {
+    try {
+      if (sound === moveSound) {
+        await moveSound.loadAsync(require("../../assets/sounds/Move.mp3"));
+        await moveSound.playAsync();
+      }
+      if (sound === captureSound) {
+        await captureSound.loadAsync(
+          require("../../assets/sounds/Capture.mp3")
+        );
+        await captureSound.setVolumeAsync(0.6);
+        await captureSound.playAsync();
+      }
+    } catch (error) {
+      console.log("audio loading failed");
+    }
+  };
+
   const castleLogic = square => {
     if (square === "G1") return { piece: "wr", start: "H1", end: "F1" };
     if (square === "C1") return { piece: "wr", start: "A1", end: "D1" };
@@ -40,6 +65,10 @@ const ChessLogic = () => {
   });
 
   useEffect(() => {
+    loadSound();
+  }, []);
+
+  useEffect(() => {
     dispatch(resetPieces());
     if (userColor == "b") computerPieceMove(notationLogic[0]);
   }, []);
@@ -47,7 +76,7 @@ const ChessLogic = () => {
   useEffect(() => {
     if (userMoveComplete) {
       if (_.isUndefined(notationLogic[moveNumber])) {
-        Alert.alert("Line complete!");
+        //   Alert.alert("Line complete!");
         dispatch(resetPieces());
         setUserMoveComplete(false);
       } else {
@@ -57,6 +86,11 @@ const ChessLogic = () => {
   }, [userMoveComplete]);
 
   const computerPieceMove = id => {
+    const didCapture =
+      currentPosition.filter(square => square.id === id.end)[0].piece.length ===
+      2;
+
+    didCapture ? playSound(captureSound) : playSound(moveSound);
     dispatch(selectPiece(id.start));
     dispatch(pieceMove(id.end));
 
@@ -87,8 +121,8 @@ const ChessLogic = () => {
       }
 
       if (_.isUndefined(notationLogic[moveNumber + 1])) {
-        Alert.alert("Line complete!");
-        dispatch(resetPieces());
+        //    Alert.alert("Line complete!");
+        dispatch(resetPieces())
         setUserMoveComplete(false);
         setMoveStart(true);
         return;
@@ -106,6 +140,10 @@ const ChessLogic = () => {
         return;
       }
 
+      const didCapture =
+        currentPosition.filter(square => square.id === endingSquare)[0].piece
+          .length === 2;
+
       const isKing =
         currentPosition
           .filter(square => square.id === selectedPiece)[0]
@@ -120,7 +158,8 @@ const ChessLogic = () => {
 
       setTimeout(() => {
         setUserMoveComplete(true);
-      }, 0);
+      }, 500);
+      didCapture ? playSound(captureSound) : playSound(moveSound);
 
       dispatch(pieceMove(squarePressed));
       isCastle && dispatch(didCastle(castleLogic(squarePressed)));
