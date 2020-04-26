@@ -2,13 +2,10 @@ import React from "react";
 import { createStore, combineReducers } from "redux";
 import { Provider } from "react-redux";
 
-import boardLayout from "./src/store/reducers/boardLayout";
 import MainBoardScreen from "./src/screens/MainBoardScreen";
-const rootReducer = combineReducers({
-  board: boardLayout
-});
+import reducer from './src/store/reducers/index'
 
-const store = createStore(rootReducer);
+const store = createStore(reducer);
 
 import { enableScreens } from "react-native-screens";
 enableScreens();

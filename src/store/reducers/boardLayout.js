@@ -3,7 +3,6 @@ import {
   PIECE_MOVE,
   SELECT_PIECE,
   RESET_PIECES,
-  SELECT_OPENING,
   DID_CASTLE
 } from "../actions/pieces";
 import Position from "../../models/position";
@@ -12,7 +11,6 @@ const initialState = {
   position: START_POSITION,
   selectedPiece: "",
   moveNumber: 0,
-  opening: 1 //1072
 };
 
 export default (state = initialState, action) => {
@@ -29,12 +27,6 @@ export default (state = initialState, action) => {
           .filter(square => square.id !== action.id.end)
           .filter(square => square.id !== action.id.start)
           .concat(newPosition, oldPosition)
-      };
-    }
-    case SELECT_OPENING: {
-      return {
-        ...state,
-        opening: action.id
       };
     }
     case RESET_PIECES:

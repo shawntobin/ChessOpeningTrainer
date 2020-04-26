@@ -1,15 +1,10 @@
 import React, { useState } from "react";
-import {
-  View,
-  Text,
-  StyleSheet,
-  Modal,
-  TouchableOpacity,
-  ScrollView
-} from "react-native";
+import { View, Text, StyleSheet, Modal, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-import { resetPieces } from "../store/actions/pieces";
 import { Ionicons } from "@expo/vector-icons";
+
+import { resetPieces } from "../store/actions/pieces";
+
 import ChessLogic from "../components/ChessLogic";
 import OPENING_LINES from "../data/openings/openingData";
 import OpeningScreen from "./OpeningScreen";
@@ -18,11 +13,9 @@ import PopupModal from "./PopupModal";
 const MainBoardScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
   const [lineFinishModalVisible, setLineFinishModalVisible] = useState(false);
-  const lineId = useSelector(state => state.board.opening);
+  const lineId = useSelector(state => state.opening.selectedOpening);
+  const moveNumber = useSelector(state => state.board.moveNumber);
   const dispatch = useDispatch();
-  const handleRefresh = () => {
-    //  dispatch(resetPieces());
-  };
 
   /*
   const handleLineFinish = () => {
@@ -30,18 +23,30 @@ const MainBoardScreen = () => {
     dispatch(resetPieces());
   };
 */
-  const currentLine = OPENING_LINES.filter(line => line.id === lineId)[0].name;
+  const lineData = OPENING_LINES.filter(line => line.id === lineId)[0];
+  const currentLineName = lineData.name;
+  const currentLineMoves = lineData.moves;
+  const currentLineMovesArray = currentLineMoves.split(" ");
+
+  const activeMove = currentLineMoves.split(" ")[moveNumber];
 
   return (
     <View style={styles.container}>
       <View style={styles.contentBar}>
         <View style={styles.titleContainer}>
           <Text numberOfLines={2} style={styles.lineText}>
-            {currentLine}
+            {currentLineName}
           </Text>
         </View>
         <View style={styles.settings}>
-          <Ionicons name="ios-refresh" size={35} />
+          <TouchableOpacity
+            activeOpacity={0.4}
+            onPress={() => {
+              dispatch(resetPieces());
+            }}
+          >
+            <Ionicons name="ios-refresh" size={35} />
+          </TouchableOpacity>
         </View>
         <TouchableOpacity
           activeOpacity={0.4}
@@ -52,19 +57,30 @@ const MainBoardScreen = () => {
           <Ionicons name="md-list" size={35} />
         </TouchableOpacity>
       </View>
-      <ScrollView scrollEnabled={false} onScrollEndDrag={() => handleRefresh()}>
-        <View style={styles.boardContainer}>
-          <ChessLogic />
-        </View>
 
-        <PopupModal isVisible={lineFinishModalVisible} />
+      <View style={styles.boardContainer}>
+        <ChessLogic />
+      </View>
+      
+        <View style={styles.moveContainer}>
+          {currentLineMovesArray.map(move => {
+            if (move == activeMove) {
+              return (
+                <Text style={{ ...styles.moveText, ...styles.activeMove }}>
+                  {move}  </Text>
+              );
+            } else {
+              return <Text style={styles.moveText}>{move}  </Text>;
+            }
+          })}
+        
+      </View>
 
-        <Modal animationType="slide" visible={modalVisible}>
-          <OpeningScreen
-            setModalVisible={() => setModalVisible(!modalVisible)}
-          />
-        </Modal>
-      </ScrollView>
+      <PopupModal isVisible={lineFinishModalVisible} />
+
+      <Modal animationType="slide" visible={modalVisible}>
+        <OpeningScreen setModalVisible={() => setModalVisible(!modalVisible)} />
+      </Modal>
     </View>
   );
 };
@@ -93,10 +109,9 @@ const styles = StyleSheet.create({
     marginTop: 22
   },
   lineText: {
-    fontSize: 16,
-    width: "80%"
+    fontSize: 14,
+    width: "100%"
   },
-
   modalView: {
     margin: 20,
     width: "90%",
@@ -130,11 +145,28 @@ const styles = StyleSheet.create({
   },
   titleContainer: {
     flex: 1,
-    width: "80%",
+    width: "90%",
     flexWrap: "wrap"
   },
   settings: {
     marginHorizontal: 30
+  },
+  moveContainer: {
+    alignItems: "center",
+    justifyContent: "flex-start",
+    marginTop: 30,
+    marginHorizontal: 20,
+    flexDirection: "row",
+    flexWrap: "wrap"
+  },
+  activeMove: {
+  //  height:36,
+    fontWeight: "bold",
+    fontSize: 16
+  },
+  moveText: {
+    height: 30,
+    fontSize: 12
   }
 });
 

@@ -16,7 +16,7 @@ import {
 
 const ChessLogic = props => {
   const userColor = "w";
-  const openingLine = useSelector(state => state.board.opening);
+  const openingLine = useSelector(state => state.opening.selectedOpening);
   const notationLogic = notationData(openingLine);
   const [moveStart, setMoveStart] = useState(true);
   const [userMoveComplete, setUserMoveComplete] = useState(false);
@@ -84,7 +84,7 @@ const ChessLogic = props => {
       if (_.isUndefined(notationLogic[moveNumber + 1])) {
         lineFinished();
       }
-    }, 500);
+    }, 1500);
   };
 
   const handleMove = squarePressed => {
@@ -103,7 +103,8 @@ const ChessLogic = props => {
     } else {
       
       if (piece.substring(0, 1) === userColor) {
-        setMoveStart(true);
+        dispatch(selectPiece(squarePressed));
+        setMoveStart(false);
         return;
       }
 
@@ -145,7 +146,11 @@ const ChessLogic = props => {
           setUserMoveComplete(true);
         } else {
           setAllowUserMove(false);
-          lineFinished();
+          setTimeout(() => {
+            if (_.isUndefined(notationLogic[moveNumber + 1])) {
+              lineFinished();
+            }
+          }, 1500);
         }
       }, 500);
     }
