@@ -12,7 +12,7 @@ const initialState = {
   position: START_POSITION,
   selectedPiece: "",
   moveNumber: 0,
-  opening: 1072 //1072
+  opening: 1 //1072
 };
 
 export default (state = initialState, action) => {

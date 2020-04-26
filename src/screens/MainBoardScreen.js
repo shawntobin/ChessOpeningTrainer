@@ -3,36 +3,46 @@ import {
   View,
   Text,
   StyleSheet,
-  Alert,
   Modal,
   TouchableOpacity,
-  TouchableHighlight,
   ScrollView
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { resetPieces } from "../store/actions/pieces";
 import { Ionicons } from "@expo/vector-icons";
 import ChessLogic from "../components/ChessLogic";
-import OPENING_LINES from '../data/openings/openingData'
+import OPENING_LINES from "../data/openings/openingData";
 import OpeningScreen from "./OpeningScreen";
+import PopupModal from "./PopupModal";
 
 const MainBoardScreen = () => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [lineFinishModalVisible, setLineFinishModalVisible] = useState(false);
   const lineId = useSelector(state => state.board.opening);
   const dispatch = useDispatch();
   const handleRefresh = () => {
     //  dispatch(resetPieces());
   };
 
-const currentLine = OPENING_LINES.filter(line => line.id === lineId)[0].name
+  /*
+  const handleLineFinish = () => {
+    setLineFinishModalVisible(state => !state);
+    dispatch(resetPieces());
+  };
+*/
+  const currentLine = OPENING_LINES.filter(line => line.id === lineId)[0].name;
 
   return (
     <View style={styles.container}>
-
       <View style={styles.contentBar}>
-      <View style={styles.titleContainer}>
-        <Text numberOfLines={2} style={styles.lineText}>{currentLine}</Text>
-      </View>
+        <View style={styles.titleContainer}>
+          <Text numberOfLines={2} style={styles.lineText}>
+            {currentLine}
+          </Text>
+        </View>
+        <View style={styles.settings}>
+          <Ionicons name="ios-refresh" size={35} />
+        </View>
         <TouchableOpacity
           activeOpacity={0.4}
           onPress={() => {
@@ -47,15 +57,13 @@ const currentLine = OPENING_LINES.filter(line => line.id === lineId)[0].name
           <ChessLogic />
         </View>
 
+        <PopupModal isVisible={lineFinishModalVisible} />
 
-        
         <Modal animationType="slide" visible={modalVisible}>
           <OpeningScreen
             setModalVisible={() => setModalVisible(!modalVisible)}
           />
         </Modal>
-        
-
       </ScrollView>
     </View>
   );
@@ -73,7 +81,7 @@ const styles = StyleSheet.create({
     alignItems: "center"
   },
   contentBar: {
-    flexDirection: 'row',
+    flexDirection: "row",
     marginTop: 10,
     marginBottom: 50,
     marginHorizontal: 20
@@ -86,8 +94,7 @@ const styles = StyleSheet.create({
   },
   lineText: {
     fontSize: 16,
-    width: '80%'
-    
+    width: "80%"
   },
 
   modalView: {
@@ -124,28 +131,11 @@ const styles = StyleSheet.create({
   titleContainer: {
     flex: 1,
     width: "80%",
-    flexWrap: 'wrap'
+    flexWrap: "wrap"
+  },
+  settings: {
+    marginHorizontal: 30
   }
 });
 
 export default MainBoardScreen;
-
-
-
-/*
-       <Modal animationType="fade" transparent={true} visible={modalVisible}>
-       <View style={styles.centeredView}>
-         <View style={styles.modalView}>
-           <TouchableHighlight
-             style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-             onPress={() => {
-               setModalVisible(!modalVisible);
-             }}
-           >
-             <Text style={styles.textStyle}>Hide Modal</Text>
-           </TouchableHighlight>
-         </View>
-       </View>
-     </Modal>
-
-     */

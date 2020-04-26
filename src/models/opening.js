@@ -1,9 +1,11 @@
 class Opening {
-  constructor(id, eco, name, moves) {
+  constructor(id, volume, shortName, name, moves, numMoves) {
     this.id = id;
-    this.eco = eco;
+    this.volume = volume;
+    this.shortName = shortName;
     this.name = name;
     this.moves = moves;
+    this.numMoves = numMoves;
   }
 }
 

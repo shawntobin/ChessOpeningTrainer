@@ -4,13 +4,13 @@ import {
   View,
   Dimensions,
   TouchableOpacity,
-  Image
+  Image,
+  Text
 } from "react-native";
 
 const squareSize = Dimensions.get("window").width / 8.5;
 
 const Square = props => {
-
   const getPiece = piece => {
     switch (piece) {
       case "wp":
@@ -48,6 +48,9 @@ const Square = props => {
     <TouchableOpacity activeOpacity={0.8} onPress={() => handlePress(props.id)}>
       <View {...props} style={styles.container}>
         <Image source={getPiece(props.id.piece)} style={styles.image} />
+        <View style={styles.label}>          
+          <Text>{props.id.piece==="" && props.id.id}</Text>
+        </View>
       </View>
     </TouchableOpacity>
   );
@@ -63,5 +66,12 @@ const styles = StyleSheet.create({
   image: {
     width: "100%",
     height: "100%"
+  },
+  label: {
+    position: "absolute",
+    top: squareSize / 3,
+    left: squareSize / 3,
+    color: "grey",
+    opacity: 0.2
   }
 });

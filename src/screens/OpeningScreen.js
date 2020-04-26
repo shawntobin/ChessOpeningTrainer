@@ -1,5 +1,6 @@
 import React, { useState, useMemo } from "react";
 import { useDispatch } from "react-redux";
+import { Slider } from "react-native";
 import _ from "lodash";
 import { selectOpening, resetPieces } from "../store/actions/pieces";
 import {
@@ -18,12 +19,15 @@ import BubbleContainer from "../components/BubbleContainer";
 
 const OpeningScreen = props => {
   const [filteredData, setFilteredData] = useState(OPENING_LINES);
+  const [filteredMoves, setFilteredMoves] = useState(10);
   const dispatch = useDispatch();
 
   const handleChangeText = text => {
     const newData = OPENING_LINES.filter(
       line => line.name.toLowerCase().indexOf(text.toLowerCase()) !== -1
     );
+
+    //const newData = filterOnSearch.filter(line => line.numMoves <= filteredMoves)
 
     setFilteredData(newData);
   };
@@ -32,6 +36,12 @@ const OpeningScreen = props => {
     dispatch(selectOpening(id));
     dispatch(resetPieces());
     props.setModalVisible();
+  };
+
+  const handleSliderChange = moves => {
+    setFilteredMoves(moves);
+    const newData = OPENING_LINES.filter(line => line.numMoves >= moves);
+    setFilteredData(newData);
   };
 
   return (
@@ -59,30 +69,45 @@ const OpeningScreen = props => {
 
       <BubbleContainer />
 
+      <View style={styles.filterContainer}>
+        <Text style={styles.label}># Moves: </Text>
+
+        <Slider
+          style={{ width: 200, height: 40 }}
+          minimumValue={1}
+          maximumValue={30}
+          minimumTrackTintColor="grey"
+          maximumTrackTintColor="grey"
+          onSlidingComplete={handleSliderChange}
+          //onValueChange={moves => setFilteredMoves(moves)}
+          step={1}
+          value={filteredMoves}
+        />
+        <Text style={styles.moves}>{filteredMoves}</Text>
+      </View>
       <View style={styles.line} />
 
-      <ScrollView
-        horizontal={true}
-        style={{ marginBottom: 220 }}
-      >
+      <ScrollView horizontal={true} style={{ marginBottom: 220 }}>
         {filteredData.length === 0 && (
           <Text style={styles.noOpenings}>No openings found</Text>
         )}
 
-        <FlatList
-          data={filteredData}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              activeOpacity={0.6}
-              onPress={() => handleChooseOpening(item.id)}
-            >
-              <View style={styles.name}>
-                <Text style={styles.item}> {item.name} </Text>
-              </View>
-            </TouchableOpacity>
-          )}
-          keyExtractor={item => item.id.toString()}
-        />
+        <View style={{ paddingBottom: 40 }}>
+          <FlatList
+            data={filteredData}
+            renderItem={({ item }) => (
+              <TouchableOpacity
+                activeOpacity={0.6}
+                onPress={() => handleChooseOpening(item.id)}
+              >
+                <View style={styles.name}>
+                  <Text style={styles.item}> {item.name} </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+            keyExtractor={item => item.id.toString()}
+          />
+        </View>
       </ScrollView>
     </View>
   );
@@ -105,7 +130,7 @@ const styles = StyleSheet.create({
   },
   line: {
     borderWidth: 0.5,
-    marginTop: 30
+    marginTop: 10
   },
   hideModalButton: {
     height: 30,
@@ -129,6 +154,21 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "flex-end",
     marginHorizontal: 10
+  },
+  filterContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    marginTop: 20
+  },
+  label: {
+    fontWeight: "bold",
+    marginRight: 10
+  },
+  moves: {
+    //fontWeight: "bold",
+    marginLeft: 20,
+    fontSize: 16,
+    color: "black"
   }
 });
 

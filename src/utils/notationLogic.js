@@ -1,7 +1,7 @@
 import OPENING_LINES from "../data/openings/openingData";
 
 export const notationData = openingId => {
-  const openingLine = OPENING_LINES[openingId].moves;
+  const openingLine = OPENING_LINES[openingId-1].moves;
   const moves = openingLine.toUpperCase().split(" ");
 
   const startMoves = () => {
