@@ -3,10 +3,15 @@ import { StyleSheet, View } from "react-native";
 
 import Square from "./Square";
 import Colors from "../constants/Colors";
+import _ from "lodash";
+import { useSelector } from "react-redux";
 
 const Chessboard = props => {
   const darkSquare = Colors.dark;
   const lightSquare = Colors.light;
+
+  const activeSquare = useSelector(state => state.board.selectedPiece);
+  const destinationSquare = useSelector(state => state.board.destinationSquare);
 
   let boardLayout = props.boardLayout.sort((a, b) => b.seqnnum - a.seqnnum);
   let letters = ["A", "B", "C", "D", "E", "F", "G", "H"];
@@ -15,6 +20,10 @@ const Chessboard = props => {
     boardLayout = boardLayout.reverse();
     letters = letters.reverse();
   }
+
+  const handleSquarePress = square => {
+    props.handleSquarePress(square);
+  };
 
   return (
     <View style={styles.container}>
@@ -28,11 +37,21 @@ const Chessboard = props => {
                   <Square
                     key={square.id}
                     id={square}
-                    backgroundColor={
+                    squareColor={
                       square.color == "dark" ? darkSquare : lightSquare
                     }
-                    handleSquarePress={props.handleSquarePress}
-                    activeSquare={props.activeSquare}
+                    activeStartSquare={
+                      activeSquare === square.id && !_.isNull(activeSquare)
+                        ? true
+                        : false
+                    }
+                    activeDestinationSquare={
+                      destinationSquare === square.id &&
+                      !_.isNull(destinationSquare)
+                        ? true
+                        : false
+                    }
+                    handleSquarePress={square => handleSquarePress(square)}
                   />
                 );
               })}

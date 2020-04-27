@@ -8,9 +8,21 @@ import {
   Text
 } from "react-native";
 
+import Colors from '../constants/Colors'
+
 const squareSize = Dimensions.get("window").width / 8.5;
 
 const Square = props => {
+  const darkLightSquare = props.squareColor;
+
+  const squareColor = () => {
+    if (props.activeDestinationSquare) return Colors.highlightStrong;
+
+    if (props.activeStartSquare) return Colors.highlightWeak;
+
+    return darkLightSquare;
+  };
+
   const getPiece = piece => {
     switch (piece) {
       case "wp":
@@ -46,10 +58,10 @@ const Square = props => {
 
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handlePress(props.id)}>
-      <View {...props} style={styles.container}>
+      <View style={{ ...styles.container, backgroundColor: squareColor() }}>
         <Image source={getPiece(props.id.piece)} style={styles.image} />
-        <View style={styles.label}>          
-          <Text>{props.id.piece==="" && props.id.id}</Text>
+        <View style={styles.label}>
+          <Text>{props.id.piece === "" && props.id.id}</Text>
         </View>
       </View>
     </TouchableOpacity>

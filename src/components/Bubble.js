@@ -3,14 +3,25 @@ import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
 
 const searchBubble = props => {
   const [selected, setSelected] = useState(false);
-  const handleSelect = () => {
-    setSelected(state => !state);
+
+  const onPress = () => {
+    props.onPress(props.id);
   };
 
   return (
-    <TouchableOpacity activeOpacity={0.6} onPress={handleSelect}>
-      <View style={{...styles.bubble, backgroundColor: selected ? 'teal' : 'white'}}>
-        <Text style={{...styles.text, color: selected ? 'white' : 'black' }}>{props.title}</Text>
+    <TouchableOpacity
+      activeOpacity={0.6}
+      onPress={onPress}
+    >
+      <View
+        style={{
+          ...styles.bubble,
+          backgroundColor: props.selected ? "teal" : "white"
+        }}
+      >
+        <Text style={{ ...styles.text, color: selected ? "white" : "black" }}>
+          {props.title}
+        </Text>
       </View>
     </TouchableOpacity>
   );

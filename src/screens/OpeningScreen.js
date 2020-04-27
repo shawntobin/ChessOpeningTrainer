@@ -1,5 +1,5 @@
-import React, { useState, useMemo } from "react";
-import { useDispatch } from "react-redux";
+import React, { useState, useEffect } from "react";
+import { useDispatch, useSelector } from "react-redux";
 
 import {
   View,
@@ -10,15 +10,16 @@ import {
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
-import OPENING_LINES from "../data/openings/openingData";
 import { resetPieces } from "../store/actions/pieces";
-import { selectOpening } from "../store/actions/opening";
+import { selectOpening, selectVolume } from "../store/actions/opening";
 
 import BubbleContainer from "../components/BubbleContainer";
 import SliderContainer from "../components/SliderContainer";
 import OpeningContainer from "../components/OpeningContainer";
 
 const OpeningScreen = props => {
+  const OPENING_LINES = useSelector(state => state.opening.openingBook);
+  const openingBookName = useSelector(state => state.opening.openingBookName);
   const [filteredData, setFilteredData] = useState(OPENING_LINES);
   const [filteredMoves, setFilteredMoves] = useState(10);
   const dispatch = useDispatch();
@@ -43,6 +44,19 @@ const OpeningScreen = props => {
     props.setModalVisible();
   };
 
+  const handleChangeVolume = id => {
+    console.log(id)
+    dispatch(selectVolume(id));
+
+    setTimeout(() => {
+      handleSliderChange(20);
+    }, 0);
+  };
+
+  useEffect(() => {
+    handleSliderChange(10);
+  }, []);
+
   return (
     <View style={styles.container}>
       <View style={styles.buttonContainer}>
@@ -66,7 +80,10 @@ const OpeningScreen = props => {
         />
       </View>
 
-      <BubbleContainer />
+      <BubbleContainer
+        id={openingBookName}
+        handlePress={id => handleChangeVolume(id)}
+      />
 
       <SliderContainer
         handleSliderChange={handleSliderChange}

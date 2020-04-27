@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
@@ -6,13 +6,16 @@ import { Ionicons } from "@expo/vector-icons";
 import { resetPieces } from "../store/actions/pieces";
 
 import ChessLogic from "../components/ChessLogic";
-import OPENING_LINES from "../data/openings/openingData";
 import OpeningScreen from "./OpeningScreen";
 import PopupModal from "./PopupModal";
 
 const MainBoardScreen = () => {
+
+  const OPENING_LINES = useSelector(state => state.opening.openingBook)
+
   const [modalVisible, setModalVisible] = useState(false);
   const [lineFinishModalVisible, setLineFinishModalVisible] = useState(false);
+  
   const lineId = useSelector(state => state.opening.selectedOpening);
   const moveNumber = useSelector(state => state.board.moveNumber);
   const dispatch = useDispatch();
@@ -23,12 +26,13 @@ const MainBoardScreen = () => {
     dispatch(resetPieces());
   };
 */
-  const lineData = OPENING_LINES.filter(line => line.id === lineId)[0];
+  const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
+
   const currentLineName = lineData.name;
   const currentLineMoves = lineData.moves;
   const currentLineMovesArray = currentLineMoves.split(" ");
 
-  const activeMove = currentLineMoves.split(" ")[moveNumber];
+  const activeMove = currentLineMoves.split(" ")[moveNumber-1];
 
   return (
     <View style={styles.container}>
@@ -66,11 +70,11 @@ const MainBoardScreen = () => {
           {currentLineMovesArray.map(move => {
             if (move == activeMove) {
               return (
-                <Text style={{ ...styles.moveText, ...styles.activeMove }}>
+                <Text key={Math.random()} style={{ ...styles.moveText, ...styles.activeMove }}>
                   {move}  </Text>
               );
             } else {
-              return <Text style={styles.moveText}>{move}  </Text>;
+              return <Text key={Math.random()} style={styles.moveText}>{move}  </Text>;
             }
           })}
         

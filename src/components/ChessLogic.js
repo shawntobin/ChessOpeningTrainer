@@ -7,6 +7,7 @@ import Chessboard from "../components/Chessboard";
 import { notationData } from "../utils/notationLogic";
 import playSound from "../utils/sound";
 import { castleLogic } from "../utils/helperFunctions";
+
 import {
   pieceMove,
   selectPiece,
@@ -16,8 +17,9 @@ import {
 
 const ChessLogic = props => {
   const userColor = "w";
+  const openingBook = useSelector(state => state.opening.openingBook);
   const openingLine = useSelector(state => state.opening.selectedOpening);
-  const notationLogic = notationData(openingLine);
+  const notationLogic = notationData(openingBook, openingLine);
   const [moveStart, setMoveStart] = useState(true);
   const [userMoveComplete, setUserMoveComplete] = useState(false);
   const [allowUserMove, setAllowUserMove] = useState(true);
@@ -96,12 +98,13 @@ const ChessLogic = props => {
         return;
       }
 
+      if (piece.substring(0, 1) !== userColor) return;
+
       if (!allowUserMove) return;
 
       dispatch(selectPiece(squarePressed));
       setMoveStart(false);
     } else {
-      
       if (piece.substring(0, 1) === userColor) {
         dispatch(selectPiece(squarePressed));
         setMoveStart(false);

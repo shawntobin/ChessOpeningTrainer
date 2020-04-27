@@ -11,6 +11,7 @@ const initialState = {
   position: START_POSITION,
   selectedPiece: "",
   moveNumber: 0,
+  destinationSquare: ""
 };
 
 export default (state = initialState, action) => {
@@ -33,12 +34,15 @@ export default (state = initialState, action) => {
       return {
         ...state,
         position: START_POSITION,
-        moveNumber: 0
+        moveNumber: 0,
+        destinationSquare: '',
+        selectedPiece: ''
       };
     case SELECT_PIECE:
       return {
         ...state,
-        selectedPiece: action.id
+        selectedPiece: action.id,
+        destinationSquare: ''
       };
     case PIECE_MOVE:
       const piece = state.position.filter(
@@ -47,14 +51,15 @@ export default (state = initialState, action) => {
 
       const newPosition = new Position(action.id, piece);
       const oldPosition = new Position(state.selectedPiece, "");
-
+console.log(state.destinationSquare)
       return {
         ...state,
         position: state.position
           .filter(square => square.id !== action.id)
           .filter(square => square.id !== state.selectedPiece)
           .concat(newPosition, oldPosition),
-        moveNumber: state.moveNumber + 1
+        moveNumber: state.moveNumber + 1,
+        destinationSquare: action.id
       };
 
     default:

@@ -1,5 +1,12 @@
 import React from "react";
-import { View, Text, StyleSheet, FlatList, ScrollView, TouchableOpacity } from "react-native";
+import {
+  View,
+  Text,
+  StyleSheet,
+  FlatList,
+  ScrollView,
+  TouchableOpacity
+} from "react-native";
 
 const OpeningContainer = props => {
   return (
@@ -13,8 +20,9 @@ const OpeningContainer = props => {
           data={props.filteredData}
           renderItem={({ item }) => (
             <TouchableOpacity
+              key={item.id}
               activeOpacity={0.6}
-              onPress={() => props.handleChooseOpening(item.id)}
+              onPress={() => props.handleChooseOpening(item.volId)}
             >
               <View style={styles.name}>
                 <Text style={styles.item}> {item.name} </Text>

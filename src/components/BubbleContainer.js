@@ -3,15 +3,40 @@ import { StyleSheet, Text, View, ScrollView } from "react-native";
 
 import Bubble from "./Bubble";
 
-const BubbleContainer = () => {
+const BubbleContainer = props => {
   return (
     <View style={styles.container}>
       <ScrollView horizontal={true} showsHorizontalScrollIndicator={false}>
-        <Bubble title="A) Flank" />
-        <Bubble title="B) Semi-Open exc. French" />
-        <Bubble title="C) Open & French" />
-        <Bubble title="D) Closed, Semi-Closed" />
-        <Bubble title="E) Indian Defense" />
+        <Bubble
+          selected={props.id === "VOLUME_A" ? true : false}
+          id={"VOLUME_A"}
+          title="A) Flank"
+          onPress={id => props.handlePress(id)}
+        />
+        <Bubble
+          selected={props.id === "VOLUME_B" ? true : false}
+          id={"VOLUME_B"}
+          title="B) Semi-Open exc. French"
+          onPress={id => props.handlePress(id)}
+        />
+        <Bubble
+          selected={props.id === "VOLUME_C" ? true : false}
+          id={"VOLUME_C"}
+          title="C) Open & French"
+          onPress={id => props.handlePress(id)}
+        />
+        <Bubble
+          selected={props.id === "VOLUME_D" ? true : false}
+          id={"VOLUME_D"}
+          title="D) Closed, Semi-Closed"
+          onPress={id => props.handlePress(id)}
+        />
+        <Bubble
+          selected={props.id === "VOLUME_E" ? true : false}
+          id={"VOLUME_E"}
+          title="E) Indian Defense"
+          onPress={id => props.handlePress(id)}
+        />
       </ScrollView>
     </View>
   );
