@@ -19,7 +19,7 @@ const searchBubble = props => {
           backgroundColor: props.selected ? "teal" : "white"
         }}
       >
-        <Text style={{ ...styles.text, color: selected ? "white" : "black" }}>
+        <Text style={{ ...styles.text, color: props.selected ? "white" : "black" }}>
           {props.title}
         </Text>
       </View>

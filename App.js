@@ -5,6 +5,7 @@ import {AppLoading} from 'expo'
 
 import MainBoardScreen from "./src/screens/MainBoardScreen";
 import reducer from "./src/store/reducers/index";
+import AppNavigator from './src/navigation/AppNavigator'
 
 const store = createStore(reducer);
 
@@ -16,7 +17,7 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <MainBoardScreen />
+      <AppNavigator />
     </Provider>
   );
 }

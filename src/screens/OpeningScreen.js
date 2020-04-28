@@ -38,23 +38,22 @@ const OpeningScreen = props => {
     setFilteredData(newData);
   };
 
+
+
   const handleChooseOpening = id => {
     dispatch(selectOpening(id));
     dispatch(resetPieces());
     props.setModalVisible();
   };
 
-  const handleChangeVolume = id => {
-    console.log(id)
+  const handleChangeVolume =  id => {
+    console.log(id);
     dispatch(selectVolume(id));
-
-    setTimeout(() => {
-      handleSliderChange(20);
-    }, 0);
+    handleSliderChange(15);
   };
 
   useEffect(() => {
-    handleSliderChange(10);
+    handleSliderChange(14);
   }, []);
 
   return (

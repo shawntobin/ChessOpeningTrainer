@@ -10,29 +10,26 @@ import OpeningScreen from "./OpeningScreen";
 import PopupModal from "./PopupModal";
 
 const MainBoardScreen = () => {
-
-  const OPENING_LINES = useSelector(state => state.opening.openingBook)
+  const OPENING_LINES = useSelector(state => state.opening.openingBook);
 
   const [modalVisible, setModalVisible] = useState(false);
   const [lineFinishModalVisible, setLineFinishModalVisible] = useState(false);
-  
+
   const lineId = useSelector(state => state.opening.selectedOpening);
   const moveNumber = useSelector(state => state.board.moveNumber);
   const dispatch = useDispatch();
 
-  /*
   const handleLineFinish = () => {
-    setLineFinishModalVisible(state => !state);
-    dispatch(resetPieces());
+//    setLineFinishModalVisible(state => !state);
   };
-*/
+
   const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
 
   const currentLineName = lineData.name;
   const currentLineMoves = lineData.moves;
   const currentLineMovesArray = currentLineMoves.split(" ");
 
-  const activeMove = currentLineMoves.split(" ")[moveNumber-1];
+  const activeMove = currentLineMoves.split(" ")[moveNumber - 1];
 
   return (
     <View style={styles.container}>
@@ -63,24 +60,31 @@ const MainBoardScreen = () => {
       </View>
 
       <View style={styles.boardContainer}>
-        <ChessLogic />
-      </View>
-      
-        <View style={styles.moveContainer}>
-          {currentLineMovesArray.map(move => {
-            if (move == activeMove) {
-              return (
-                <Text key={Math.random()} style={{ ...styles.moveText, ...styles.activeMove }}>
-                  {move}  </Text>
-              );
-            } else {
-              return <Text key={Math.random()} style={styles.moveText}>{move}  </Text>;
-            }
-          })}
-        
+        <ChessLogic handleModalVisible={handleLineFinish} />
       </View>
 
-      <PopupModal isVisible={lineFinishModalVisible} />
+      <View style={styles.moveContainer}>
+        {currentLineMovesArray.map(move => {
+          if (move == activeMove) {
+            return (
+              <Text
+                key={Math.random()}
+                style={{ ...styles.moveText, ...styles.activeMove }}
+              >
+                {move}{" "}
+              </Text>
+            );
+          } else {
+            return (
+              <Text key={Math.random()} style={styles.moveText}>
+                {move}{" "}
+              </Text>
+            );
+          }
+        })}
+      </View>
+
+      <PopupModal isVisible={lineFinishModalVisible} handleToggleVisible={handleLineFinish}/>
 
       <Modal animationType="slide" visible={modalVisible}>
         <OpeningScreen setModalVisible={() => setModalVisible(!modalVisible)} />
@@ -164,7 +168,7 @@ const styles = StyleSheet.create({
     flexWrap: "wrap"
   },
   activeMove: {
-  //  height:36,
+    //  height:36,
     fontWeight: "bold",
     fontSize: 16
   },
