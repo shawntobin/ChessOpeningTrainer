@@ -14,7 +14,6 @@ initialState = {
 };
 
 export default (state = initialState, action) => {
-  console.log(action.id);
   switch (action.type) {
     case SELECT_VOLUME: {
       switch (action.id) {
@@ -60,7 +59,6 @@ export default (state = initialState, action) => {
       };
     }
     default:
-      console.log(action.type);
       return state;
   }
 };

@@ -7,6 +7,7 @@ import _ from "lodash";
 import { useSelector } from "react-redux";
 
 const Chessboard = props => {
+
   const darkSquare = Colors.dark;
   const lightSquare = Colors.light;
 
@@ -51,6 +52,18 @@ const Chessboard = props => {
                         ? true
                         : false
                     }
+                    expectedMoveStart={
+                      props.expectedMoveStart === square.id &&
+                      !_.isNull(props.expectedMoveStart)
+                        ? true
+                        : false
+                    }
+                    expectedMoveEnd={
+                      props.expectedMoveEnd === square.id &&
+                      !_.isNull(props.expectedMoveEnd)
+                        ? true
+                        : false
+                    }
                     handleSquarePress={square => handleSquarePress(square)}
                   />
                 );
@@ -67,7 +80,15 @@ export default Chessboard;
 const styles = StyleSheet.create({
   container: {
     flexDirection: "row",
-    borderWidth: 0.5
+    borderWidth: 0.5,
+    shadowColor: "#000",
+    shadowOffset: {
+      width: 0,
+      height: 2
+    },
+    shadowOpacity: 0.25,
+    shadowRadius: 3.84,
+    elevation: 5
   },
   columnContainer: {
     flexDirection: "column"

@@ -17,8 +17,6 @@ const initialState = {
 export default (state = initialState, action) => {
   switch (action.type) {
     case DID_CASTLE: {
-      console.log(action.id);
-
       const newPosition = new Position(action.id.end, action.id.piece);
       const oldPosition = new Position(action.id.start, "");
 
@@ -35,14 +33,14 @@ export default (state = initialState, action) => {
         ...state,
         position: START_POSITION,
         moveNumber: 0,
-        destinationSquare: '',
-        selectedPiece: ''
+        destinationSquare: "",
+        selectedPiece: ""
       };
     case SELECT_PIECE:
       return {
         ...state,
         selectedPiece: action.id,
-        destinationSquare: ''
+        destinationSquare: ""
       };
     case PIECE_MOVE:
       const piece = state.position.filter(
@@ -51,7 +49,6 @@ export default (state = initialState, action) => {
 
       const newPosition = new Position(action.id, piece);
       const oldPosition = new Position(state.selectedPiece, "");
-console.log(state.destinationSquare)
       return {
         ...state,
         position: state.position

@@ -43,11 +43,11 @@ const OpeningScreen = props => {
   const handleChooseOpening = id => {
     dispatch(selectOpening(id));
     dispatch(resetPieces());
-    props.setModalVisible();
+    //props.setModalVisible();
+    props.navigation.navigate('Main')
   };
 
   const handleChangeVolume =  id => {
-    console.log(id);
     dispatch(selectVolume(id));
     handleSliderChange(15);
   };
@@ -63,7 +63,8 @@ const OpeningScreen = props => {
           style={styles.hideModalButton}
           activeOpacity={0.4}
           onPress={() => {
-            props.setModalVisible();
+            //props.setModalVisible();
+            props.navigation.navigate('Main')
           }}
         >
           <Ionicons name="md-close" size={35} />
@@ -102,7 +103,8 @@ const OpeningScreen = props => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 40,
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    backgroundColor: '#fafafa'
   },
   header: {
     fontSize: 28,
@@ -121,10 +123,11 @@ const styles = StyleSheet.create({
     borderWidth: 0.5,
     borderRadius: 25,
     justifyContent: "center",
-    paddingLeft: 20
+    paddingLeft: 20,
+    backgroundColor: 'white'
   },
   inputTextStyle: {
-    fontSize: 16
+    fontSize: 16,
   },
   buttonContainer: {
     alignItems: "flex-end",

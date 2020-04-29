@@ -2,25 +2,35 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons";
 
 import { resetPieces } from "../store/actions/pieces";
 
 import ChessLogic from "../components/ChessLogic";
 import OpeningScreen from "./OpeningScreen";
 import PopupModal from "./PopupModal";
+import playSound from "../utils/sound";
 
-const MainBoardScreen = () => {
+const MainBoardScreen = props => {
   const OPENING_LINES = useSelector(state => state.opening.openingBook);
 
   const [modalVisible, setModalVisible] = useState(false);
+  const [blackOrWhite, setBlackOrWhite] = useState("w");
   const [lineFinishModalVisible, setLineFinishModalVisible] = useState(false);
 
   const lineId = useSelector(state => state.opening.selectedOpening);
   const moveNumber = useSelector(state => state.board.moveNumber);
   const dispatch = useDispatch();
 
+  const handlePieceColor = () => {
+    setBlackOrWhite(state => {
+      return state === "w" ? "b" : "w";
+    });
+    dispatch(resetPieces());
+  };
+
   const handleLineFinish = () => {
-//    setLineFinishModalVisible(state => !state);
+    //    setLineFinishModalVisible(state => !state);
   };
 
   const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
@@ -34,33 +44,42 @@ const MainBoardScreen = () => {
   return (
     <View style={styles.container}>
       <View style={styles.contentBar}>
-        <View style={styles.titleContainer}>
-          <Text numberOfLines={2} style={styles.lineText}>
-            {currentLineName}
-          </Text>
-        </View>
         <View style={styles.settings}>
           <TouchableOpacity
             activeOpacity={0.4}
-            onPress={() => {
-              dispatch(resetPieces());
-            }}
+            onPress={
+              () => {
+                handlePieceColor();
+              }
+              //dispatch(resetPieces());
+            }
           >
             <Ionicons name="ios-refresh" size={35} />
           </TouchableOpacity>
         </View>
+
         <TouchableOpacity
           activeOpacity={0.4}
           onPress={() => {
-            setModalVisible(true);
+            props.navigation.navigate("Openings");
+            //setModalVisible(true);
           }}
         >
           <Ionicons name="md-list" size={35} />
         </TouchableOpacity>
       </View>
 
+      <View style={styles.titleContainer}>
+        <Text numberOfLines={1} style={styles.lineText}>
+          {currentLineName}
+        </Text>
+      </View>
+
       <View style={styles.boardContainer}>
-        <ChessLogic handleModalVisible={handleLineFinish} />
+        <ChessLogic
+          handleModalVisible={handleLineFinish}
+          pieceColor={blackOrWhite}
+        />
       </View>
 
       <View style={styles.moveContainer}>
@@ -84,18 +103,19 @@ const MainBoardScreen = () => {
         })}
       </View>
 
-      <PopupModal isVisible={lineFinishModalVisible} handleToggleVisible={handleLineFinish}/>
-
-      <Modal animationType="slide" visible={modalVisible}>
-        <OpeningScreen setModalVisible={() => setModalVisible(!modalVisible)} />
-      </Modal>
+      <PopupModal
+        isVisible={lineFinishModalVisible}
+        handleToggleVisible={handleLineFinish}
+      />
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40
+    marginTop: 40,
+    backgroundColor: "#fafafa",
+    height: "100%"
   },
   textStyle: {
     color: "white",
@@ -107,8 +127,10 @@ const styles = StyleSheet.create({
   contentBar: {
     flexDirection: "row",
     marginTop: 10,
-    marginBottom: 50,
-    marginHorizontal: 20
+    marginBottom: 25,
+    marginHorizontal: 35,
+    alignItems: "center",
+    justifyContent: "flex-end"
   },
   centeredView: {
     flex: 1,
@@ -117,7 +139,7 @@ const styles = StyleSheet.create({
     marginTop: 22
   },
   lineText: {
-    fontSize: 14,
+    fontSize: 12,
     width: "100%"
   },
   modalView: {
@@ -152,17 +174,18 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   titleContainer: {
-    flex: 1,
-    width: "90%",
-    flexWrap: "wrap"
+    marginTop: 0,
+    marginBottom: 15,
+    marginHorizontal: 10,
+    width: "80%"
   },
   settings: {
-    marginHorizontal: 30
+    marginHorizontal: 35
   },
   moveContainer: {
     alignItems: "center",
     justifyContent: "flex-start",
-    marginTop: 30,
+    marginTop: 20,
     marginHorizontal: 20,
     flexDirection: "row",
     flexWrap: "wrap"
@@ -179,3 +202,13 @@ const styles = StyleSheet.create({
 });
 
 export default MainBoardScreen;
+
+/*
+
+
+      <Modal animationType="slide" visible={modalVisible}>
+        <OpeningScreen setModalVisible={() => setModalVisible(!modalVisible)} />
+      </Modal>
+
+
+      */

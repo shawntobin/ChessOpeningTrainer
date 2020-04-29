@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import {
   StyleSheet,
   View,
@@ -8,7 +8,7 @@ import {
   Text
 } from "react-native";
 
-import Colors from '../constants/Colors'
+import Colors from "../constants/Colors";
 
 const squareSize = Dimensions.get("window").width / 8.5;
 
@@ -16,9 +16,12 @@ const Square = props => {
   const darkLightSquare = props.squareColor;
 
   const squareColor = () => {
-    if (props.activeDestinationSquare) return Colors.highlightStrong;
+   
+    if (props.expectedMoveStart) return Colors.darkOrange;
+    if (props.expectedMoveEnd) return Colors.lightOrange;
 
     if (props.activeStartSquare) return Colors.highlightWeak;
+    if (props.activeDestinationSquare) return Colors.highlightStrong;
 
     return darkLightSquare;
   };
@@ -60,6 +63,7 @@ const Square = props => {
     <TouchableOpacity activeOpacity={0.8} onPress={() => handlePress(props.id)}>
       <View style={{ ...styles.container, backgroundColor: squareColor() }}>
         <Image source={getPiece(props.id.piece)} style={styles.image} />
+
         <View style={styles.label}>
           <Text>{props.id.piece === "" && props.id.id}</Text>
         </View>

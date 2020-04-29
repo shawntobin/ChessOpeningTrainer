@@ -15,8 +15,11 @@ import {
   didCastle
 } from "../store/actions/pieces";
 
+let expectedMoveStart;
+let expectedMoveEnd;
+
 const ChessLogic = props => {
-  const userColor = "b";
+  const userColor = props.pieceColor;
   const openingBook = useSelector(state => state.opening.openingBook);
   const openingLine = useSelector(state => state.opening.selectedOpening);
   const notationLogic = notationData(openingBook, openingLine);
@@ -30,6 +33,7 @@ const ChessLogic = props => {
 
   const moveSound = "moveSound";
   const captureSound = "captureSound";
+  const wrongMoveSound = "wrongMoveSound";
 
   const currentBoardLayout = BOARDLAYOUT.map(item => {
     return {
@@ -46,15 +50,18 @@ const ChessLogic = props => {
   };
 
   useEffect(() => {
+    expectedMoveEnd = null;
+    expectedMoveStart = null;
     userColor == "b" &&
       moveNumber === 0 &&
       setTimeout(() => {
         computerPieceMove(notationLogic[0]);
       }, 500);
-  }, [moveNumber]);
+  }, [moveNumber, userColor]);
 
   useEffect(() => {
     dispatch(resetPieces());
+
     //(userColor == "b" && moveNumber===0) && computerPieceMove(notationLogic[0])
   }, []);
 
@@ -98,6 +105,8 @@ const ChessLogic = props => {
   };
 
   const handleMove = squarePressed => {
+    expectedMoveStart = null;
+    expectedMoveEnd = null;
     const piece = currentPosition.filter(
       square => square.id === squarePressed
     )[0].piece;
@@ -124,12 +133,15 @@ const ChessLogic = props => {
 
       if (selectedPiece !== startingSquare || squarePressed !== endingSquare) {
         setMoveStart(true);
-        console.log("not the currently selected line - try again");
-        console.log("expected sequence:");
-        console.log(startingSquare);
-        console.log(endingSquare);
+        expectedMoveStart = notationLogic[moveNumber].start;
+        expectedMoveEnd = notationLogic[moveNumber].end;
+        dispatch(selectPiece(null));
+        playSound(wrongMoveSound);
+        //selectPiece=null;
         return;
       }
+      expectedMoveStart = null;
+      expectedMoveEnd = null;
 
       setMoveStart(true);
 
@@ -145,7 +157,8 @@ const ChessLogic = props => {
       didCapture ? playSound(captureSound) : playSound(moveSound);
 
       dispatch(pieceMove(squarePressed));
-      isKingMove && dispatch(didCastle(castleLogic(startingSquare, endingSquare)));
+      isKingMove &&
+        dispatch(didCastle(castleLogic(startingSquare, endingSquare)));
 
       setTimeout(() => {
         if (!_.isUndefined(notationLogic[moveNumber + 1])) {
@@ -168,6 +181,8 @@ const ChessLogic = props => {
         boardLayout={currentBoardLayout}
         handleSquarePress={handleMove}
         boardOrientation={userColor}
+        expectedMoveStart={expectedMoveStart}
+        expectedMoveEnd={expectedMoveEnd}
       />
     </View>
   );
