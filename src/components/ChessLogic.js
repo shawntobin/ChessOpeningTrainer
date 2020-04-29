@@ -101,7 +101,7 @@ const ChessLogic = props => {
       if (_.isUndefined(notationLogic[moveNumber + 1])) {
         lineFinished();
       }
-    }, 500);
+    }, 2000);
   };
 
   const handleMove = squarePressed => {
@@ -135,9 +135,10 @@ const ChessLogic = props => {
         setMoveStart(true);
         expectedMoveStart = notationLogic[moveNumber].start;
         expectedMoveEnd = notationLogic[moveNumber].end;
+
         dispatch(selectPiece(null));
-        playSound(wrongMoveSound);
-        //selectPiece=null;
+         playSound(wrongMoveSound);
+
         return;
       }
       expectedMoveStart = null;
@@ -169,11 +170,12 @@ const ChessLogic = props => {
             if (_.isUndefined(notationLogic[moveNumber + 1])) {
               lineFinished();
             }
-          }, 1000);
+          }, 2000);
         }
       }, 500);
     }
   };
+
   return (
     <View>
       <Chessboard

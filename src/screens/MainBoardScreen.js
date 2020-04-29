@@ -30,7 +30,7 @@ const MainBoardScreen = props => {
   };
 
   const handleLineFinish = () => {
-    //    setLineFinishModalVisible(state => !state);
+        //setLineFinishModalVisible(state => !state);
   };
 
   const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
@@ -100,7 +100,7 @@ const MainBoardScreen = props => {
               </Text>
             );
           }
-        })}
+        })}        
       </View>
 
       <PopupModal
@@ -198,6 +198,11 @@ const styles = StyleSheet.create({
   moveText: {
     height: 30,
     fontSize: 12
+  },
+  finishText: {
+    marginLeft: 10,
+    color: 'green',
+    fontWeight: 'bold'
   }
 });
 

@@ -9,7 +9,7 @@ import {
 
 const PopupModal = props => {
   return (
-    <Modal animationType="slide" transparent={true} visible={props.isVisible}>
+    <Modal animationType="fade" transparent={true} visible={props.isVisible}>
       <View style={styles.centeredView}>
         <TouchableOpacity onPress={() => props.handleToggleVisible()}>
           <View style={styles.modalView}>

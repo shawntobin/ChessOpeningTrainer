@@ -10,7 +10,7 @@ import {
 
 import Colors from "../constants/Colors";
 
-const squareSize = Dimensions.get("window").width / 8.5;
+const squareSize = Dimensions.get("window").width / 8;
 
 const Square = props => {
   const darkLightSquare = props.squareColor;
@@ -62,7 +62,7 @@ const Square = props => {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handlePress(props.id)}>
       <View style={{ ...styles.container, backgroundColor: squareColor() }}>
-        <Image source={getPiece(props.id.piece)} style={styles.image} />
+        <Image source={getPiece(props.id.piece)} style={styles.image}/>
 
         <View style={styles.label}>
           <Text>{props.id.piece === "" && props.id.id}</Text>
