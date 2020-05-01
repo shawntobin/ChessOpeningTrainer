@@ -30,8 +30,12 @@ const MainBoardScreen = props => {
   };
 
   const handleLineFinish = () => {
-        //setLineFinishModalVisible(state => !state);
+    setLineFinishModalVisible(state => !state);
   };
+
+//  useEffect(() => {
+ //   setTimeout(setLineFinishModalVisible(state => !state), 1000);
+ // }, [handleLineFinish]);
 
   const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
 
@@ -61,7 +65,7 @@ const MainBoardScreen = props => {
         <TouchableOpacity
           activeOpacity={0.4}
           onPress={() => {
-            props.navigation.navigate("Openings");
+            props.navigation.navigate("Menu");
             //setModalVisible(true);
           }}
         >
@@ -100,7 +104,7 @@ const MainBoardScreen = props => {
               </Text>
             );
           }
-        })}        
+        })}
       </View>
 
       <PopupModal
@@ -201,8 +205,8 @@ const styles = StyleSheet.create({
   },
   finishText: {
     marginLeft: 10,
-    color: 'green',
-    fontWeight: 'bold'
+    color: "green",
+    fontWeight: "bold"
   }
 });
 

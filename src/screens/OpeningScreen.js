@@ -17,6 +17,8 @@ import BubbleContainer from "../components/BubbleContainer";
 import SliderContainer from "../components/SliderContainer";
 import OpeningContainer from "../components/OpeningContainer";
 
+import { addOpening } from "../store/actions/playlist";
+
 const OpeningScreen = props => {
   const OPENING_LINES = useSelector(state => state.opening.openingBook);
   const openingBookName = useSelector(state => state.opening.openingBookName);
@@ -38,18 +40,24 @@ const OpeningScreen = props => {
     setFilteredData(newData);
   };
 
-
-
   const handleChooseOpening = id => {
-    dispatch(selectOpening(id));
+    dispatch(selectOpening(id.volId));
     dispatch(resetPieces());
     //props.setModalVisible();
-    props.navigation.navigate('Main')
+
+    //  console.log(id);
+    //  console.log("^ screen");
+
+    props.navigation.navigate("Main");
   };
 
-  const handleChangeVolume =  id => {
+  const handleChangeVolume = id => {
     dispatch(selectVolume(id));
     handleSliderChange(15);
+  };
+
+  const handleAddToPlaylist = id => {
+    dispatch(addOpening(id));
   };
 
   useEffect(() => {
@@ -64,7 +72,7 @@ const OpeningScreen = props => {
           activeOpacity={0.4}
           onPress={() => {
             //props.setModalVisible();
-            props.navigation.navigate('Main')
+            props.navigation.navigate("Main");
           }}
         >
           <Ionicons name="md-close" size={35} />
@@ -95,6 +103,7 @@ const OpeningScreen = props => {
       <OpeningContainer
         handleChooseOpening={handleChooseOpening}
         filteredData={filteredData}
+        addToPlaylist={handleAddToPlaylist}
       />
     </View>
   );
@@ -104,7 +113,7 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 40,
     paddingHorizontal: 20,
-    backgroundColor: '#fafafa'
+    backgroundColor: "#fafafa"
   },
   header: {
     fontSize: 28,
@@ -124,10 +133,10 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     paddingLeft: 20,
-    backgroundColor: 'white'
+    backgroundColor: "white"
   },
   inputTextStyle: {
-    fontSize: 16,
+    fontSize: 16
   },
   buttonContainer: {
     alignItems: "flex-end",

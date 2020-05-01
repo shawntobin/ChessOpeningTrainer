@@ -8,7 +8,7 @@ export const didCastle = id => {
   return { type: DID_CASTLE, id: id };
 };
 
-export const pieceMove = (id) => {
+export const pieceMove = id => {
   return { type: PIECE_MOVE, id: id };
 };
 

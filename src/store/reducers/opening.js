@@ -6,7 +6,7 @@ import VOLUME_C from "../../data/openings/VolumeC";
 import VOLUME_D from "../../data/openings/VolumeD";
 import VOLUME_E from "../../data/openings/VolumeE";
 
-initialState = {
+const initialState = {
   openingBookName: "VOLUME_B",
   selectedOpening: 1,
   movesFilter: 20,

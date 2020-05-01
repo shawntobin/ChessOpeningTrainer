@@ -11,7 +11,7 @@ const PopupModal = props => {
   return (
     <Modal animationType="fade" transparent={true} visible={props.isVisible}>
       <View style={styles.centeredView}>
-        <TouchableOpacity onPress={() => props.handleToggleVisible()}>
+        <TouchableOpacity onPress={() => props.handleToggleVisible()} activeOpacity={1}>
           <View style={styles.modalView}>
             <Text style={{fontWeight: 'bold', fontSize: 18}}>Nice!</Text>
           </View>

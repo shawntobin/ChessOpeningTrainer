@@ -44,6 +44,7 @@ const ChessLogic = props => {
 
   const lineFinished = () => {
     props.handleModalVisible();
+
     dispatch(resetPieces());
     setUserMoveComplete(false);
     setAllowUserMove(true);
@@ -137,7 +138,7 @@ const ChessLogic = props => {
         expectedMoveEnd = notationLogic[moveNumber].end;
 
         dispatch(selectPiece(null));
-         playSound(wrongMoveSound);
+        playSound(wrongMoveSound);
 
         return;
       }
