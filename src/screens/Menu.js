@@ -7,6 +7,18 @@ import MenuItem from "../components/MenuItem";
 const Menu = props => {
   return (
     <View style={styles.container}>
+      <View style={styles.header}>
+        <TouchableOpacity
+          style={styles.hideModalButton}
+          activeOpacity={0.4}
+          onPress={() => {
+            props.navigation.navigate("Main");
+          }}
+        >
+          <Ionicons name="md-close" size={35} />
+        </TouchableOpacity>
+      </View>
+
       <MenuItem
         title="Opening Database"
         onPress={() => props.navigation.navigate("Openings")}
@@ -27,8 +39,14 @@ export default Menu;
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     //alignItems: "center",
-    justifyContent: "center"
+    //justifyContent: "center"
+  },
+  header: {
+    marginBottom: 100,
+    marginTop: 40,
+    marginHorizontal: 30,
+    justifyContent: "flex-end",
+    alignItems: "flex-end"
   }
 });

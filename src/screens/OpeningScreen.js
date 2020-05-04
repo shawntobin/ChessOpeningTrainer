@@ -46,7 +46,6 @@ const OpeningScreen = props => {
   const handleChooseOpening = id => {
     dispatch(selectOpening(id.volId));
     dispatch(resetPieces());
-    dispatch(addOpening(id));
     props.navigation.navigate("Main");
   };
 
@@ -72,7 +71,7 @@ const OpeningScreen = props => {
       <PopupModal
         isVisible={modalVisible}
         handleToggleVisible={() => setModalVisible(state => !state)}
-        modalText="Line added!"
+        modalText="Line added to favorites"
       />
 
       <View style={styles.buttonContainer}>
@@ -111,7 +110,7 @@ const OpeningScreen = props => {
       <OpeningContainer
         handleChooseOpening={handleChooseOpening}
         filteredData={filteredData}
-        addToPlaylist={handleAddToPlaylist}
+        buttonPush={handleAddToPlaylist}
         showButtons
         savedOpeningData={savedOpenings}
       />

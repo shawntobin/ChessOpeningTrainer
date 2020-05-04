@@ -19,6 +19,10 @@ const MainBoardScreen = props => {
   const [lineFinishModalVisible, setLineFinishModalVisible] = useState(false);
 
   const lineId = useSelector(state => state.opening.selectedOpening);
+
+  console.log('below is line id')
+  console.log(lineId)
+  console.log('above is line id')
   const moveNumber = useSelector(state => state.board.moveNumber);
   const dispatch = useDispatch();
 
@@ -41,6 +45,8 @@ const MainBoardScreen = props => {
   // }, [handleLineFinish]);
 
   const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
+
+console.log(lineData)
 
   const currentLineName = lineData.name;
   const currentLineMoves = lineData.moves;

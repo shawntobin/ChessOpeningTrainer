@@ -7,11 +7,12 @@ import VOLUME_D from "../../data/openings/VolumeD";
 import VOLUME_E from "../../data/openings/VolumeE";
 
 const initialState = {
-  openingBookName: "VOLUME_B",
-  selectedOpening: 1,
+  openingBookName: "VOLUME_A",
+  selectedOpening: 7,
   movesFilter: 20,
-  openingBook: VOLUME_B
+  openingBook: VOLUME_A
 };
+// saved openings need to specify volume
 
 export default (state = initialState, action) => {
   switch (action.type) {

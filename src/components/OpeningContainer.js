@@ -12,15 +12,24 @@ import _ from "lodash";
 import { Ionicons } from "@expo/vector-icons";
 
 const OpeningContainer = props => {
+
   const handleShowButton = id => {
     if (_.isUndefined(props.savedOpeningData)) return;
 
-    const matchItem = props.savedOpeningData.filter(item => item.id === id.id)[0];
+    const matchItem = props.savedOpeningData.filter(
+      item => item.id === id.id
+    )[0];
 
     if (!matchItem) {
       return (
-        <TouchableOpacity onPress={() => props.addToPlaylist(id)}>
-          <Ionicons name="md-add-circle-outline" size={35} />
+        <TouchableOpacity onPress={() => props.buttonPush(id)}>
+          <Ionicons name="md-add-circle-outline" size={30} />
+        </TouchableOpacity>
+      );
+    } else {
+      return (
+        <TouchableOpacity onPress={() => props.buttonPush(id)}>
+          <Ionicons name="md-remove-circle-outline" size={30} />
         </TouchableOpacity>
       );
     }
@@ -34,12 +43,12 @@ const OpeningContainer = props => {
 
       <View style={{ paddingBottom: 0 }}>
         <FlatList
-        style={{height: '100%'}}
+          style={{ height: "100%" }}
           showsVerticalScrollIndicator={false}
           data={props.filteredData}
           renderItem={({ item }) => (
             <TouchableOpacity
-            style={{}}
+              style={{}}
               key={item.id}
               activeOpacity={0.6}
               onPress={() => props.handleChooseOpening(item)}

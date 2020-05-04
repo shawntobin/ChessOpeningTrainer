@@ -12,8 +12,8 @@ import { Ionicons } from "@expo/vector-icons";
 
 import OpeningContainer from "../components/OpeningContainer";
 import { selectOpening } from "../store/actions/opening";
+import { deleteOpening } from "../store/actions/playlist";
 import { resetPieces } from "../store/actions/pieces";
-import {AsyncStorage} from 'react-native';
 
 const PlaylistScreen = props => {
   const playlistData = useSelector(state => state.playlist.playlist);
@@ -24,6 +24,11 @@ const PlaylistScreen = props => {
     dispatch(selectOpening(id.volId));
     dispatch(resetPieces());
     props.navigation.navigate("Main");
+  };
+
+  const handleDelete = id => {
+   // console.log(id)
+    dispatch(deleteOpening(id));
   };
 
   return (
@@ -39,15 +44,14 @@ const PlaylistScreen = props => {
         >
           <Ionicons name="md-list" size={35} />
         </TouchableOpacity>
-
-        
-        
       </View>
       <View style={styles.line} />
       <OpeningContainer
-        handleChooseOpening={handleChooseOpening}
+        handleChooseOpening={(id) => handleChooseOpening(id)}
         filteredData={playlistData}
-        showButtons={false}
+        showButtons
+        buttonPush={(id) => handleDelete(id)}
+        savedOpeningData={playlistData}
       />
     </View>
   );
@@ -64,10 +68,9 @@ const styles = StyleSheet.create({
     marginVertical: 15
   },
   headerContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
+    flexDirection: "row",
+    alignItems: "center",
     marginVertical: 20
-    
   },
   line: {
     borderBottomWidth: 0.5
