@@ -102,7 +102,7 @@ const ChessLogic = props => {
       if (_.isUndefined(notationLogic[moveNumber + 1])) {
         lineFinished();
       }
-    }, 2000);
+    }, 1000);
   };
 
   const handleMove = squarePressed => {
@@ -171,7 +171,7 @@ const ChessLogic = props => {
             if (_.isUndefined(notationLogic[moveNumber + 1])) {
               lineFinished();
             }
-          }, 2000);
+          }, 1000);
         }
       }, 500);
     }

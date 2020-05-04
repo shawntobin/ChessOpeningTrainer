@@ -10,7 +10,7 @@ const playSound = async sound => {
     if (sound === "captureSound") {
       const captureSound = new Audio.Sound();
       await captureSound.loadAsync(require("../../assets/sounds/Capture.mp3"));
-      await captureSound.setVolumeAsync(0.5);
+      //await captureSound.setVolumeAsync(0.5);
       await captureSound.playAsync();
     }
     if (sound === "wrongMoveSound") {

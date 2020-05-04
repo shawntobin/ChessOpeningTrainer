@@ -12,8 +12,12 @@ const Menu = props => {
         onPress={() => props.navigation.navigate("Openings")}
       />
       <MenuItem
-        title="Saved Openings"
+        title="Favorite Openings"
         onPress={() => props.navigation.navigate("Playlist")}
+      />
+      <MenuItem
+        title="Settings"
+        onPress={() => props.navigation.navigate("Settings")}
       />
     </View>
   );

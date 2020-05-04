@@ -6,6 +6,7 @@ import MainBoardScreen from "../screens/MainBoardScreen";
 import OpeningScreen from "../screens/OpeningScreen";
 import PlaylistScreen from "../screens/PlaylistScreen";
 import Menu from "../screens/Menu";
+import Settings from "../screens/Settings";
 
 const Drawer = createDrawerNavigator();
 
@@ -23,6 +24,7 @@ const AppNavigator = () => {
         <Drawer.Screen name="Openings" component={OpeningScreen} />
         <Drawer.Screen name="Playlist" component={PlaylistScreen} />
         <Drawer.Screen name="Menu" component={Menu} />
+        <Drawer.Screen name="Settings" component={Settings} />
       </Drawer.Navigator>
     </NavigationContainer>
   );

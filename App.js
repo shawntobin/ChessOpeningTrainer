@@ -1,16 +1,24 @@
 import React, { useState } from "react";
-import { createStore } from "redux";
+import { AsyncStorage } from "react-native";
 import { Provider } from "react-redux";
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
+import { PersistGate } from "redux-persist/integration/react";
+import { createStore } from "redux";
+import { persistStore, persistReducer } from "redux-persist";
 
-import reducer from "./src/store/reducers/index";
 import AppNavigator from "./src/navigation/AppNavigator";
+import rootReducer from "./src/store/reducers/index";
 
-const store = createStore(reducer);
+const persistConfig = {
+  key: "root",
+  storage: AsyncStorage
+};
 
-import { enableScreens } from "react-native-screens";
-enableScreens();
+const persistedReducer = persistReducer(persistConfig, rootReducer);
+
+let store = createStore(persistedReducer);
+let persistor = persistStore(store);
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
@@ -47,22 +55,9 @@ export default function App() {
 
   return (
     <Provider store={store}>
-      <AppNavigator />
+      <PersistGate loading={null} persistor={persistor}>
+        <AppNavigator />
+      </PersistGate>
     </Provider>
   );
 }
-
-/*
-  require("../../assets/piecesPNG/wp.png")  
-  require("../../assets/piecesPNG/wk.png")
-  require("../../assets/piecesPNG/wq.png")
-  require("../../assets/piecesPNG/wr.png")  
-  require("../../assets/piecesPNG/wb.png")  
-  require("../../assets/piecesPNG/wn.png")
-  require("../../assets/piecesPNG/bp.png")
-  require("../../assets/piecesPNG/bk.png")
-  require("../../assets/piecesPNG/bq.png")
-  require("../../assets/piecesPNG/br.png")
-  require("../../assets/piecesPNG/bb.png")
-  require("../../assets/piecesPNG/bn.png")
-*/

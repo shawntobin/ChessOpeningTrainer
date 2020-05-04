@@ -16,12 +16,15 @@ import { selectOpening, selectVolume } from "../store/actions/opening";
 import BubbleContainer from "../components/BubbleContainer";
 import SliderContainer from "../components/SliderContainer";
 import OpeningContainer from "../components/OpeningContainer";
+import PopupModal from "../screens/PopupModal";
 
 import { addOpening } from "../store/actions/playlist";
 
 const OpeningScreen = props => {
+  const [modalVisible, setModalVisible] = useState(false);
   const OPENING_LINES = useSelector(state => state.opening.openingBook);
   const openingBookName = useSelector(state => state.opening.openingBookName);
+  const savedOpenings = useSelector(state => state.playlist.playlist);
   const [filteredData, setFilteredData] = useState(OPENING_LINES);
   const [filteredMoves, setFilteredMoves] = useState(10);
   const dispatch = useDispatch();
@@ -43,11 +46,7 @@ const OpeningScreen = props => {
   const handleChooseOpening = id => {
     dispatch(selectOpening(id.volId));
     dispatch(resetPieces());
-    //props.setModalVisible();
-
-    //  console.log(id);
-    //  console.log("^ screen");
-
+    dispatch(addOpening(id));
     props.navigation.navigate("Main");
   };
 
@@ -58,6 +57,10 @@ const OpeningScreen = props => {
 
   const handleAddToPlaylist = id => {
     dispatch(addOpening(id));
+    setModalVisible(true);
+    setTimeout(() => {
+      setModalVisible(false);
+    }, 1000);
   };
 
   useEffect(() => {
@@ -66,12 +69,17 @@ const OpeningScreen = props => {
 
   return (
     <View style={styles.container}>
+      <PopupModal
+        isVisible={modalVisible}
+        handleToggleVisible={() => setModalVisible(state => !state)}
+        modalText="Line added!"
+      />
+
       <View style={styles.buttonContainer}>
         <TouchableOpacity
           style={styles.hideModalButton}
           activeOpacity={0.4}
           onPress={() => {
-            //props.setModalVisible();
             props.navigation.navigate("Main");
           }}
         >
@@ -104,6 +112,8 @@ const OpeningScreen = props => {
         handleChooseOpening={handleChooseOpening}
         filteredData={filteredData}
         addToPlaylist={handleAddToPlaylist}
+        showButtons
+        savedOpeningData={savedOpenings}
       />
     </View>
   );

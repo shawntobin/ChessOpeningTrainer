@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -8,10 +8,23 @@ import {
   TouchableOpacity,
   Dimensions
 } from "react-native";
+import _ from "lodash";
 import { Ionicons } from "@expo/vector-icons";
 
 const OpeningContainer = props => {
-  const handlePress = id => {};
+  const handleShowButton = id => {
+    if (_.isUndefined(props.savedOpeningData)) return;
+
+    const matchItem = props.savedOpeningData.filter(item => item.id === id.id)[0];
+
+    if (!matchItem) {
+      return (
+        <TouchableOpacity onPress={() => props.addToPlaylist(id)}>
+          <Ionicons name="md-add-circle-outline" size={35} />
+        </TouchableOpacity>
+      );
+    }
+  };
 
   return (
     <View style={{ marginBottom: 220 }}>
@@ -19,12 +32,14 @@ const OpeningContainer = props => {
         <Text style={styles.noOpenings}>No openings found</Text>
       )}
 
-      <View style={{ paddingBottom: 40 }}>
+      <View style={{ paddingBottom: 0 }}>
         <FlatList
+        style={{height: '100%'}}
           showsVerticalScrollIndicator={false}
           data={props.filteredData}
           renderItem={({ item }) => (
             <TouchableOpacity
+            style={{}}
               key={item.id}
               activeOpacity={0.6}
               onPress={() => props.handleChooseOpening(item)}
@@ -39,9 +54,7 @@ const OpeningContainer = props => {
                     {item.name.substring(item.name.indexOf(":") + 1, 99)}
                   </Text>
                 </View>
-                <TouchableOpacity onPress={() => props.addToPlaylist(item)}>
-                  <Ionicons name="md-add-circle-outline" size={35} />
-                </TouchableOpacity>
+                {handleShowButton(item)}
               </View>
               <View style={styles.line} />
             </TouchableOpacity>

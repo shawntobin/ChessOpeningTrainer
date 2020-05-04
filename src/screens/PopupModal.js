@@ -1,19 +1,18 @@
-import React, { useState } from "react";
-import {
-  View,
-  Modal,
-  Text,
-  StyleSheet,
-  TouchableOpacity
-} from "react-native";
+import React from "react";
+import { View, Modal, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const PopupModal = props => {
   return (
     <Modal animationType="fade" transparent={true} visible={props.isVisible}>
       <View style={styles.centeredView}>
-        <TouchableOpacity onPress={() => props.handleToggleVisible()} activeOpacity={1}>
+        <TouchableOpacity
+          onPress={() => props.handleToggleVisible()}
+          activeOpacity={1}
+        >
           <View style={styles.modalView}>
-            <Text style={{fontWeight: 'bold', fontSize: 18}}>Nice!</Text>
+            <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+              {props.modalText}
+            </Text>
           </View>
         </TouchableOpacity>
       </View>
@@ -48,14 +47,3 @@ const styles = StyleSheet.create({
 });
 
 export default PopupModal;
-
-/*
- <TouchableHighlight
-            style={{ ...styles.openButton, backgroundColor: "#2196F3" }}
-            onPress={() => {
-              setModalVisible(!modalVisible);
-            }}
-          >
-            <Text style={styles.textStyle}>Hide Modal</Text>
-          </TouchableHighlight>
-          */

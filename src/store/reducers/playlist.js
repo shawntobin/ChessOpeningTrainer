@@ -5,6 +5,7 @@ const initialState = {
 };
 
 export default (state = initialState, action) => {
+
   switch (action.type) {
     case ADD_OPENING: {
       return { ...state, playlist: [...state.playlist, action.id] };

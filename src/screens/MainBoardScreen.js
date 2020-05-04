@@ -31,11 +31,14 @@ const MainBoardScreen = props => {
 
   const handleLineFinish = () => {
     setLineFinishModalVisible(state => !state);
+    setTimeout(() => {
+      setLineFinishModalVisible(state => !state);
+    }, 1000);
   };
 
-//  useEffect(() => {
- //   setTimeout(setLineFinishModalVisible(state => !state), 1000);
- // }, [handleLineFinish]);
+  //  useEffect(() => {
+  //   setTimeout(setLineFinishModalVisible(state => !state), 1000);
+  // }, [handleLineFinish]);
 
   const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
 
@@ -110,6 +113,8 @@ const MainBoardScreen = props => {
       <PopupModal
         isVisible={lineFinishModalVisible}
         handleToggleVisible={handleLineFinish}
+        modalText="Line complete!"
+
       />
     </View>
   );
