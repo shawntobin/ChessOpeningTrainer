@@ -10,7 +10,7 @@ const PopupModal = props => {
           activeOpacity={1}
         >
           <View style={styles.modalView}>
-            <Text style={{ fontWeight: "bold", fontSize: 18 }}>
+            <Text style={{  fontSize: 16, fontWeight: 'bold' }}>
               {props.modalText}
             </Text>
           </View>

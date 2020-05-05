@@ -65,7 +65,7 @@ const Square = props => {
         <Image source={getPiece(props.id.piece)} style={styles.image}/>
 
         <View style={styles.label}>
-          <Text>{props.id.piece === "" && props.id.id}</Text>
+          <Text>{props.notation && props.id.piece === "" && props.id.id}</Text>
         </View>
       </View>
     </TouchableOpacity>

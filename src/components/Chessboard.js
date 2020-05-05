@@ -7,7 +7,6 @@ import _ from "lodash";
 import { useSelector } from "react-redux";
 
 const Chessboard = props => {
-
   const darkSquare = Colors.dark;
   const lightSquare = Colors.light;
 
@@ -36,6 +35,7 @@ const Chessboard = props => {
               .map(square => {
                 return (
                   <Square
+                    notation={props.notation}
                     key={square.id}
                     id={square}
                     squareColor={

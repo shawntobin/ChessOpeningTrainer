@@ -14,16 +14,15 @@ const AppNavigator = () => {
   return (
     <NavigationContainer>
       <Drawer.Navigator
-        initialRouteName={"Main"}
+        initialRouteName={"Chessboard"}
         drawerStyle={{
-          backgroundColor: "#c6cbef",
-          width: 240
+          //backgroundColor: "#c6cbef",
+          width: 280
         }}
       >
-        <Drawer.Screen name="Main" component={MainBoardScreen} />
-        <Drawer.Screen name="Openings" component={OpeningScreen} />
-        <Drawer.Screen name="Playlist" component={PlaylistScreen} />
-        <Drawer.Screen name="Menu" component={Menu} />
+        <Drawer.Screen name="Chessboard" component={MainBoardScreen} />
+        <Drawer.Screen name="Opening Database" component={OpeningScreen} />
+        <Drawer.Screen name="Favorite Openings" component={PlaylistScreen} />
         <Drawer.Screen name="Settings" component={Settings} />
       </Drawer.Navigator>
     </NavigationContainer>

@@ -19,10 +19,6 @@ const MainBoardScreen = props => {
   const [lineFinishModalVisible, setLineFinishModalVisible] = useState(false);
 
   const lineId = useSelector(state => state.opening.selectedOpening);
-
-  console.log('below is line id')
-  console.log(lineId)
-  console.log('above is line id')
   const moveNumber = useSelector(state => state.board.moveNumber);
   const dispatch = useDispatch();
 
@@ -46,9 +42,8 @@ const MainBoardScreen = props => {
 
   const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
 
-console.log(lineData)
-
   const currentLineName = lineData.name;
+  const currentLineDescription = lineData.shortName;
   const currentLineMoves = lineData.moves;
   const currentLineMovesArray = currentLineMoves.split(" ");
 
@@ -56,9 +51,10 @@ console.log(lineData)
 
   return (
     <View style={styles.container}>
+
       <View style={styles.contentBar}>
-        <View style={styles.settings}>
-          <TouchableOpacity
+      <View style={styles.reverse}>
+      <TouchableOpacity
             activeOpacity={0.4}
             onPress={
               () => {
@@ -70,11 +66,15 @@ console.log(lineData)
             <Ionicons name="ios-refresh" size={35} />
           </TouchableOpacity>
         </View>
+        <View style={styles.settings}>
+        
+        </View>
 
         <TouchableOpacity
           activeOpacity={0.4}
           onPress={() => {
-            props.navigation.navigate("Menu");
+            //props.navigation.navigate("Menu");
+            props.navigation.openDrawer();
             //setModalVisible(true);
           }}
         >
@@ -83,8 +83,14 @@ console.log(lineData)
       </View>
 
       <View style={styles.titleContainer}>
-        <Text numberOfLines={1} style={styles.lineText}>
+        <Text
+          numberOfLines={1}
+          style={{ ...styles.lineText, fontWeight: "bold" }}
+        >
           {currentLineName}
+        </Text>
+        <Text numberOfLines={1} style={styles.lineText}>
+          {currentLineDescription}
         </Text>
       </View>
 
@@ -120,7 +126,6 @@ console.log(lineData)
         isVisible={lineFinishModalVisible}
         handleToggleVisible={handleLineFinish}
         modalText="Line complete!"
-
       />
     </View>
   );
@@ -143,9 +148,9 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     marginTop: 10,
     marginBottom: 25,
-    marginHorizontal: 35,
+    marginHorizontal: 20,
     alignItems: "center",
-    justifyContent: "flex-end"
+    //justifyContent: "flex-end"
   },
   centeredView: {
     flex: 1,
@@ -218,6 +223,10 @@ const styles = StyleSheet.create({
     marginLeft: 10,
     color: "green",
     fontWeight: "bold"
+  },
+  reverse: {
+    justifyContent: 'flex-start',
+    flex: 1
   }
 });
 

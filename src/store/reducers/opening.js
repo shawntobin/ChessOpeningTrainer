@@ -1,5 +1,6 @@
 import { SELECT_OPENING } from "../actions/opening";
 import { SELECT_VOLUME } from "../actions/opening";
+import { RANDOM_OPENING } from "../actions/opening";
 import VOLUME_A from "../../data/openings/VolumeA";
 import VOLUME_B from "../../data/openings/VolumeB";
 import VOLUME_C from "../../data/openings/VolumeC";
@@ -12,6 +13,7 @@ const initialState = {
   movesFilter: 20,
   openingBook: VOLUME_A
 };
+
 // saved openings need to specify volume
 
 export default (state = initialState, action) => {
@@ -22,31 +24,36 @@ export default (state = initialState, action) => {
           return {
             ...state,
             openingBook: VOLUME_A,
-            openingBookName: action.id
+            openingBookName: action.id,
+            selectedOpening: 1
           };
         case "VOLUME_B":
           return {
             ...state,
             openingBook: VOLUME_B,
-            openingBookName: action.id
+            openingBookName: action.id,
+            selectedOpening: 1
           };
         case "VOLUME_C":
           return {
             ...state,
             openingBook: VOLUME_C,
-            openingBookName: action.id
+            openingBookName: action.id,
+            selectedOpening: 1
           };
         case "VOLUME_D":
           return {
             ...state,
             openingBook: VOLUME_D,
-            openingBookName: action.id
+            openingBookName: action.id,
+            selectedOpening: 1
           };
         case "VOLUME_E":
           return {
             ...state,
             openingBook: VOLUME_E,
-            openingBookName: action.id
+            openingBookName: action.id,
+            selectedOpening: 1
           };
         default:
           return VOLUME_A;
@@ -59,7 +66,26 @@ export default (state = initialState, action) => {
         selectedOpening: action.id
       };
     }
+
+    case RANDOM_OPENING: {
+      return {
+        ...state,
+        selectedOpening: 7,
+
+      }
+    }
+
     default:
       return state;
+    /*
+      return {
+        
+        openingBookName: "VOLUME_A",
+        selectedOpening: 7,
+        movesFilter: 20,
+        openingBook: VOLUME_A
+      
+      }
+      */
   }
 };

@@ -8,10 +8,34 @@ import {
   TouchableOpacity,
   Dimensions
 } from "react-native";
+
 import _ from "lodash";
 import { Ionicons } from "@expo/vector-icons";
 
 const OpeningContainer = props => {
+  const renderItem = ({ item }) => {
+    return (
+      <TouchableOpacity
+        key={item.id}
+        activeOpacity={0.6}
+        onPress={() => props.handleChooseOpening(item)}
+      >
+        <View style={styles.textContainer}>
+          <View style={styles.name}>
+            <Text style={{ ...styles.item, fontWeight: "bold" }}>
+              {item.name.trim()}
+            </Text>
+            <Text style={styles.itemDesc} numberOfLines={1}>
+              {item.shortName}
+            </Text>
+          </View>
+
+          {handleShowButton(item)}
+        </View>
+        <View style={styles.line} />
+      </TouchableOpacity>
+    );
+  };
 
   const handleShowButton = id => {
     if (_.isUndefined(props.savedOpeningData)) return;
@@ -22,52 +46,35 @@ const OpeningContainer = props => {
 
     if (!matchItem) {
       return (
-        <TouchableOpacity onPress={() => props.buttonPush(id)}>
-          <Ionicons name="md-add-circle-outline" size={30} />
-        </TouchableOpacity>
+        <View style={{ flex: 0 }}>
+          <TouchableOpacity onPress={() => props.buttonPush(id)}>
+            <Ionicons name="md-add-circle-outline" size={30} />
+          </TouchableOpacity>
+        </View>
       );
     } else {
-      return (
-        <TouchableOpacity onPress={() => props.buttonPush(id)}>
-          <Ionicons name="md-remove-circle-outline" size={30} />
-        </TouchableOpacity>
-      );
+      if (props.showRemoveButtons) {
+        return (
+          <TouchableOpacity onPress={() => props.buttonPush(id)}>
+            <Ionicons name="md-remove-circle-outline" size={30} />
+          </TouchableOpacity>
+        );
+      }
     }
   };
 
   return (
-    <View style={{ marginBottom: 220 }}>
+    <View style={{ marginBottom: 0, flex: 1 }}>
       {props.filteredData.length === 0 && (
         <Text style={styles.noOpenings}>No openings found</Text>
       )}
 
-      <View style={{ paddingBottom: 0 }}>
+      <View style={{ paddingBottom: 0, flex: 0 }}>
         <FlatList
-          style={{ height: "100%" }}
+          style={{ paddingBottom: 150 }}
           showsVerticalScrollIndicator={false}
           data={props.filteredData}
-          renderItem={({ item }) => (
-            <TouchableOpacity
-              style={{}}
-              key={item.id}
-              activeOpacity={0.6}
-              onPress={() => props.handleChooseOpening(item)}
-            >
-              <View style={styles.textContainer}>
-                <View style={styles.name}>
-                  <Text style={{ ...styles.item, fontWeight: "bold" }}>
-                    {" "}
-                    {item.shortName}{" "}
-                  </Text>
-                  <Text style={styles.itemDesc} numberOfLines={1}>
-                    {item.name.substring(item.name.indexOf(":") + 1, 99)}
-                  </Text>
-                </View>
-                {handleShowButton(item)}
-              </View>
-              <View style={styles.line} />
-            </TouchableOpacity>
-          )}
+          renderItem={renderItem}
           keyExtractor={item => item.id.toString()}
         />
       </View>
@@ -87,8 +94,7 @@ const styles = StyleSheet.create({
     marginVertical: 10,
     height: 35,
     justifyContent: "center",
-    flex: 1,
-    width: "100%"
+    flex: 1
   },
   noOpenings: {
     fontSize: 18,

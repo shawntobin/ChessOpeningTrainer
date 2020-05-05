@@ -14,6 +14,7 @@ import OpeningContainer from "../components/OpeningContainer";
 import { selectOpening } from "../store/actions/opening";
 import { deleteOpening } from "../store/actions/playlist";
 import { resetPieces } from "../store/actions/pieces";
+import { selectVolume } from "../store/actions/opening";
 
 const PlaylistScreen = props => {
   const playlistData = useSelector(state => state.playlist.playlist);
@@ -21,13 +22,13 @@ const PlaylistScreen = props => {
   const dispatch = useDispatch();
 
   const handleChooseOpening = id => {
+    dispatch(selectVolume(`VOLUME_${id.name.substring(0,1)}`))
     dispatch(selectOpening(id.volId));
     dispatch(resetPieces());
-    props.navigation.navigate("Main");
+    props.navigation.navigate("Chessboard");
   };
 
   const handleDelete = id => {
-   // console.log(id)
     dispatch(deleteOpening(id));
   };
 
@@ -39,18 +40,18 @@ const PlaylistScreen = props => {
         <TouchableOpacity
           activeOpacity={0.4}
           onPress={() => {
-            props.navigation.navigate("Menu");
+            props.navigation.navigate("Chessboard");
           }}
         >
-          <Ionicons name="md-list" size={35} />
+          <Ionicons name="md-close" size={35} />
         </TouchableOpacity>
       </View>
       <View style={styles.line} />
       <OpeningContainer
-        handleChooseOpening={(id) => handleChooseOpening(id)}
+        handleChooseOpening={id => handleChooseOpening(id)}
         filteredData={playlistData}
-        showButtons
-        buttonPush={(id) => handleDelete(id)}
+        showRemoveButtons
+        buttonPush={id => handleDelete(id)}
         savedOpeningData={playlistData}
       />
     </View>
@@ -60,7 +61,8 @@ const PlaylistScreen = props => {
 const styles = StyleSheet.create({
   container: {
     marginTop: 50,
-    marginHorizontal: 20
+    marginHorizontal: 20,
+    flex: 1
   },
   header: {
     fontSize: 26,

@@ -10,7 +10,6 @@ export default (state = initialState, action) => {
       return { ...state, playlist: [...state.playlist, action.id] };
     }
     case DELETE_OPENING: {
-      console.log(action.id)
       return {
         
         ...state,

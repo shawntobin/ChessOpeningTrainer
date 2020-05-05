@@ -12,7 +12,8 @@ import {
   pieceMove,
   selectPiece,
   resetPieces,
-  didCastle
+  didCastle,
+
 } from "../store/actions/pieces";
 
 let expectedMoveStart;
@@ -29,6 +30,7 @@ const ChessLogic = props => {
   const currentPosition = useSelector(state => state.board.position);
   const selectedPiece = useSelector(state => state.board.selectedPiece);
   const moveNumber = useSelector(state => state.board.moveNumber);
+  const notation = useSelector(state => state.board.notationOverlay);
   const dispatch = useDispatch();
 
   const moveSound = "moveSound";
@@ -42,10 +44,17 @@ const ChessLogic = props => {
     };
   });
 
+
+  
+
+
   const lineFinished = () => {
     props.handleModalVisible();
 
+
+
     dispatch(resetPieces());
+
     setUserMoveComplete(false);
     setAllowUserMove(true);
   };
@@ -186,6 +195,7 @@ const ChessLogic = props => {
         boardOrientation={userColor}
         expectedMoveStart={expectedMoveStart}
         expectedMoveEnd={expectedMoveEnd}
+        notation={notation}
       />
     </View>
   );

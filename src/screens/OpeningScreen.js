@@ -46,7 +46,7 @@ const OpeningScreen = props => {
   const handleChooseOpening = id => {
     dispatch(selectOpening(id.volId));
     dispatch(resetPieces());
-    props.navigation.navigate("Main");
+    props.navigation.navigate("Chessboard");
   };
 
   const handleChangeVolume = id => {
@@ -79,7 +79,7 @@ const OpeningScreen = props => {
           style={styles.hideModalButton}
           activeOpacity={0.4}
           onPress={() => {
-            props.navigation.navigate("Main");
+            props.navigation.navigate("Chessboard");
           }}
         >
           <Ionicons name="md-close" size={35} />
@@ -111,7 +111,7 @@ const OpeningScreen = props => {
         handleChooseOpening={handleChooseOpening}
         filteredData={filteredData}
         buttonPush={handleAddToPlaylist}
-        showButtons
+        showRemoveButtons={false}
         savedOpeningData={savedOpenings}
       />
     </View>
@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 40,
     paddingHorizontal: 20,
-    backgroundColor: "#fafafa"
+    backgroundColor: "#fafafa",
+    flex: 1
   },
   header: {
     fontSize: 28,
