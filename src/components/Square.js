@@ -13,6 +13,7 @@ import Colors from "../constants/Colors";
 const squareSize = Dimensions.get("window").width / 8;
 
 const Square = props => {
+
   const darkLightSquare = props.squareColor;
 
   const squareColor = () => {

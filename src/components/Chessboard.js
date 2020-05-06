@@ -7,7 +7,28 @@ import _ from "lodash";
 import { useSelector } from "react-redux";
 
 const Chessboard = props => {
-  const darkSquare = Colors.dark;
+  const selectedColor = useSelector(state => state.settings.darkSquareColor);
+
+  const squareColor = id => {
+    switch (id) {
+      case 1: {
+        return Colors.lightBlue;
+      }
+      case 2: {
+        return Colors.lightBrown;
+      }
+      case 3: {
+        return Colors.lightGreen;
+      }
+      case 4: {
+        return Colors.lightRed;
+      }
+      default:
+        Colors.lightBlue;
+    }
+  };
+
+  const darkSquare = squareColor(selectedColor);
   const lightSquare = Colors.light;
 
   const activeSquare = useSelector(state => state.board.selectedPiece);

@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import Colors from '../constants/Colors'
 
 const searchBubble = props => {
   const [selected, setSelected] = useState(false);
@@ -16,7 +17,7 @@ const searchBubble = props => {
       <View
         style={{
           ...styles.bubble,
-          backgroundColor: props.selected ? "teal" : "white"
+          backgroundColor: props.selected ? Colors.darkBlue : "white"
         }}
       >
         <Text style={{ ...styles.text, color: props.selected ? "white" : "black" }}>
@@ -34,7 +35,6 @@ const styles = StyleSheet.create({
   bubble: {
     marginHorizontal: 5,
     padding: 7,
-    marginTop: 20,
     borderRadius: 20,
     borderWidth: 0.5
   },

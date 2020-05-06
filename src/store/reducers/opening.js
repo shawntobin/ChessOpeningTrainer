@@ -1,6 +1,5 @@
 import { SELECT_OPENING } from "../actions/opening";
 import { SELECT_VOLUME } from "../actions/opening";
-import { RANDOM_OPENING } from "../actions/opening";
 import VOLUME_A from "../../data/openings/VolumeA";
 import VOLUME_B from "../../data/openings/VolumeB";
 import VOLUME_C from "../../data/openings/VolumeC";
@@ -67,25 +66,7 @@ export default (state = initialState, action) => {
       };
     }
 
-    case RANDOM_OPENING: {
-      return {
-        ...state,
-        selectedOpening: 7,
-
-      }
-    }
-
     default:
       return state;
-    /*
-      return {
-        
-        openingBookName: "VOLUME_A",
-        selectedOpening: 7,
-        movesFilter: 20,
-        openingBook: VOLUME_A
-      
-      }
-      */
   }
 };

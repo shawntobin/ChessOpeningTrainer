@@ -51,7 +51,12 @@ const OpeningScreen = props => {
 
   const handleChangeVolume = id => {
     dispatch(selectVolume(id));
-    handleSliderChange(15);
+   // handleChooseOpening(1)
+    //setFilteredData
+    setTimeout(() => {
+      handleSliderChange(16);
+    }, 2000);
+ 
   };
 
   const handleAddToPlaylist = id => {
@@ -71,7 +76,7 @@ const OpeningScreen = props => {
       <PopupModal
         isVisible={modalVisible}
         handleToggleVisible={() => setModalVisible(state => !state)}
-        modalText="Line added to favorites"
+        modalText="Added to favorites"
       />
 
       <View style={styles.buttonContainer}>
@@ -87,18 +92,18 @@ const OpeningScreen = props => {
       </View>
       <Text style={styles.header}>Opening Database</Text>
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Search database"
-          style={styles.inputTextStyle}
-          onChangeText={text => handleChangeText(text)}
-        />
-      </View>
-
       <BubbleContainer
         id={openingBookName}
         handlePress={id => handleChangeVolume(id)}
       />
+
+      <View style={styles.inputContainer}>
+        <TextInput
+          placeholder="Search the selected database"
+          style={styles.inputTextStyle}
+          onChangeText={text => handleChangeText(text)}
+        />
+      </View>
 
       <SliderContainer
         handleSliderChange={handleSliderChange}
@@ -127,7 +132,8 @@ const styles = StyleSheet.create({
   },
   header: {
     fontSize: 28,
-    marginBottom: 25
+    marginBottom: 25,
+    fontWeight: "bold"
   },
   line: {
     borderWidth: 0.5,
@@ -143,7 +149,8 @@ const styles = StyleSheet.create({
     borderRadius: 25,
     justifyContent: "center",
     paddingLeft: 20,
-    backgroundColor: "white"
+    backgroundColor: "white",
+    marginTop: 20
   },
   inputTextStyle: {
     fontSize: 16

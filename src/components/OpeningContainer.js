@@ -13,6 +13,12 @@ import _ from "lodash";
 import { Ionicons } from "@expo/vector-icons";
 
 const OpeningContainer = props => {
+  const [refreshFlatlist, setRefreshFlatlist] = useState(false);
+
+  const handleRefresh = () => {
+    setRefreshFlatlist(state => !state);
+  };
+
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -74,6 +80,7 @@ const OpeningContainer = props => {
           style={{ paddingBottom: 150 }}
           showsVerticalScrollIndicator={false}
           data={props.filteredData}
+          extraData={props.filteredData}
           renderItem={renderItem}
           keyExtractor={item => item.id.toString()}
         />

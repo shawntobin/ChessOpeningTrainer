@@ -3,8 +3,7 @@ import {
   PIECE_MOVE,
   SELECT_PIECE,
   RESET_PIECES,
-  DID_CASTLE,
-  TOGGLE_NOTATION
+  DID_CASTLE
 } from "../actions/pieces";
 import Position from "../../models/position";
 
@@ -12,8 +11,7 @@ const initialState = {
   position: START_POSITION,
   selectedPiece: "",
   moveNumber: 0,
-  destinationSquare: "",
-  notationOverlay: true
+  destinationSquare: ""
 };
 
 export default (state = initialState, action) => {
@@ -60,14 +58,11 @@ export default (state = initialState, action) => {
         moveNumber: state.moveNumber + 1,
         destinationSquare: action.id
       };
-    case TOGGLE_NOTATION: {
-      return {
-        ...state,
-        notationOverlay: !action.id
-      };
-    }
 
     default:
-      return state;
+      return state
+
+      
+      
   }
 };

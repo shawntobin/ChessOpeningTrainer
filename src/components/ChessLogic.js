@@ -13,7 +13,6 @@ import {
   selectPiece,
   resetPieces,
   didCastle,
-
 } from "../store/actions/pieces";
 
 let expectedMoveStart;
@@ -30,7 +29,7 @@ const ChessLogic = props => {
   const currentPosition = useSelector(state => state.board.position);
   const selectedPiece = useSelector(state => state.board.selectedPiece);
   const moveNumber = useSelector(state => state.board.moveNumber);
-  const notation = useSelector(state => state.board.notationOverlay);
+  const notation = useSelector(state => state.settings.notationOverlay);
   const dispatch = useDispatch();
 
   const moveSound = "moveSound";
