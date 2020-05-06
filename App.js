@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import { AsyncStorage } from "react-native";
 import { Provider } from "react-redux";
+import ReduxThunk from 'redux-thunk'
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
 import { PersistGate } from "redux-persist/integration/react";
-import { createStore } from "redux";
+import { createStore, applyMiddleware } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 
 import AppNavigator from "./src/navigation/AppNavigator";
@@ -17,7 +18,7 @@ const persistConfig = {
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);
 
-let store = createStore(persistedReducer);
+let store = createStore(persistedReducer, applyMiddleware(ReduxThunk));
 let persistor = persistStore(store);
 
 export default function App() {

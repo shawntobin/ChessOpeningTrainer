@@ -13,7 +13,7 @@ const SliderContainer = props => {
         minimumTrackTintColor="grey"
         maximumTrackTintColor="grey"
         onSlidingComplete={props.handleSliderChange}
-        //onValueChange={moves => setFilteredMoves(moves)}
+        onValueChange={props.loading}
         step={1}
         value={props.filteredMoves}
       />

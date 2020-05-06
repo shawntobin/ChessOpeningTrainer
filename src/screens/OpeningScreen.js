@@ -6,7 +6,10 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
-  TextInput
+  TextInput,
+  ActivityIndicator,
+  Keyboard,
+  TouchableWithoutFeedback
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -22,6 +25,7 @@ import { addOpening } from "../store/actions/playlist";
 
 const OpeningScreen = props => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
   const OPENING_LINES = useSelector(state => state.opening.openingBook);
   const openingBookName = useSelector(state => state.opening.openingBookName);
   const savedOpenings = useSelector(state => state.playlist.playlist);
@@ -36,10 +40,10 @@ const OpeningScreen = props => {
   };
 
   const handleChangeText = text => {
+    setIsLoading(true);
     const newData = OPENING_LINES.filter(
       line => line.name.toLowerCase().indexOf(text.toLowerCase()) !== -1
     );
-    //const newData = filterOnSearch.filter(line => line.numMoves <= filteredMoves)
     setFilteredData(newData);
   };
 
@@ -51,12 +55,7 @@ const OpeningScreen = props => {
 
   const handleChangeVolume = id => {
     dispatch(selectVolume(id));
-   // handleChooseOpening(1)
-    //setFilteredData
-    setTimeout(() => {
-      handleSliderChange(16);
-    }, 2000);
- 
+    setIsLoading(true);
   };
 
   const handleAddToPlaylist = id => {
@@ -68,58 +67,74 @@ const OpeningScreen = props => {
   };
 
   useEffect(() => {
-    handleSliderChange(14);
-  }, []);
+    setIsLoading(false);
+  }, [filteredData]);
+
+  useEffect(() => {
+    setFilteredData(OPENING_LINES);
+    setIsLoading(false);
+  }, [OPENING_LINES]);
+
+  const handleSliderLoad = () => {
+    setIsLoading(true);
+  };
 
   return (
-    <View style={styles.container}>
-      <PopupModal
-        isVisible={modalVisible}
-        handleToggleVisible={() => setModalVisible(state => !state)}
-        modalText="Added to favorites"
-      />
+    <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
+      <View style={styles.container}>
+        <PopupModal
+          isVisible={modalVisible}
+          handleToggleVisible={() => setModalVisible(state => !state)}
+          modalText="Added to favorites"
+        />
 
-      <View style={styles.buttonContainer}>
-        <TouchableOpacity
-          style={styles.hideModalButton}
-          activeOpacity={0.4}
-          onPress={() => {
-            props.navigation.navigate("Chessboard");
-          }}
-        >
-          <Ionicons name="md-close" size={35} />
-        </TouchableOpacity>
-      </View>
-      <Text style={styles.header}>Opening Database</Text>
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.hideModalButton}
+            activeOpacity={0.4}
+            onPress={() => {
+              props.navigation.navigate("Chessboard");
+            }}
+          >
+            <Ionicons name="md-close" size={35} />
+          </TouchableOpacity>
+        </View>
+        <Text style={styles.header}>Opening Database</Text>
 
-      <BubbleContainer
-        id={openingBookName}
-        handlePress={id => handleChangeVolume(id)}
-      />
+        <BubbleContainer
+          id={openingBookName}
+          handlePress={id => handleChangeVolume(id)}
+        />
 
-      <View style={styles.inputContainer}>
-        <TextInput
-          placeholder="Search the selected database"
-          style={styles.inputTextStyle}
-          onChangeText={text => handleChangeText(text)}
+        <View style={styles.inputContainer}>
+          <TextInput
+            placeholder="Search the selected database"
+            style={styles.inputTextStyle}
+            onChangeText={text => handleChangeText(text)}
+          />
+        </View>
+
+        <SliderContainer
+          handleSliderChange={handleSliderChange}
+          filteredMoves={filteredMoves}
+          loading={() => handleSliderLoad()}
+        />
+
+        <View style={styles.line} />
+        <ActivityIndicator
+          size="large"
+          style={styles.loading}
+          animating={isLoading}
+        />
+        <OpeningContainer
+          handleChooseOpening={handleChooseOpening}
+          filteredData={filteredData}
+          buttonPush={handleAddToPlaylist}
+          showRemoveButtons={false}
+          savedOpeningData={savedOpenings}
         />
       </View>
-
-      <SliderContainer
-        handleSliderChange={handleSliderChange}
-        filteredMoves={filteredMoves}
-      />
-
-      <View style={styles.line} />
-
-      <OpeningContainer
-        handleChooseOpening={handleChooseOpening}
-        filteredData={filteredData}
-        buttonPush={handleAddToPlaylist}
-        showRemoveButtons={false}
-        savedOpeningData={savedOpenings}
-      />
-    </View>
+    </TouchableWithoutFeedback>
   );
 };
 
@@ -158,6 +173,11 @@ const styles = StyleSheet.create({
   buttonContainer: {
     alignItems: "flex-end",
     marginHorizontal: 10
+  },
+  loading: {
+    position: "absolute",
+    top: "50%",
+    left: "50%"
   }
 });
 

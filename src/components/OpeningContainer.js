@@ -13,11 +13,6 @@ import _ from "lodash";
 import { Ionicons } from "@expo/vector-icons";
 
 const OpeningContainer = props => {
-  const [refreshFlatlist, setRefreshFlatlist] = useState(false);
-
-  const handleRefresh = () => {
-    setRefreshFlatlist(state => !state);
-  };
 
   const renderItem = ({ item }) => {
     return (
@@ -82,6 +77,7 @@ const OpeningContainer = props => {
           data={props.filteredData}
           extraData={props.filteredData}
           renderItem={renderItem}
+          onEndReachedThreshold={.7}
           keyExtractor={item => item.id.toString()}
         />
       </View>
