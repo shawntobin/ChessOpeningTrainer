@@ -2,25 +2,30 @@ import React, { useState, useEffect } from "react";
 import { View, Text, StyleSheet, Modal, TouchableOpacity } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
-import { MaterialIcons } from "@expo/vector-icons";
-
 import { resetPieces } from "../store/actions/pieces";
-
+import { addOpening, deleteOpening } from "../store/actions/playlist";
 import ChessLogic from "../components/ChessLogic";
-import OpeningScreen from "./OpeningScreen";
 import PopupModal from "./PopupModal";
-import playSound from "../utils/sound";
+import FavoriteStar from "../components/FavoriteStar";
+import _ from "lodash";
 
 const MainBoardScreen = props => {
   const OPENING_LINES = useSelector(state => state.opening.openingBook);
-
-  const [modalVisible, setModalVisible] = useState(false);
+  const [favoritesModalVisible, setFavoritesModalVisible] = useState(false);
   const [blackOrWhite, setBlackOrWhite] = useState("w");
   const [lineFinishModalVisible, setLineFinishModalVisible] = useState(false);
 
   const lineId = useSelector(state => state.opening.selectedOpening);
   const moveNumber = useSelector(state => state.board.moveNumber);
+
+  const favoriteOpenings = useSelector(state => state.playlist.playlist);
+
+  const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
   const dispatch = useDispatch();
+
+  const isFavOpening = favoriteOpenings.filter(
+    item => item.id === lineData.id
+  )[0];
 
   const handlePieceColor = () => {
     setBlackOrWhite(state => {
@@ -29,18 +34,25 @@ const MainBoardScreen = props => {
     dispatch(resetPieces());
   };
 
+  const handleSetFavorite = () => {
+    if (isFavOpening) {
+      dispatch(deleteOpening(lineData));
+    } else {
+      dispatch(addOpening(lineData));
+      setFavoritesModalVisible(true);
+
+      setTimeout(() => {
+        setFavoritesModalVisible(false);
+      }, 1000);
+    }
+  };
+
   const handleLineFinish = () => {
     setLineFinishModalVisible(state => !state);
     setTimeout(() => {
       setLineFinishModalVisible(state => !state);
-    }, 1000);
+    }, 1200);
   };
-
-  //  useEffect(() => {
-  //   setTimeout(setLineFinishModalVisible(state => !state), 1000);
-  // }, [handleLineFinish]);
-
-  const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
 
   const currentLineName = lineData.name;
   const currentLineDescription = lineData.shortName;
@@ -51,47 +63,51 @@ const MainBoardScreen = props => {
 
   return (
     <View style={styles.container}>
-
       <View style={styles.contentBar}>
-      <View style={styles.reverse}>
-      <TouchableOpacity
+        <View style={styles.reverse}>
+          <TouchableOpacity
             activeOpacity={0.4}
-            onPress={
-              () => {
-                handlePieceColor();
-              }
-              //dispatch(resetPieces());
-            }
+            onPress={() => {
+              handlePieceColor();
+            }}
           >
             <Ionicons name="ios-refresh" size={35} />
           </TouchableOpacity>
         </View>
-        <View style={styles.settings}>
-        
-        </View>
+        <View style={styles.settings}></View>
 
         <TouchableOpacity
           activeOpacity={0.4}
           onPress={() => {
-            //props.navigation.navigate("Menu");
             props.navigation.openDrawer();
-            //setModalVisible(true);
           }}
         >
-          <Ionicons name="md-list" size={35} />
+          <Ionicons name="ios-menu" size={40} />
         </TouchableOpacity>
       </View>
 
       <View style={styles.titleContainer}>
-        <Text
-          numberOfLines={1}
-          style={{ ...styles.lineText, fontWeight: "bold" }}
-        >
-          {currentLineName}
-        </Text>
-        <Text numberOfLines={1} style={styles.lineText}>
-          {currentLineDescription}
-        </Text>
+        <View style={styles.star}>
+          <FavoriteStar
+            id={lineId}
+            selected={isFavOpening}
+            handleStarPress={id => handleSetFavorite(id)}
+          />
+        </View>
+
+        <View style={styles.headerContainer}>
+        <TouchableOpacity onPress={() => props.navigation.navigate("Favorite Openings")}>
+          <Text
+            numberOfLines={1}
+            style={{ ...styles.lineText, fontWeight: "bold" }}
+          >
+            {currentLineName}
+          </Text>
+          <Text numberOfLines={1} style={styles.lineText}>
+            {currentLineDescription}
+          </Text>
+          </TouchableOpacity>
+        </View>
       </View>
 
       <View style={styles.boardContainer}>
@@ -122,6 +138,18 @@ const MainBoardScreen = props => {
         })}
       </View>
 
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={favoritesModalVisible}
+      >
+        <View style={styles.centeredView}>
+          <View style={styles.modalView}>
+            <Text style={styles.modalText}>Added to favorites</Text>
+          </View>
+        </View>
+      </Modal>
+
       <PopupModal
         isVisible={lineFinishModalVisible}
         handleToggleVisible={handleLineFinish}
@@ -135,7 +163,8 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 40,
     backgroundColor: "#fafafa",
-    height: "100%"
+    height: "100%",
+    flex: 1
   },
   textStyle: {
     color: "white",
@@ -149,8 +178,7 @@ const styles = StyleSheet.create({
     marginTop: 10,
     marginBottom: 25,
     marginHorizontal: 20,
-    alignItems: "center",
-    //justifyContent: "flex-end"
+    alignItems: "center"
   },
   centeredView: {
     flex: 1,
@@ -163,12 +191,12 @@ const styles = StyleSheet.create({
     width: "100%"
   },
   modalView: {
-    margin: 20,
-    width: "90%",
+     margin: 20,
+    width: "60%",
     backgroundColor: "white",
     borderRadius: 20,
     padding: 35,
-    alignItems: "center",
+
     shadowColor: "#000",
     shadowOffset: {
       width: 0,
@@ -190,14 +218,17 @@ const styles = StyleSheet.create({
     textAlign: "center"
   },
   modalText: {
-    marginBottom: 15,
-    textAlign: "center"
+    //  marginBottom: 15,
+    textAlign: "center",
+    fontWeight: "bold",
+    fontSize: 16
   },
   titleContainer: {
     marginTop: 0,
     marginBottom: 15,
     marginHorizontal: 10,
-    width: "80%"
+    width: "80%",
+    flexDirection: "row"
   },
   settings: {
     marginHorizontal: 35
@@ -208,15 +239,16 @@ const styles = StyleSheet.create({
     marginTop: 20,
     marginHorizontal: 20,
     flexDirection: "row",
-    flexWrap: "wrap"
+    flexWrap: "wrap",
+    height: 36
   },
   activeMove: {
-    //  height:36,
+    //    height:36,
     fontWeight: "bold",
-    fontSize: 16
+    fontSize: 14
   },
   moveText: {
-    height: 30,
+    height: 20,
     fontSize: 12
   },
   finishText: {
@@ -225,19 +257,18 @@ const styles = StyleSheet.create({
     fontWeight: "bold"
   },
   reverse: {
-    justifyContent: 'flex-start',
+    justifyContent: "flex-start",
     flex: 1
+  },
+  headerContainer: {
+    flexDirection: "column",
+    justifyContent: "center",
+    marginRight: 25
+  },
+  star: {
+    marginRight: 6,
+    justifyContent: "center"
   }
 });
 
 export default MainBoardScreen;
-
-/*
-
-
-      <Modal animationType="slide" visible={modalVisible}>
-        <OpeningScreen setModalVisible={() => setModalVisible(!modalVisible)} />
-      </Modal>
-
-
-      */

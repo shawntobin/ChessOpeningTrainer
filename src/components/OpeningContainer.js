@@ -29,6 +29,9 @@ const OpeningContainer = props => {
             <Text style={styles.itemDesc} numberOfLines={1}>
               {item.shortName}
             </Text>
+            <Text style={{...styles.itemDesc}} numberOfLines={1}>
+              {item.moves}
+            </Text>
           </View>
 
           {handleShowButton(item)}
@@ -49,7 +52,7 @@ const OpeningContainer = props => {
       return (
         <View style={{ flex: 0 }}>
           <TouchableOpacity onPress={() => props.buttonPush(id)}>
-            <Ionicons name="md-add-circle-outline" size={30} />
+            <Ionicons name="ios-add-circle-outline" size={30} color='#718aa3'/>
           </TouchableOpacity>
         </View>
       );
@@ -57,7 +60,7 @@ const OpeningContainer = props => {
       if (props.showRemoveButtons) {
         return (
           <TouchableOpacity onPress={() => props.buttonPush(id)}>
-            <Ionicons name="md-remove-circle-outline" size={30} />
+            <Ionicons name="ios-remove-circle-outline" size={30} color='#718aa3' />
           </TouchableOpacity>
         );
       }
@@ -91,7 +94,8 @@ const styles = StyleSheet.create({
   },
   itemDesc: {
     fontSize: 12,
-    width: "90%"
+    width: "90%",
+    color: '#474747'
   },
   name: {
     marginVertical: 10,

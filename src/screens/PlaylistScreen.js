@@ -43,7 +43,7 @@ const PlaylistScreen = props => {
             props.navigation.navigate("Chessboard");
           }}
         >
-          <Ionicons name="md-close" size={35} />
+          <Ionicons name="ios-close-circle-outline" size={35} />
         </TouchableOpacity>
       </View>
       <View style={styles.line} />

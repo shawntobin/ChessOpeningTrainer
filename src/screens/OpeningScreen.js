@@ -22,28 +22,44 @@ import OpeningContainer from "../components/OpeningContainer";
 import PopupModal from "../screens/PopupModal";
 
 import { addOpening } from "../store/actions/playlist";
+import Colors from "../constants/Colors";
 
 const OpeningScreen = props => {
   const [modalVisible, setModalVisible] = useState(false);
+  const [inputText, setInputText] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const OPENING_LINES = useSelector(state => state.opening.openingBook);
   const openingBookName = useSelector(state => state.opening.openingBookName);
+  const currentOpeningBook = useSelector(
+    state => state.opening.openingBookName
+  );
   const savedOpenings = useSelector(state => state.playlist.playlist);
   const [filteredData, setFilteredData] = useState(OPENING_LINES);
   const [filteredMoves, setFilteredMoves] = useState(10);
   const dispatch = useDispatch();
 
   const handleSliderChange = moves => {
+    setIsLoading(true)
+
+    setTimeout(() => {
+      setIsLoading(false)
+    }, 4000);
+
     setFilteredMoves(moves);
-    const newData = OPENING_LINES.filter(line => line.numMoves >= moves);
-    setFilteredData(newData);
   };
 
   const handleChangeText = text => {
+    setInputText(text);
+  };
+
+  const handleFilterData = () => {
     setIsLoading(true);
-    const newData = OPENING_LINES.filter(
-      line => line.name.toLowerCase().indexOf(text.toLowerCase()) !== -1
-    );
+    const newData = OPENING_LINES.filter(line => {
+      return (
+        line.numMoves >= filteredMoves &&
+        line.name.toLowerCase().indexOf(inputText.toLowerCase()) !== -1
+      );
+    });
     setFilteredData(newData);
   };
 
@@ -54,6 +70,7 @@ const OpeningScreen = props => {
   };
 
   const handleChangeVolume = id => {
+    if (currentOpeningBook === id) return;
     dispatch(selectVolume(id));
     setIsLoading(true);
   };
@@ -67,11 +84,13 @@ const OpeningScreen = props => {
   };
 
   useEffect(() => {
+    handleFilterData();
     setIsLoading(false);
-  }, [filteredData]);
+  }, [filteredMoves, inputText]);
 
   useEffect(() => {
     setFilteredData(OPENING_LINES);
+    handleFilterData();
     setIsLoading(false);
   }, [OPENING_LINES]);
 
@@ -88,18 +107,18 @@ const OpeningScreen = props => {
           modalText="Added to favorites"
         />
 
-        <View style={styles.buttonContainer}>
+        <View style={styles.buttonContainer}></View>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}>Opening Database</Text>
           <TouchableOpacity
-            style={styles.hideModalButton}
             activeOpacity={0.4}
             onPress={() => {
               props.navigation.navigate("Chessboard");
             }}
           >
-            <Ionicons name="md-close" size={35} />
+            <Ionicons name="ios-close-circle-outline" size={35} />
           </TouchableOpacity>
         </View>
-        <Text style={styles.header}>Opening Database</Text>
 
         <BubbleContainer
           id={openingBookName}
@@ -108,9 +127,10 @@ const OpeningScreen = props => {
 
         <View style={styles.inputContainer}>
           <TextInput
-            placeholder="Search the selected database"
+            placeholder="Search the selected category"
             style={styles.inputTextStyle}
             onChangeText={text => handleChangeText(text)}
+            value={inputText}
           />
         </View>
 
@@ -125,6 +145,7 @@ const OpeningScreen = props => {
           size="large"
           style={styles.loading}
           animating={isLoading}
+          color={Colors.darkBlue}
         />
         <OpeningContainer
           handleChooseOpening={handleChooseOpening}
@@ -148,7 +169,8 @@ const styles = StyleSheet.create({
   header: {
     fontSize: 28,
     marginBottom: 25,
-    fontWeight: "bold"
+    fontWeight: "bold",
+    flex: 1
   },
   line: {
     borderWidth: 0.5,
@@ -178,6 +200,10 @@ const styles = StyleSheet.create({
     position: "absolute",
     top: "50%",
     left: "50%"
+  },
+  headerContainer: {
+    flexDirection: "row",
+    marginVertical: 10
   }
 });
 

@@ -12,7 +12,7 @@ import {
   pieceMove,
   selectPiece,
   resetPieces,
-  didCastle,
+  didCastle
 } from "../store/actions/pieces";
 
 let expectedMoveStart;
@@ -43,14 +43,21 @@ const ChessLogic = props => {
     };
   });
 
-
-  
-
+  const isCastleUser = (startingSquare, endingSquare) => {
+    if (
+      (startingSquare === "E1") & (endingSquare === "G1") ||
+      (startingSquare === "E1") & (endingSquare === "C1") ||
+      (startingSquare === "E8") & (endingSquare === "G8") ||
+      (startingSquare === "E8") & (endingSquare === "C8")
+    ) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   const lineFinished = () => {
     props.handleModalVisible();
-
-
 
     dispatch(resetPieces());
 
@@ -103,7 +110,23 @@ const ChessLogic = props => {
         .filter(square => square.id === id.start)[0]
         .piece.substring(1, 2) === "k";
 
-    isKingMove && dispatch(didCastle(castleLogic(id.start, id.end)));
+    const isCastleComputer = () => {
+      if (
+        (id.start === "E1") & (id.end === "G1") ||
+        (id.start === "E1") & (id.end === "C1") ||
+        (id.start === "E8") & (id.end === "G8") ||
+        (id.start === "E8") & (id.end === "C8")
+      ) {
+        return true;
+      } else {
+        return false;
+      }
+    };
+
+    if (isKingMove && isCastleComputer()) {
+      dispatch(didCastle(castleLogic(id.start, id.end)));
+    }
+
     setUserMoveComplete(false);
 
     setTimeout(() => {
@@ -167,8 +190,9 @@ const ChessLogic = props => {
       didCapture ? playSound(captureSound) : playSound(moveSound);
 
       dispatch(pieceMove(squarePressed));
-      isKingMove &&
+      if (isKingMove && isCastleUser(startingSquare, endingSquare)) {
         dispatch(didCastle(castleLogic(startingSquare, endingSquare)));
+      }
 
       setTimeout(() => {
         if (!_.isUndefined(notationLogic[moveNumber + 1])) {
