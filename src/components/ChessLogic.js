@@ -41,18 +41,11 @@ const ChessLogic = props => {
       piece: currentPosition.filter(square => square.id == item.id)[0].piece
   }));
 
-  const isCastleUser = (startingSquare, endingSquare) => {
-    if (
-      (startingSquare === "E1") & (endingSquare === "G1") ||
-      (startingSquare === "E1") & (endingSquare === "C1") ||
-      (startingSquare === "E8") & (endingSquare === "G8") ||
-      (startingSquare === "E8") & (endingSquare === "C8")
-    ) {
-      return true;
-    } else {
-      return false;
-    }
-  };
+  const isCastleUser = (startingSquare, endingSquare) =>
+    (startingSquare === "E1") & (endingSquare === "G1") ||
+    (startingSquare === "E1") & (endingSquare === "C1") ||
+    (startingSquare === "E8") & (endingSquare === "G8") ||
+    (startingSquare === "E8") & (endingSquare === "C8");
 
   const lineFinished = () => {
     props.handleModalVisible();
