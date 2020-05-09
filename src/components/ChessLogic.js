@@ -36,12 +36,10 @@ const ChessLogic = props => {
   const captureSound = "captureSound";
   const wrongMoveSound = "wrongMoveSound";
 
-  const currentBoardLayout = BOARDLAYOUT.map(item => {
-    return {
+  const currentBoardLayout = BOARDLAYOUT.map(item => ({
       ...item,
       piece: currentPosition.filter(square => square.id == item.id)[0].piece
-    };
-  });
+  }));
 
   const isCastleUser = (startingSquare, endingSquare) => {
     if (
