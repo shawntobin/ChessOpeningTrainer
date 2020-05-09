@@ -42,10 +42,10 @@ const ChessLogic = props => {
   }));
 
   const isCastleUser = (startingSquare, endingSquare) =>
-    (startingSquare === "E1") & (endingSquare === "G1") ||
-    (startingSquare === "E1") & (endingSquare === "C1") ||
-    (startingSquare === "E8") & (endingSquare === "G8") ||
-    (startingSquare === "E8") & (endingSquare === "C8");
+    (startingSquare === "E1") && (endingSquare === "G1") ||
+    (startingSquare === "E1") && (endingSquare === "C1") ||
+    (startingSquare === "E8") && (endingSquare === "G8") ||
+    (startingSquare === "E8") && (endingSquare === "C8");
 
   const lineFinished = () => {
     props.handleModalVisible();
