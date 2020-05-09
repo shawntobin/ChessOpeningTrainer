@@ -37,15 +37,15 @@ const ChessLogic = props => {
   const wrongMoveSound = "wrongMoveSound";
 
   const currentBoardLayout = BOARDLAYOUT.map(item => ({
-      ...item,
-      piece: currentPosition.filter(square => square.id == item.id)[0].piece
+    ...item,
+    piece: currentPosition.filter(square => square.id == item.id)[0].piece
   }));
 
   const isCastleUser = (startingSquare, endingSquare) =>
-    (startingSquare === "E1") && (endingSquare === "G1") ||
-    (startingSquare === "E1") && (endingSquare === "C1") ||
-    (startingSquare === "E8") && (endingSquare === "G8") ||
-    (startingSquare === "E8") && (endingSquare === "C8");
+    (startingSquare === "E1" && endingSquare === "G1") ||
+    (startingSquare === "E1" && endingSquare === "C1") ||
+    (startingSquare === "E8" && endingSquare === "G8") ||
+    (startingSquare === "E8" && endingSquare === "C8");
 
   const lineFinished = () => {
     props.handleModalVisible();
@@ -102,10 +102,10 @@ const ChessLogic = props => {
         .piece.substring(1, 2) === "k";
 
     const isCastleComputer =
-      (id.start === "E1") && (id.end === "G1") ||
-      (id.start === "E1") && (id.end === "C1") ||
-      (id.start === "E8") && (id.end === "G8") ||
-      (id.start === "E8") && (id.end === "C8");
+      (id.start === "E1" && id.end === "G1") ||
+      (id.start === "E1" && id.end === "C1") ||
+      (id.start === "E8" && id.end === "G8") ||
+      (id.start === "E8" && id.end === "C8");
 
     if (isKingMove && isCastleComputer) {
       dispatch(didCastle(castleLogic(id.start, id.end)));

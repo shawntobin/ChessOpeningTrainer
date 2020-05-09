@@ -73,13 +73,14 @@ const Chessboard = props => {
 
   return (
     <View style={styles.container}>
-      letters.map(letter =>
+      {letters.map(letter =>
         <View key={letter} style={styles.columnContainer}>
-          boardLayout
+          {boardLayout
             .filter(sq => sq.file <= 8 && sq.rank == letter)
             .map(square)
+          }
         </View>
-      )
+      )}
     </View>
   );
 };
