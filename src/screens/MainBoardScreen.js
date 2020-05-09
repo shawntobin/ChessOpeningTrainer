@@ -8,6 +8,7 @@ import ChessLogic from "../components/ChessLogic";
 import PopupModal from "./PopupModal";
 import FavoriteStar from "../components/FavoriteStar";
 import _ from "lodash";
+import { Audio } from "expo-av";
 
 const MainBoardScreen = props => {
 //  const OPENING_LINES = useSelector(state => state.opening.openingBook);
@@ -17,6 +18,8 @@ const MainBoardScreen = props => {
 
   const lineId = useSelector(state => state.opening.selectedOpening);
   const moveNumber = useSelector(state => state.board.moveNumber);
+
+  const sound = new Audio.Sound();
 
   const favoriteOpenings = useSelector(state => state.playlist.playlist);
 
@@ -117,6 +120,7 @@ const MainBoardScreen = props => {
         <ChessLogic
           handleModalVisible={handleLineFinish}
           pieceColor={blackOrWhite}
+          sound={sound}
         />
       </View>
 <ScrollView
