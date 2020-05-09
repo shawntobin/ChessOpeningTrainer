@@ -32,6 +32,7 @@ const ChessLogic = props => {
   const notation = useSelector(state => state.settings.notationOverlay);
   const dispatch = useDispatch();
 
+  const sound = props.sound;
   const moveSound = "moveSound";
   const captureSound = "captureSound";
   const wrongMoveSound = "wrongMoveSound";
@@ -92,7 +93,7 @@ const ChessLogic = props => {
       currentPosition.filter(square => square.id === id.end)[0].piece.length ===
       2;
 
-    didCapture ? playSound(captureSound) : playSound(moveSound);
+    didCapture ? playSound(sound, captureSound) : playSound(sound, moveSound);
     dispatch(selectPiece(id.start));
     dispatch(pieceMove(id.end));
 
@@ -153,7 +154,7 @@ const ChessLogic = props => {
         expectedMoveEnd = notationLogic[moveNumber].end;
 
         dispatch(selectPiece(null));
-        playSound(wrongMoveSound);
+        playSound(sound, wrongMoveSound);
 
         return;
       }
@@ -171,7 +172,7 @@ const ChessLogic = props => {
           .filter(square => square.id === selectedPiece)[0]
           .piece.substring(1, 2) === "k";
 
-      didCapture ? playSound(captureSound) : playSound(moveSound);
+      didCapture ? playSound(sound, captureSound) : playSound(sound, moveSound);
 
       dispatch(pieceMove(squarePressed));
       if (isKingMove && isCastleUser(startingSquare, endingSquare)) {
