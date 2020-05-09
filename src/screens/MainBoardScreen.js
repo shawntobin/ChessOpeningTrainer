@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { View, Text, StyleSheet, Modal, TouchableOpacity } from "react-native";
+import { View, Text, StyleSheet, Modal, TouchableOpacity, ScrollView } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import { resetPieces } from "../store/actions/pieces";
@@ -10,7 +10,7 @@ import FavoriteStar from "../components/FavoriteStar";
 import _ from "lodash";
 
 const MainBoardScreen = props => {
-  const OPENING_LINES = useSelector(state => state.opening.openingBook);
+//  const OPENING_LINES = useSelector(state => state.opening.openingBook);
   const [favoritesModalVisible, setFavoritesModalVisible] = useState(false);
   const [blackOrWhite, setBlackOrWhite] = useState("w");
   const [lineFinishModalVisible, setLineFinishModalVisible] = useState(false);
@@ -20,7 +20,10 @@ const MainBoardScreen = props => {
 
   const favoriteOpenings = useSelector(state => state.playlist.playlist);
 
-  const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
+//  const lineData = OPENING_LINES.filter(line => line.volId === lineId)[0];
+
+  const lineData = useSelector(state => state.opening.openingBook).filter(line => line.volId === lineId)[0];
+
   const dispatch = useDispatch();
 
   const isFavOpening = favoriteOpenings.filter(
@@ -116,10 +119,13 @@ const MainBoardScreen = props => {
           pieceColor={blackOrWhite}
         />
       </View>
-
+<ScrollView
+style={{paddingBottom: 20}}
+>
       <View style={styles.moveContainer}>
-        {currentLineMovesArray.map(move => {
-          if (move == activeMove) {
+        {currentLineMovesArray.map((move, index) => {
+          //if (move === activeMove) {
+            if (moveNumber-1 === index) {
             return (
               <Text
                 key={Math.random()}
@@ -137,7 +143,7 @@ const MainBoardScreen = props => {
           }
         })}
       </View>
-
+      </ScrollView>
       <Modal
         animationType="slide"
         transparent={true}
@@ -161,7 +167,7 @@ const MainBoardScreen = props => {
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 40,
+    marginTop: 22,
     backgroundColor: "#fafafa",
     height: "100%",
     flex: 1
@@ -175,8 +181,8 @@ const styles = StyleSheet.create({
   },
   contentBar: {
     flexDirection: "row",
-    marginTop: 10,
-    marginBottom: 25,
+    marginTop: 26,
+    marginBottom: 30,
     marginHorizontal: 20,
     alignItems: "center"
   },
@@ -188,10 +194,10 @@ const styles = StyleSheet.create({
   },
   lineText: {
     fontSize: 12,
-    width: "100%"
+    width: 300
   },
   modalView: {
-     margin: 20,
+    margin: 20,
     width: "60%",
     backgroundColor: "white",
     borderRadius: 20,
@@ -237,7 +243,7 @@ const styles = StyleSheet.create({
     alignItems: "center",
     justifyContent: "flex-start",
     marginTop: 20,
-    marginHorizontal: 20,
+    marginHorizontal: 15,
     flexDirection: "row",
     flexWrap: "wrap",
     height: 36

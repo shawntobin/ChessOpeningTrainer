@@ -7,10 +7,10 @@ import VOLUME_D from "../../data/openings/VolumeD";
 import VOLUME_E from "../../data/openings/VolumeE";
 
 const initialState = {
-  openingBookName: "VOLUME_A",
-  selectedOpening: 7,
-  movesFilter: 20,
-  openingBook: VOLUME_A
+  openingBookName: "VOLUME_B",
+  selectedOpening: 5,
+  movesFilter: 15,
+  openingBook: VOLUME_B
 };
 
 // saved openings need to specify volume

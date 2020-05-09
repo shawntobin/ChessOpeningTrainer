@@ -39,10 +39,10 @@ const OpeningScreen = props => {
   const dispatch = useDispatch();
 
   const handleSliderChange = moves => {
-    setIsLoading(true)
+    setIsLoading(true);
 
     setTimeout(() => {
-      setIsLoading(false)
+      setIsLoading(false);
     }, 4000);
 
     setFilteredMoves(moves);
@@ -57,7 +57,8 @@ const OpeningScreen = props => {
     const newData = OPENING_LINES.filter(line => {
       return (
         line.numMoves >= filteredMoves &&
-        line.name.toLowerCase().indexOf(inputText.toLowerCase()) !== -1
+        (line.shortName.toLowerCase().indexOf(inputText.toLowerCase()) !== -1 ||
+          line.name.toLowerCase().indexOf(inputText.toLowerCase()) !== -1)
       );
     });
     setFilteredData(newData);
@@ -145,7 +146,7 @@ const OpeningScreen = props => {
           size="large"
           style={styles.loading}
           animating={isLoading}
-          color={Colors.darkBlue}
+          // color={Colors.darkBlue}
         />
         <OpeningContainer
           handleChooseOpening={handleChooseOpening}

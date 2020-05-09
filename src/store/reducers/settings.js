@@ -1,10 +1,8 @@
 import { TOGGLE_NOTATION, CHANGE_SQUARE_COLOR } from "../actions/settings";
 
-import Colors from "../../constants/Colors";
-
 const initialState = {
-  notationOverlay: true,
-  darkSquareColor: Colors.dark
+  notationOverlay: false,
+  darkSquareColor: 1
 };
 
 export default (state = initialState, action) => {
@@ -20,6 +18,6 @@ export default (state = initialState, action) => {
     }
 
     default:
-      return state;
+      return state
   }
 };

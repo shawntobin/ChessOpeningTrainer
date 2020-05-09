@@ -1,3 +1,4 @@
+/*
 import VOLUME_A from "./VolumeA";
 import VOLUME_B from "./VolumeB";
 import VOLUME_C from "./VolumeC";
@@ -13,3 +14,4 @@ const ALL_OPENINGS = [
 ];
 
 export default ALL_OPENINGS;
+*/

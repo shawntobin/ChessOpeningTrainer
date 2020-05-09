@@ -1,12 +1,13 @@
 import React, { useState } from "react";
 import { AsyncStorage } from "react-native";
 import { Provider } from "react-redux";
-import ReduxThunk from 'redux-thunk'
+import ReduxThunk from "redux-thunk";
 import { AppLoading } from "expo";
 import { Asset } from "expo-asset";
 import { PersistGate } from "redux-persist/integration/react";
 import { createStore, applyMiddleware } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
+
 
 import AppNavigator from "./src/navigation/AppNavigator";
 import rootReducer from "./src/store/reducers/index";
@@ -23,6 +24,7 @@ let persistor = persistStore(store);
 
 export default function App() {
   const [isReady, setIsReady] = useState(false);
+
 
   const _cacheResourcesAsync = async () => {
     const images = [
