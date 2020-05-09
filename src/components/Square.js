@@ -28,31 +28,43 @@ const Square = props => {
   };
 
   const getPiece = piece => {
-    switch (piece) {
-      case "wp":
-        return require("../../assets/piecesPNG/wp.png");
-      case "wk":
-        return require("../../assets/piecesPNG/wk.png");
-      case "wq":
-        return require("../../assets/piecesPNG/wq.png");
-      case "wr":
-        return require("../../assets/piecesPNG/wr.png");
-      case "wb":
-        return require("../../assets/piecesPNG/wb.png");
-      case "wn":
-        return require("../../assets/piecesPNG/wn.png");
-      case "bp":
-        return require("../../assets/piecesPNG/bp.png");
-      case "bk":
-        return require("../../assets/piecesPNG/bk.png");
-      case "bq":
-        return require("../../assets/piecesPNG/bq.png");
-      case "br":
-        return require("../../assets/piecesPNG/br.png");
-      case "bb":
-        return require("../../assets/piecesPNG/bb.png");
-      case "bn":
-        return require("../../assets/piecesPNG/bn.png");
+    const head = piece[0];
+    const tail = piece[1];
+
+    const piecesPNG = "../../assets/piecesPNG";
+
+    switch (head) {
+      case "w":
+        switch (tail) {
+          case "p":
+            return require(`${piecesPng}/wp.png`);
+          case "k":
+            return require(`${piecesPng}/wk.png`);
+          case "q":
+            return require(`${piecesPng}/wq.png`);
+          case "r":
+            return require(`${piecesPng}/wr.png`);
+          case "b":
+            return require(`${piecesPng}/wb.png`);
+          case "n":
+            return require(`${piecesPng}/wn.png`);
+        }
+
+      case "b":
+        switch (tail) {
+          case "p":
+            return require(`${piecesPng}/bp.png`);
+          case "k":
+            return require(`${piecesPng}/bk.png`);
+          case "q":
+            return require(`${piecesPng}/bq.png`);
+          case "r":
+            return require(`${piecesPng}/br.png`);
+          case "b":
+            return require(`${piecesPng}/bb.png`);
+          case "n":
+            return require(`${piecesPng}/bn.png`);
+        }
     }
   };
 
