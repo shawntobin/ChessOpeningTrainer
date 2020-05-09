@@ -48,13 +48,11 @@ const Chessboard = props => {
 
   return (
     <View style={styles.container}>
-      {letters.map(letter => {
-        return (
+      {letters.map(letter =>
           <View key={letter} style={styles.columnContainer}>
             {boardLayout
               .filter(square => square.file <= 8 && square.rank == letter)
               .map(square => {
-                return (
                   <Square
                     notation={props.notation}
                     key={square.id}
@@ -87,10 +85,8 @@ const Chessboard = props => {
                     }
                     handleSquarePress={square => handleSquarePress(square)}
                   />
-                );
               })}
           </View>
-        );
       })}
     </View>
   );
