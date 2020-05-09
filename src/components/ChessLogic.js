@@ -101,20 +101,13 @@ const ChessLogic = props => {
         .filter(square => square.id === id.start)[0]
         .piece.substring(1, 2) === "k";
 
-    const isCastleComputer = () => {
-      if (
-        (id.start === "E1") & (id.end === "G1") ||
-        (id.start === "E1") & (id.end === "C1") ||
-        (id.start === "E8") & (id.end === "G8") ||
-        (id.start === "E8") & (id.end === "C8")
-      ) {
-        return true;
-      } else {
-        return false;
-      }
-    };
+    const isCastleComputer =
+      (id.start === "E1") && (id.end === "G1") ||
+      (id.start === "E1") && (id.end === "C1") ||
+      (id.start === "E8") && (id.end === "G8") ||
+      (id.start === "E8") && (id.end === "C8");
 
-    if (isKingMove && isCastleComputer()) {
+    if (isKingMove && isCastleComputer) {
       dispatch(didCastle(castleLogic(id.start, id.end)));
     }
 
