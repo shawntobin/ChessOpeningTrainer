@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View } from "react-native";
 import _ from "lodash";
@@ -31,7 +31,6 @@ const ChessLogic = props => {
   const moveNumber = useSelector(state => state.board.moveNumber);
   const notation = useSelector(state => state.settings.notationOverlay);
   const dispatch = useDispatch();
-
   const sound = props.sound;
   const moveSound = "moveSound";
   const captureSound = "captureSound";
@@ -50,9 +49,7 @@ const ChessLogic = props => {
 
   const lineFinished = () => {
     props.handleModalVisible();
-
     dispatch(resetPieces());
-
     setUserMoveComplete(false);
     setAllowUserMove(true);
   };
@@ -69,19 +66,13 @@ const ChessLogic = props => {
 
   useEffect(() => {
     dispatch(resetPieces());
-
-    //(userColor == "b" && moveNumber===0) && computerPieceMove(notationLogic[0])
   }, []);
 
   useEffect(() => {
     if (userMoveComplete) {
       if (_.isUndefined(notationLogic[moveNumber + 1])) {
-        //   Alert.alert("Line complete!");
-        //dispatch(resetPieces());
-        //setUserMoveComplete(false);
         computerPieceMove(notationLogic[moveNumber]);
         setAllowUserMove(false);
-        //setTimeout(lineFinished(), 1000)
       } else {
         computerPieceMove(notationLogic[moveNumber]);
       }
@@ -133,9 +124,7 @@ const ChessLogic = props => {
       }
 
       if (piece.substring(0, 1) !== userColor) return;
-
       if (!allowUserMove) return;
-
       dispatch(selectPiece(squarePressed));
       setMoveStart(false);
     } else {

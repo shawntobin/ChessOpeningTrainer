@@ -13,8 +13,6 @@ const initialState = {
   openingBook: VOLUME_B
 };
 
-// saved openings need to specify volume
-
 export default (state = initialState, action) => {
   switch (action.type) {
     case SELECT_VOLUME: {

@@ -11,7 +11,6 @@ export default (state = initialState, action) => {
     }
     case DELETE_OPENING: {
       return {
-        
         ...state,
         playlist: state.playlist.filter(lines => lines.id !== action.id.id)
       };

@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React from "react";
 import {
   StyleSheet,
   View,
@@ -7,14 +7,11 @@ import {
   Image,
   Text
 } from "react-native";
-
 import Colors from "../constants/Colors";
 
 const squareSize = Dimensions.get("window").width / 8;
 
 const Square = props => {
-  const darkLightSquare = props.squareColor;
-
   const squareColor = () => {
     if (props.expectedMoveStart) return Colors.darkOrange;
     if (props.expectedMoveEnd) return Colors.lightOrange;
@@ -22,14 +19,14 @@ const Square = props => {
     if (props.activeStartSquare) return Colors.highlightWeak;
     if (props.activeDestinationSquare) return Colors.highlightStrong;
 
-    return darkLightSquare;
+    return props.squareColor;
   };
 
   const getPiece = piece => {
     const head = piece[0];
     const tail = piece[1];
 
-    const piecesPng = "../../assets/piecesPNG/"
+    const piecesPng = "../../assets/piecesPNG/";
 
     switch (head) {
       case "w":

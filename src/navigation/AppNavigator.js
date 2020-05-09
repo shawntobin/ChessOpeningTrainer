@@ -5,7 +5,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import MainBoardScreen from "../screens/MainBoardScreen";
 import OpeningScreen from "../screens/OpeningScreen";
 import PlaylistScreen from "../screens/PlaylistScreen";
-import Menu from "../screens/Menu";
 import Settings from "../screens/Settings";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
@@ -14,14 +13,11 @@ const Drawer = createDrawerNavigator();
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Drawer.Navigator
-      
+      <Drawer.Navigator      
         initialRouteName={"Chessboard"}
         drawerStyle={{
-          //backgroundColor: "#c6cbef",
           width: 280,
-          paddingTop: 50,          
-          
+          paddingTop: 50,                    
         }}
       >
         <Drawer.Screen name="Chessboard" component={MainBoardScreen} options={{drawerIcon: config => <FontAwesome5 name="chess" size={30}/>}}/>

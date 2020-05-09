@@ -1,11 +1,10 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
 const FavoriteStar = props => {
-
   return (
-    <View style={styles.container}>
+    <View>
       <TouchableOpacity onPress={() => props.handleStarPress(props.id)}>
         {props.selected ? (
           <Ionicons name="ios-star" size={20} />
@@ -18,7 +17,3 @@ const FavoriteStar = props => {
 };
 
 export default FavoriteStar;
-
-const styles = StyleSheet.create({
-  container: {}
-});

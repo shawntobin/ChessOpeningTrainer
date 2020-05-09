@@ -1,10 +1,10 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { StyleSheet, View } from "react-native";
+import _ from "lodash";
 
 import Square from "./Square";
 import Colors from "../constants/Colors";
-import _ from "lodash";
-import { useSelector } from "react-redux";
 
 const Chessboard = props => {
   const selectedColor = useSelector(state => state.settings.darkSquareColor);
@@ -30,7 +30,7 @@ const Chessboard = props => {
 
   const darkSquare = squareColor(selectedColor);
   const lightSquare = Colors.light;
-
+  
   const activeSquare = useSelector(state => state.board.selectedPiece);
   const destinationSquare = useSelector(state => state.board.destinationSquare);
 

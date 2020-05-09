@@ -1,13 +1,11 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   StyleSheet,
   Text,
   View,
-  TouchableOpacity,
-  ScrollView
+  TouchableOpacity
 } from "react-native";
 import { useSelector, useDispatch } from "react-redux";
-
 import { Ionicons } from "@expo/vector-icons";
 
 import OpeningContainer from "../components/OpeningContainer";
@@ -18,7 +16,6 @@ import { selectVolume } from "../store/actions/opening";
 
 const PlaylistScreen = props => {
   const playlistData = useSelector(state => state.playlist.playlist);
-
   const dispatch = useDispatch();
 
   const handleChooseOpening = id => {

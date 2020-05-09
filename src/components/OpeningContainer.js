@@ -1,19 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import {
   View,
   Text,
   StyleSheet,
   FlatList,
-  ScrollView,
-  TouchableOpacity,
-  Dimensions
+  TouchableOpacity
 } from "react-native";
 
 import _ from "lodash";
 import { Ionicons } from "@expo/vector-icons";
 
 const OpeningContainer = props => {
-
   const renderItem = ({ item }) => {
     return (
       <TouchableOpacity
@@ -29,7 +26,7 @@ const OpeningContainer = props => {
             <Text style={styles.itemDesc} numberOfLines={1}>
               {item.shortName}
             </Text>
-            <Text style={{...styles.itemDesc}} numberOfLines={1}>
+            <Text style={{ ...styles.itemDesc }} numberOfLines={1}>
               {item.moves}
             </Text>
           </View>
@@ -52,7 +49,7 @@ const OpeningContainer = props => {
       return (
         <View style={{ flex: 0 }}>
           <TouchableOpacity onPress={() => props.buttonPush(id)}>
-            <Ionicons name="ios-add-circle-outline" size={30} color='#718aa3'/>
+            <Ionicons name="ios-add-circle-outline" size={30} color="#718aa3" />
           </TouchableOpacity>
         </View>
       );
@@ -60,7 +57,11 @@ const OpeningContainer = props => {
       if (props.showRemoveButtons) {
         return (
           <TouchableOpacity onPress={() => props.buttonPush(id)}>
-            <Ionicons name="ios-remove-circle-outline" size={30} color='#718aa3' />
+            <Ionicons
+              name="ios-remove-circle-outline"
+              size={30}
+              color="#718aa3"
+            />
           </TouchableOpacity>
         );
       }
@@ -80,7 +81,7 @@ const OpeningContainer = props => {
           data={props.filteredData}
           extraData={props.filteredData}
           renderItem={renderItem}
-          onEndReachedThreshold={.7}
+          onEndReachedThreshold={0.7}
           keyExtractor={item => item.id.toString()}
           removeClippedSubviews
         />
@@ -96,7 +97,7 @@ const styles = StyleSheet.create({
   itemDesc: {
     fontSize: 12,
     width: "90%",
-    color: '#474747'
+    color: "#474747"
   },
   name: {
     marginVertical: 10,

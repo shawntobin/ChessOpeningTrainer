@@ -8,7 +8,6 @@ import { PersistGate } from "redux-persist/integration/react";
 import { createStore, applyMiddleware } from "redux";
 import { persistStore, persistReducer } from "redux-persist";
 
-
 import AppNavigator from "./src/navigation/AppNavigator";
 import rootReducer from "./src/store/reducers/index";
 
@@ -25,21 +24,22 @@ let persistor = persistStore(store);
 export default function App() {
   const [isReady, setIsReady] = useState(false);
 
+  const piecesPng = "./assets/piecesPNG/";
 
   const _cacheResourcesAsync = async () => {
     const images = [
-      require("./assets/piecesPNG/wp.png"),
-      require("./assets/piecesPNG/wk.png"),
-      require("./assets/piecesPNG/wq.png"),
-      require("./assets/piecesPNG/wr.png"),
-      require("./assets/piecesPNG/wb.png"),
-      require("./assets/piecesPNG/wn.png"),
-      require("./assets/piecesPNG/bp.png"),
-      require("./assets/piecesPNG/bk.png"),
-      require("./assets/piecesPNG/bq.png"),
-      require("./assets/piecesPNG/br.png"),
-      require("./assets/piecesPNG/bb.png"),
-      require("./assets/piecesPNG/bn.png")
+      require(`${piecesPng}wp.png`),
+      require(`${piecesPng}wk.png`),
+      require(`${piecesPng}wq.png`),
+      require(`${piecesPng}wr.png`),
+      require(`${piecesPng}wb.png`),
+      require(`${piecesPng}wn.png`),
+      require(`${piecesPng}bp.png`),
+      require(`${piecesPng}bk.png`),
+      require(`${piecesPng}bq.png`),
+      require(`${piecesPng}br.png`),
+      require(`${piecesPng}bb.png`),
+      require(`${piecesPng}bn.png`)
     ];
     const cacheImages = images.map(image => {
       return Asset.fromModule(image).downloadAsync();

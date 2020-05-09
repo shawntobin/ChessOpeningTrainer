@@ -1,20 +1,16 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity, Switch } from "react-native";
 import SquareColor from "../components/SquareColor";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { toggleNotation, changeSquareColor } from "../store/actions/settings";
 
-
 const Settings = props => {
-  //const [selectedColor, setSelectedColor] = useState(1);
-
   const dispatch = useDispatch();
   const notationEnabled = useSelector(state => state.settings.notationOverlay);
   const selectedColor = useSelector(state => state.settings.darkSquareColor);
 
   const handleColorChange = id => {
- //   setSelectedColor(id);
     dispatch(changeSquareColor(id));
   };
 
@@ -41,22 +37,22 @@ const Settings = props => {
         <View style={{ flexDirection: "row" }}>
           <SquareColor
             id={1}
-            onPress={(id) => handleColorChange(id)}
+            onPress={id => handleColorChange(id)}
             selected={selectedColor}
           />
           <SquareColor
             id={2}
-            onPress={(id) => handleColorChange(id)}
+            onPress={id => handleColorChange(id)}
             selected={selectedColor}
           />
           <SquareColor
             id={3}
-            onPress={(id) => handleColorChange(id)}
+            onPress={id => handleColorChange(id)}
             selected={selectedColor}
           />
           <SquareColor
             id={4}
-            onPress={(id) => handleColorChange(id)}
+            onPress={id => handleColorChange(id)}
             selected={selectedColor}
           />
         </View>
@@ -73,13 +69,7 @@ const Settings = props => {
         />
       </View>
       <View style={styles.line} />
-
-
     </View>
-
-
-
-
   );
 };
 
@@ -102,7 +92,7 @@ const styles = StyleSheet.create({
     fontSize: 28,
     marginBottom: 30,
     flex: 1,
-    fontWeight: 'bold'
+    fontWeight: "bold"
   },
   menuItem: {
     fontSize: 18,

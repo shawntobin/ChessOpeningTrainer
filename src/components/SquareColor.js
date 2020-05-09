@@ -1,6 +1,5 @@
 import React from "react";
-import { StyleSheet, Text, View } from "react-native";
-import { TouchableOpacity } from "react-native-gesture-handler";
+import { StyleSheet, View, TouchableOpacity } from "react-native";
 import Colors from "../constants/Colors";
 
 const SquareColor = props => {

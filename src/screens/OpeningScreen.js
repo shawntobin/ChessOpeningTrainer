@@ -15,14 +15,12 @@ import { Ionicons } from "@expo/vector-icons";
 
 import { resetPieces } from "../store/actions/pieces";
 import { selectOpening, selectVolume } from "../store/actions/opening";
-
 import BubbleContainer from "../components/BubbleContainer";
 import SliderContainer from "../components/SliderContainer";
 import OpeningContainer from "../components/OpeningContainer";
-import PopupModal from "../screens/PopupModal";
+import PopupModal from "../components/PopupModal";
 
 import { addOpening } from "../store/actions/playlist";
-import Colors from "../constants/Colors";
 
 const OpeningScreen = props => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -40,7 +38,6 @@ const OpeningScreen = props => {
 
   const handleSliderChange = moves => {
     setIsLoading(true);
-
     setTimeout(() => {
       setIsLoading(false);
     }, 4000);
@@ -146,7 +143,6 @@ const OpeningScreen = props => {
           size="large"
           style={styles.loading}
           animating={isLoading}
-          // color={Colors.darkBlue}
         />
         <OpeningContainer
           handleChooseOpening={handleChooseOpening}
@@ -176,10 +172,6 @@ const styles = StyleSheet.create({
   line: {
     borderWidth: 0.5,
     marginTop: 10
-  },
-  hideModalButton: {
-    height: 30,
-    marginTop: 5
   },
   inputContainer: {
     height: 45,

@@ -1,26 +1,23 @@
-import React, { useState } from "react";
+import React from "react";
 import { StyleSheet, Text, View, TouchableOpacity } from "react-native";
-import Colors from '../constants/Colors'
+import Colors from "../constants/Colors";
 
 const searchBubble = props => {
-  const [selected, setSelected] = useState(false);
-
   const onPress = () => {
     props.onPress(props.id);
   };
 
   return (
-    <TouchableOpacity
-      activeOpacity={0.6}
-      onPress={onPress}
-    >
+    <TouchableOpacity activeOpacity={0.6} onPress={onPress}>
       <View
         style={{
           ...styles.bubble,
           backgroundColor: props.selected ? Colors.darkBlue : "white"
         }}
       >
-        <Text style={{ ...styles.text, color: props.selected ? "white" : "black" }}>
+        <Text
+          style={{ ...styles.text, color: props.selected ? "white" : "black" }}
+        >
           {props.title}
         </Text>
       </View>

@@ -6,7 +6,7 @@ import settings from "./settings";
 
 export default combineReducers({
   board: boardLayout,
-  opening: opening,
+  opening,
   playlist,
   settings
 });
