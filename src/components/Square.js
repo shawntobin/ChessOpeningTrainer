@@ -13,11 +13,9 @@ import Colors from "../constants/Colors";
 const squareSize = Dimensions.get("window").width / 8;
 
 const Square = props => {
-
   const darkLightSquare = props.squareColor;
 
   const squareColor = () => {
-   
     if (props.expectedMoveStart) return Colors.darkOrange;
     if (props.expectedMoveEnd) return Colors.lightOrange;
 
@@ -30,8 +28,6 @@ const Square = props => {
   const getPiece = piece => {
     const head = piece[0];
     const tail = piece[1];
-
-    const piecesPNG = "../../assets/piecesPNG";
 
     switch (head) {
       case "w":
@@ -75,7 +71,7 @@ const Square = props => {
   return (
     <TouchableOpacity activeOpacity={0.8} onPress={() => handlePress(props.id)}>
       <View style={{ ...styles.container, backgroundColor: squareColor() }}>
-        <Image source={getPiece(props.id.piece)} style={styles.image}/>
+        <Image source={getPiece(props.id.piece)} style={styles.image} />
 
         <View style={styles.label}>
           <Text>{props.notation && props.id.piece === "" && props.id.id}</Text>
