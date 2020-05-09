@@ -46,52 +46,40 @@ const Chessboard = props => {
     props.handleSquarePress(square);
   };
 
+  const square = sq =>
+    <Square
+      notation={props.notation}
+      key={sq.id}
+      id={sq}
+      squareColor={ sq.color == "dark" ? darkSquare : lightSquare }
+      activeStartSquare={
+        activeSquare === sq.id &&
+        !_.isNull(activeSquare)
+      }
+      activeDestinationSquare={
+        destinationSquare === sq.id &&
+        !_.isNull(destinationSquare)
+      }
+      expectedMoveStart={
+        props.expectedMoveStart === sq.id &&
+        !_.isNull(props.expectedMoveStart)
+      }
+      expectedMoveEnd={
+        props.expectedMoveEnd === sq.id &&
+        !_.isNull(props.expectedMoveEnd)
+      }
+      handleSquarePress={ handleSquarePress }
+    />
+
   return (
     <View style={styles.container}>
-      {letters.map(letter => {
-        return (
-          <View key={letter} style={styles.columnContainer}>
-            {boardLayout
-              .filter(square => square.file <= 8 && square.rank == letter)
-              .map(square => {
-                return (
-                  <Square
-                    notation={props.notation}
-                    key={square.id}
-                    id={square}
-                    squareColor={
-                      square.color == "dark" ? darkSquare : lightSquare
-                    }
-                    activeStartSquare={
-                      activeSquare === square.id && !_.isNull(activeSquare)
-                        ? true
-                        : false
-                    }
-                    activeDestinationSquare={
-                      destinationSquare === square.id &&
-                      !_.isNull(destinationSquare)
-                        ? true
-                        : false
-                    }
-                    expectedMoveStart={
-                      props.expectedMoveStart === square.id &&
-                      !_.isNull(props.expectedMoveStart)
-                        ? true
-                        : false
-                    }
-                    expectedMoveEnd={
-                      props.expectedMoveEnd === square.id &&
-                      !_.isNull(props.expectedMoveEnd)
-                        ? true
-                        : false
-                    }
-                    handleSquarePress={square => handleSquarePress(square)}
-                  />
-                );
-              })}
-          </View>
-        );
-      })}
+      letters.map(letter =>
+        <View key={letter} style={styles.columnContainer}>
+          boardLayout
+            .filter(sq => sq.file <= 8 && sq.rank == letter)
+            .map(square)
+        </View>
+      )
     </View>
   );
 };
