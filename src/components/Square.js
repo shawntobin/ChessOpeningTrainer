@@ -29,37 +29,39 @@ const Square = props => {
     const head = piece[0];
     const tail = piece[1];
 
+    const piecesPng = "../../assets/piecesPNG/"
+
     switch (head) {
       case "w":
         switch (tail) {
           case "p":
-            return require("../../assets/piecesPNG/wp.png");
+            return require(`${piecesPng}/wp.png`);
           case "k":
-            return require("../../assets/piecesPNG/wk.png");
+            return require(`${piecesPng}/wk.png`);
           case "q":
-            return require("../../assets/piecesPNG/wq.png");
+            return require(`${piecesPng}/wq.png`);
           case "r":
-            return require("../../assets/piecesPNG/wr.png");
+            return require(`${piecesPng}/wr.png`);
           case "b":
-            return require("../../assets/piecesPNG/wb.png");
+            return require(`${piecesPng}/wb.png`);
           case "n":
-            return require("../../assets/piecesPNG/wn.png");
+            return require(`${piecesPng}/wn.png`);
         }
 
       case "b":
         switch (tail) {
           case "p":
-            return require("../../assets/piecesPNG/bp.png");
+            return require(`${piecesPng}/bp.png`);
           case "k":
-            return require("../../assets/piecesPNG/bk.png");
+            return require(`${piecesPng}/bk.png`);
           case "q":
-            return require("../../assets/piecesPNG/bq.png");
+            return require(`${piecesPng}/bq.png`);
           case "r":
-            return require("../../assets/piecesPNG/br.png");
+            return require(`${piecesPng}/br.png`);
           case "b":
-            return require("../../assets/piecesPNG/bb.png");
+            return require(`${piecesPng}/bb.png`);
           case "n":
-            return require("../../assets/piecesPNG/bn.png");
+            return require(`${piecesPng}/bn.png`);
         }
     }
   };
