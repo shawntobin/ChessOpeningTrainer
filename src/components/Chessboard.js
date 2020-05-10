@@ -30,7 +30,7 @@ const Chessboard = props => {
 
   const darkSquare = squareColor(selectedColor);
   const lightSquare = Colors.light;
-  
+
   const activeSquare = useSelector(state => state.board.selectedPiece);
   const destinationSquare = useSelector(state => state.board.destinationSquare);
 
@@ -46,41 +46,34 @@ const Chessboard = props => {
     props.handleSquarePress(square);
   };
 
-  const square = sq =>
+  const square = sq => (
     <Square
       notation={props.notation}
       key={sq.id}
       id={sq}
-      squareColor={ sq.color == "dark" ? darkSquare : lightSquare }
-      activeStartSquare={
-        activeSquare === sq.id &&
-        !_.isNull(activeSquare)
-      }
+      squareColor={sq.color == "dark" ? darkSquare : lightSquare}
+      activeStartSquare={activeSquare === sq.id && !_.isNull(activeSquare)}
       activeDestinationSquare={
-        destinationSquare === sq.id &&
-        !_.isNull(destinationSquare)
+        destinationSquare === sq.id && !_.isNull(destinationSquare)
       }
       expectedMoveStart={
-        props.expectedMoveStart === sq.id &&
-        !_.isNull(props.expectedMoveStart)
+        props.expectedMoveStart === sq.id && !_.isNull(props.expectedMoveStart)
       }
       expectedMoveEnd={
-        props.expectedMoveEnd === sq.id &&
-        !_.isNull(props.expectedMoveEnd)
+        props.expectedMoveEnd === sq.id && !_.isNull(props.expectedMoveEnd)
       }
-      handleSquarePress={ handleSquarePress }
+      handleSquarePress={handleSquarePress}
     />
-
+  );
   return (
     <View style={styles.container}>
-      {letters.map(letter =>
+      {letters.map(letter => (
         <View key={letter} style={styles.columnContainer}>
           {boardLayout
             .filter(sq => sq.file <= 8 && sq.rank == letter)
-            .map(square)
-          }
+            .map(square)}
         </View>
-      )}
+      ))}
     </View>
   );
 };

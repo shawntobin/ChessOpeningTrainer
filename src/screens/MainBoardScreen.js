@@ -7,6 +7,7 @@ import {
   TouchableOpacity,
   ScrollView
 } from "react-native";
+
 import { useSelector, useDispatch } from "react-redux";
 import { Ionicons } from "@expo/vector-icons";
 import { resetPieces } from "../store/actions/pieces";
@@ -119,6 +120,7 @@ const MainBoardScreen = props => {
           sound={sound}
         />
       </View>
+
       <ScrollView style={{ paddingBottom: 20 }}>
         <View style={styles.moveContainer}>
           {currentLineMovesArray.map((move, index) => {
@@ -167,7 +169,7 @@ const styles = StyleSheet.create({
     marginTop: 22,
     backgroundColor: "#fafafa",
     height: "100%",
-    flex: 1
+    flex: 1,
   },
   boardContainer: {
     alignItems: "center"

@@ -9,6 +9,8 @@ import {
 } from "react-native";
 import Colors from "../constants/Colors";
 
+import { getPiece } from "../utils/helperFunctions";
+
 const squareSize = Dimensions.get("window").width / 8;
 
 const Square = props => {
@@ -22,61 +24,27 @@ const Square = props => {
     return props.squareColor;
   };
 
-  const getPiece = piece => {
-    const head = piece[0];
-    const tail = piece[1];
-
-    const piecesPng = "../../assets/piecesPNG/";
-
-    switch (head) {
-      case "w":
-        switch (tail) {
-          case "p":
-            return require(`${piecesPng}/wp.png`);
-          case "k":
-            return require(`${piecesPng}/wk.png`);
-          case "q":
-            return require(`${piecesPng}/wq.png`);
-          case "r":
-            return require(`${piecesPng}/wr.png`);
-          case "b":
-            return require(`${piecesPng}/wb.png`);
-          case "n":
-            return require(`${piecesPng}/wn.png`);
-        }
-
-      case "b":
-        switch (tail) {
-          case "p":
-            return require(`${piecesPng}/bp.png`);
-          case "k":
-            return require(`${piecesPng}/bk.png`);
-          case "q":
-            return require(`${piecesPng}/bq.png`);
-          case "r":
-            return require(`${piecesPng}/br.png`);
-          case "b":
-            return require(`${piecesPng}/bb.png`);
-          case "n":
-            return require(`${piecesPng}/bn.png`);
-        }
-    }
-  };
-
   const handlePress = square => {
     props.handleSquarePress(square.id);
   };
 
   return (
-    <TouchableOpacity activeOpacity={0.8} onPress={() => handlePress(props.id)}>
-      <View style={{ ...styles.container, backgroundColor: squareColor() }}>
-        <Image source={getPiece(props.id.piece)} style={styles.image} />
+    <View>
+      <TouchableOpacity
+        activeOpacity={0.8}
+        onPress={() => handlePress(props.id)}
+      >
+        <View style={{ ...styles.container, backgroundColor: squareColor() }}>
+          <Image source={getPiece(props.id.piece)} style={styles.image} />
 
-        <View style={styles.label}>
-          <Text>{props.notation && props.id.piece === "" && props.id.id}</Text>
+          <View style={styles.label}>
+            <Text>
+              {props.notation && props.id.piece === "" && props.id.id}
+            </Text>
+          </View>
         </View>
-      </View>
-    </TouchableOpacity>
+      </TouchableOpacity>
+    </View>
   );
 };
 
