@@ -3,7 +3,7 @@ import { View, Modal, Text, StyleSheet, TouchableOpacity } from "react-native";
 
 const PopupModal = props => {
   return (
-    <Modal animationType="fade" transparent={true} visible={props.isVisible}>
+    <Modal animationType={props.animationType} transparent={true} visible={props.isVisible}>
       <View style={styles.centeredView}>
         <TouchableOpacity
           onPress={() => props.handleToggleVisible()}

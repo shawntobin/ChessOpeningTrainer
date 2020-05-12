@@ -1,11 +1,11 @@
-import React, { useState, useEffect, useMemo } from "react";
+import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View } from "react-native";
 import _ from "lodash";
 import BOARDLAYOUT from "../data/boardLayout";
 import Chessboard from "../components/Chessboard";
 import { notationData } from "../utils/notationLogic";
-import playSoundImport from "../utils/sound";
+import playSound from "../utils/sound";
 import { castleLogic, isCastle, isKingMove } from "../utils/helperFunctions";
 
 import {
@@ -19,7 +19,6 @@ let expectedMoveStart;
 let expectedMoveEnd;
 
 const ChessLogic = props => {
-  const playSound = useMemo(() => playSoundImport);
 
   const userColor = props.pieceColor;
   const openingBook = useSelector(state => state.opening.openingBook);

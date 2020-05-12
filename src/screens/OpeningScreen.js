@@ -100,6 +100,7 @@ const OpeningScreen = props => {
     <TouchableWithoutFeedback onPress={() => Keyboard.dismiss()}>
       <View style={styles.container}>
         <PopupModal
+          animationType="fade"
           isVisible={modalVisible}
           handleToggleVisible={() => setModalVisible(state => !state)}
           modalText="Added to favorites"
@@ -144,6 +145,7 @@ const OpeningScreen = props => {
           style={styles.loading}
           animating={isLoading}
         />
+        
         <OpeningContainer
           handleChooseOpening={handleChooseOpening}
           filteredData={filteredData}

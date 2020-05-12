@@ -6,7 +6,7 @@ import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 import MainBoardScreen from "../screens/MainBoardScreen";
 import OpeningScreen from "../screens/OpeningScreen";
 import PlaylistScreen from "../screens/PlaylistScreen";
-import Settings from "../screens/Settings";
+import SettingsScreen from "../screens/SettingsScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -43,7 +43,7 @@ const AppNavigator = () => {
         />
         <Drawer.Screen
           name="Settings"
-          component={Settings}
+          component={SettingsScreen}
           options={{
             drawerIcon: config => <Ionicons name="md-settings" size={32} />
           }}

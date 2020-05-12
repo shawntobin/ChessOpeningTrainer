@@ -1,9 +1,8 @@
-import React, { useState } from "react";
+import React, { useState, useMemo } from "react";
 import {
   View,
   Text,
   StyleSheet,
-  Modal,
   TouchableOpacity,
   ScrollView
 } from "react-native";
@@ -16,7 +15,8 @@ import { resetPieces } from "../store/actions/pieces";
 import { addOpening, deleteOpening } from "../store/actions/playlist";
 import ChessLogic from "../components/ChessLogic";
 import PopupModal from "../components/PopupModal";
-import FavoriteStar from "../components/FavoriteStar";
+
+import HeaderContainer from "../components/HeaderContainer";
 
 const MainBoardScreen = props => {
   const [favoritesModalVisible, setFavoritesModalVisible] = useState(false);
@@ -24,7 +24,7 @@ const MainBoardScreen = props => {
   const [lineFinishModalVisible, setLineFinishModalVisible] = useState(false);
   const lineId = useSelector(state => state.opening.selectedOpening);
   const moveNumber = useSelector(state => state.board.moveNumber);
-  const sound = new Audio.Sound();
+
   const favoriteOpenings = useSelector(state => state.playlist.playlist);
   const lineData = useSelector(state => state.opening.openingBook).filter(
     line => line.volId === lineId
@@ -35,6 +35,8 @@ const MainBoardScreen = props => {
   )[0];
   const currentLineMoves = lineData.moves;
   const currentLineMovesArray = currentLineMoves.split(" ");
+
+  const sound = useMemo(() => new Audio.Sound());
 
   const handlePieceColor = () => {
     setBlackOrWhite(state => {
@@ -87,31 +89,13 @@ const MainBoardScreen = props => {
         </TouchableOpacity>
       </View>
 
-      <View style={styles.titleContainer}>
-        <View style={styles.star}>
-          <FavoriteStar
-            id={lineId}
-            selected={isFavOpening}
-            handleStarPress={id => handleSetFavorite(id)}
-          />
-        </View>
-
-        <View style={styles.headerContainer}>
-          <TouchableOpacity
-            onPress={() => props.navigation.navigate("Favorite Openings")}
-          >
-            <Text
-              numberOfLines={1}
-              style={{ ...styles.lineText, fontWeight: "bold" }}
-            >
-              {lineData.name}
-            </Text>
-            <Text numberOfLines={1} style={styles.lineText}>
-              {lineData.shortName}
-            </Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+      <HeaderContainer
+        lineId={lineId}
+        isFavOpening={isFavOpening}
+        lineData={lineData}
+        onPress={() => props.navigation.navigate("Favorite Openings")}
+        onStarPress={handleSetFavorite}
+      />
 
       <View style={styles.boardContainer}>
         <ChessLogic
@@ -143,19 +127,15 @@ const MainBoardScreen = props => {
           })}
         </View>
       </ScrollView>
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={favoritesModalVisible}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Added to favorites</Text>
-          </View>
-        </View>
-      </Modal>
 
       <PopupModal
+        animationType="slide"
+        isVisible={favoritesModalVisible}
+        modalText="Added to favorites"
+      />
+
+      <PopupModal
+        animationType="fade"
         isVisible={lineFinishModalVisible}
         handleToggleVisible={handleLineFinish}
         modalText="Line complete!"
@@ -181,49 +161,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 20,
     alignItems: "center"
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  },
-  lineText: {
-    fontSize: 12,
-    width: 300
-  },
-  modalView: {
-    margin: 20,
-    width: "60%",
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
 
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 3.84,
-    elevation: 5
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
-  },
-  modalText: {
-    textAlign: "center",
-    fontWeight: "bold",
-    fontSize: 16
-  },
-  titleContainer: {
-    marginTop: 0,
-    marginBottom: 15,
-    marginHorizontal: 10,
-    width: "80%",
-    flexDirection: "row"
-  },
   settings: {
     marginHorizontal: 35
   },
@@ -247,15 +185,6 @@ const styles = StyleSheet.create({
   reverse: {
     justifyContent: "flex-start",
     flex: 1
-  },
-  headerContainer: {
-    flexDirection: "column",
-    justifyContent: "center",
-    marginRight: 25
-  },
-  star: {
-    marginRight: 6,
-    justifyContent: "center"
   }
 });
 
