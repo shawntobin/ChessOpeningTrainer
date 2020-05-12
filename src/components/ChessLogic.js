@@ -1,12 +1,12 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useMemo } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View } from "react-native";
 import _ from "lodash";
 import BOARDLAYOUT from "../data/boardLayout";
 import Chessboard from "../components/Chessboard";
 import { notationData } from "../utils/notationLogic";
-import playSound from "../utils/sound";
-import { castleLogic } from "../utils/helperFunctions";
+import playSoundImport from "../utils/sound";
+import { castleLogic, isCastle, isKingMove } from "../utils/helperFunctions";
 
 import {
   pieceMove,
@@ -19,6 +19,8 @@ let expectedMoveStart;
 let expectedMoveEnd;
 
 const ChessLogic = props => {
+  const playSound = useMemo(() => playSoundImport);
+
   const userColor = props.pieceColor;
   const openingBook = useSelector(state => state.opening.openingBook);
   const openingLine = useSelector(state => state.opening.selectedOpening);
@@ -40,12 +42,6 @@ const ChessLogic = props => {
     ...item,
     piece: currentPosition.filter(square => square.id == item.id)[0].piece
   }));
-
-  const isCastleUser = (startingSquare, endingSquare) =>
-    (startingSquare === "E1" && endingSquare === "G1") ||
-    (startingSquare === "E1" && endingSquare === "C1") ||
-    (startingSquare === "E8" && endingSquare === "G8") ||
-    (startingSquare === "E8" && endingSquare === "C8");
 
   const lineFinished = () => {
     props.handleModalVisible();
@@ -79,50 +75,22 @@ const ChessLogic = props => {
     }
   }, [userMoveComplete]);
 
-  const computerPieceMove = id => {
-    const didCapture =
-      currentPosition.filter(square => square.id === id.end)[0].piece.length ===
-      2;
-
-    didCapture ? playSound(sound, captureSound) : playSound(sound, moveSound);
-    dispatch(selectPiece(id.start));
-    dispatch(pieceMove(id.end));
-
-    const isKingMove =
-      currentPosition
-        .filter(square => square.id === id.start)[0]
-        .piece.substring(1, 2) === "k";
-
-    const isCastleComputer =
-      (id.start === "E1" && id.end === "G1") ||
-      (id.start === "E1" && id.end === "C1") ||
-      (id.start === "E8" && id.end === "G8") ||
-      (id.start === "E8" && id.end === "C8");
-
-    if (isKingMove && isCastleComputer) {
-      dispatch(didCastle(castleLogic(id.start, id.end)));
-    }
-
-    setUserMoveComplete(false);
-
-    setTimeout(() => {
-      if (_.isUndefined(notationLogic[moveNumber + 1])) {
-        lineFinished();
-      }
-    }, 1000);
-  };
-
-  const handleMove = squarePressed => {
+  const userPieceMove = squarePressed => {
     expectedMoveStart = null;
     expectedMoveEnd = null;
+    const startingSquare = notationLogic[moveNumber].start;
+    const endingSquare = notationLogic[moveNumber].end;
     const piece = currentPosition.filter(
       square => square.id === squarePressed
     )[0].piece;
+
+    // check if blank square
     if (moveStart) {
       if (!piece) {
         return;
       }
 
+      // check if piece is user's, and that it's the user's turn
       if (piece.substring(0, 1) !== userColor) return;
       if (!allowUserMove) return;
       dispatch(selectPiece(squarePressed));
@@ -134,9 +102,7 @@ const ChessLogic = props => {
         return;
       }
 
-      const startingSquare = notationLogic[moveNumber].start;
-      const endingSquare = notationLogic[moveNumber].end;
-
+      // check if the move follows the selected opening sequence
       if (selectedPiece !== startingSquare || squarePressed !== endingSquare) {
         setMoveStart(true);
         expectedMoveStart = notationLogic[moveNumber].start;
@@ -147,8 +113,8 @@ const ChessLogic = props => {
 
         return;
       }
-      expectedMoveStart = null;
-      expectedMoveEnd = null;
+
+      // all checks now complete so move is valid
 
       setMoveStart(true);
 
@@ -156,18 +122,19 @@ const ChessLogic = props => {
         currentPosition.filter(square => square.id === endingSquare)[0].piece
           .length === 2;
 
-      const isKingMove =
-        currentPosition
-          .filter(square => square.id === selectedPiece)[0]
-          .piece.substring(1, 2) === "k";
-
       didCapture ? playSound(sound, captureSound) : playSound(sound, moveSound);
 
       dispatch(pieceMove(squarePressed));
-      if (isKingMove && isCastleUser(startingSquare, endingSquare)) {
+
+      // executed when move is castling
+      if (
+        isKingMove(currentPosition, selectedPiece) &&
+        isCastle(startingSquare, endingSquare)
+      ) {
         dispatch(didCastle(castleLogic(startingSquare, endingSquare)));
       }
 
+      // executed when line has completed successfully
       setTimeout(() => {
         if (!_.isUndefined(notationLogic[moveNumber + 1])) {
           setUserMoveComplete(true);
@@ -183,12 +150,33 @@ const ChessLogic = props => {
     }
   };
 
+  const computerPieceMove = id => {
+    const didCapture =
+      currentPosition.filter(square => square.id === id.end)[0].piece.length ===
+      2;
+
+    didCapture ? playSound(sound, captureSound) : playSound(sound, moveSound);
+    dispatch(selectPiece(id.start));
+    dispatch(pieceMove(id.end));
+
+    if (isKingMove(currentPosition, id.start) && isCastle(id.start, id.end)) {
+      dispatch(didCastle(castleLogic(id.start, id.end)));
+    }
+
+    setUserMoveComplete(false);
+    setTimeout(() => {
+      if (_.isUndefined(notationLogic[moveNumber + 1])) {
+        lineFinished();
+      }
+    }, 1000);
+  };
+
   return (
     <View>
       <Chessboard
         activeSquare={selectedPiece}
         boardLayout={currentBoardLayout}
-        handleSquarePress={handleMove}
+        handleSquarePress={userPieceMove}
         boardOrientation={userColor}
         expectedMoveStart={expectedMoveStart}
         expectedMoveEnd={expectedMoveEnd}

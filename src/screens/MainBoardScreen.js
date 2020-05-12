@@ -9,14 +9,14 @@ import {
 } from "react-native";
 
 import { useSelector, useDispatch } from "react-redux";
+import { Audio } from "expo-av";
+import _ from "lodash";
 import { Ionicons } from "@expo/vector-icons";
 import { resetPieces } from "../store/actions/pieces";
 import { addOpening, deleteOpening } from "../store/actions/playlist";
 import ChessLogic from "../components/ChessLogic";
 import PopupModal from "../components/PopupModal";
 import FavoriteStar from "../components/FavoriteStar";
-import _ from "lodash";
-import { Audio } from "expo-av";
 
 const MainBoardScreen = props => {
   const [favoritesModalVisible, setFavoritesModalVisible] = useState(false);
@@ -169,7 +169,7 @@ const styles = StyleSheet.create({
     marginTop: 22,
     backgroundColor: "#fafafa",
     height: "100%",
-    flex: 1,
+    flex: 1
   },
   boardContainer: {
     alignItems: "center"

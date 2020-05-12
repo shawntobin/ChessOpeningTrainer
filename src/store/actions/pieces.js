@@ -8,9 +8,10 @@ export const didCastle = id => {
 };
 
 export const pieceMove = id => {
-  return { type: PIECE_MOVE, id: id };
+  return dispatch => {
+  dispatch({ type: PIECE_MOVE, id: id });
 };
-
+}
 export const selectPiece = id => {
   return { type: SELECT_PIECE, id: id };
 };

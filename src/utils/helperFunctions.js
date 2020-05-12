@@ -9,6 +9,23 @@ export const castleLogic = (startSquare, endSquare) => {
     return { piece: "br", start: "A8", end: "D8" };
 };
 
+export const isCastle = (startingSquare, endingSquare) =>
+  (startingSquare === "E1" && endingSquare === "G1") ||
+  (startingSquare === "E1" && endingSquare === "C1") ||
+  (startingSquare === "E8" && endingSquare === "G8") ||
+  (startingSquare === "E8" && endingSquare === "C8");
+
+export const isKingMove = async (currentPosition, startingSquare) => {
+  (await currentPosition
+    .filter(square => square.id === startingSquare)[0]
+    .piece.substring(1, 2)) === "k";
+};
+
+export const didCapture = async (currentPosition, endingSquare) => {
+  (await currentPosition.filter(square => square.id === endingSquare)[0].piece
+    .length) === 2;
+};
+
 export const getPiece = piece => {
   const head = piece[0];
   const tail = piece[1];

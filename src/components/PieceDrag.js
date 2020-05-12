@@ -18,11 +18,12 @@ const PieceDrag = props => {
       });
     },
     onPanResponderMove: Animated.event([null, { dx: pan.x, dy: pan.y }]),
+
     onPanResponderRelease: () => {
       pan.flattenOffset();
     },
     onPanResponderEnd: () => {
-      setPieceVisible(0);
+      setPieceVisible(1);
     }
   });
 
@@ -37,7 +38,7 @@ const PieceDrag = props => {
         <View>
           <Image
             source={getPiece(props.piece)}
-            style={{opacity: pieceVisible }}
+            style={{ opacity: pieceVisible }}
           />
         </View>
       </Animated.View>
