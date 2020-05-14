@@ -55,7 +55,8 @@ const OpeningScreen = props => {
       return (
         line.numMoves >= filteredMoves &&
         (line.shortName.toLowerCase().indexOf(inputText.toLowerCase()) !== -1 ||
-          line.name.toLowerCase().indexOf(inputText.toLowerCase()) !== -1)
+          line.name.toLowerCase().indexOf(inputText.toLowerCase()) !== -1 ||
+          line.moves.toLowerCase().indexOf(inputText.toLowerCase()) !== -1 )
       );
     });
     setFilteredData(newData);

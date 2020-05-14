@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from "react";
+import React, { useState } from "react";
 import {
   View,
   Text,
@@ -36,7 +36,7 @@ const MainBoardScreen = props => {
   const currentLineMoves = lineData.moves;
   const currentLineMovesArray = currentLineMoves.split(" ");
 
-  const sound = useMemo(() => new Audio.Sound());
+  const sound = new Audio.Sound();
 
   const handlePieceColor = () => {
     setBlackOrWhite(state => {
