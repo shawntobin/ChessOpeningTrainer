@@ -7,6 +7,7 @@ import MainBoardScreen from "../screens/MainBoardScreen";
 import OpeningScreen from "../screens/OpeningScreen";
 import PlaylistScreen from "../screens/PlaylistScreen";
 import SettingsScreen from "../screens/SettingsScreen";
+import CategoriesScreen from "../screens/CategoriesScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -25,6 +26,15 @@ const AppNavigator = () => {
           component={MainBoardScreen}
           options={{
             drawerIcon: config => <FontAwesome5 name="chess" size={30} />
+          }}
+        />
+        <Drawer.Screen
+          name="Popular Openings"
+          component={CategoriesScreen}
+          options={{
+            drawerIcon: config => (
+              <Ionicons name="ios-checkmark-circle" size={32} />
+            )
           }}
         />
         <Drawer.Screen
