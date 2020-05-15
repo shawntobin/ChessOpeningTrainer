@@ -1,10 +1,10 @@
 import { SELECT_OPENING } from "../actions/opening";
 import { SELECT_VOLUME } from "../actions/opening";
-import VOLUME_A from "../../data/openings/VolumeA";
-import VOLUME_B from "../../data/openings/VolumeB";
-import VOLUME_C from "../../data/openings/VolumeC";
-import VOLUME_D from "../../data/openings/VolumeD";
-import VOLUME_E from "../../data/openings/VolumeE";
+import VOLUME_A from "../../data/openings/volumes/VolumeA";
+import VOLUME_B from "../../data/openings/volumes/VolumeB";
+import VOLUME_C from "../../data/openings/volumes/VolumeC";
+import VOLUME_D from "../../data/openings/volumes/VolumeD";
+import VOLUME_E from "../../data/openings/volumes/VolumeE";
 
 const initialState = {
   openingBookName: "VOLUME_B",

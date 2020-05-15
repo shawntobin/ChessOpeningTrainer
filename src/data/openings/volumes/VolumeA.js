@@ -1,5 +1,5 @@
 
-import Opening from "../../models/opening";
+import Opening from "../../../models/opening";
 
 const VOLUME_A = [
 

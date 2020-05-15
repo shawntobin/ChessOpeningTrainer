@@ -1,4 +1,4 @@
-import Opening from "../../models/opening";
+import Opening from "../../../models/opening";
 
 const VOLUME_D = [
     new Opening( 2614,0,"Closed Games and Semi-Closed Games","Amazon Attack","D00 Amazon Attack","d2d4 d7d5 d1d3",3),

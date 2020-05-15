@@ -1,5 +1,5 @@
 
-import Opening from "../../models/opening";
+import Opening from "../../../models/opening";
 
 const VOLUME_E = [
     new Opening( 3109,0,"Indian Defenses","Hungarian Gambit","E00 Catalan Opening","d2d4 g8f6 c2c4 e7e6 g2g3 e6e5",6),

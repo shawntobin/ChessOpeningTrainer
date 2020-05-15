@@ -1,4 +1,4 @@
-import START_POSITION from "../../data/startPosition";
+import START_POSITION from "../../data/board/startPosition";
 import {
   PIECE_MOVE,
   SELECT_PIECE,

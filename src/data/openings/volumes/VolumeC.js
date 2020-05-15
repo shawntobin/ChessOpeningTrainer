@@ -1,4 +1,4 @@
-import Opening from "../../models/opening";
+import Opening from "../../../models/opening";
 
 const VOLUME_C = [
     new Opening( 1445,0,"Open Games and the French Defense","Alapin Gambit","C00 French Defense","e2e4 e7e6 d2d4 d7d5 c1e3",5),

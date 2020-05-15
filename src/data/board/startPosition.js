@@ -1,4 +1,4 @@
-import Position from "../models/position";
+import Position from "../../models/position";
 
 const START_POSITION = [
   new Position("A1", "wr"),

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { View } from "react-native";
 import _ from "lodash";
-import BOARDLAYOUT from "../data/boardLayout";
+import BOARDLAYOUT from "../data/board/boardLayout";
 import Chessboard from "../components/Chessboard";
 import { notationData } from "../utils/notationLogic";
 import playSound from "../utils/sound";

@@ -7,74 +7,58 @@ import {
   ScrollView,
   TouchableOpacity
 } from "react-native";
+import Images from "../utils/Images";
+import OpeningGroup from "../components/OpeningGroup";
 
-const CategoriesScreen = () => {
+import summary from "../data/openings/summary";
+
+const categoryNum = [
+  {id: 1, title: "Flank Openings" },
+  {id: 2, title: "Semi-Open Games"},
+  {id: 3, title: "Open Games"},
+  {id: 4, title: "Closed and Semi-Closed Games"},
+  {id: 5, title: "Indian Defenses"} 
+]
+
+const CategoriesScreen = props => {
   return (
     <View style={styles.container}>
-      <Text style={styles.header}> Popular Openings </Text>
-      <View style={styles.bodyContainer}>
-        <ScrollView>
-          <View style={styles.rowContainer}>
-            <TouchableOpacity activeOpacity={0.7}>
-              <View style={styles.openingContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/openings/ruylopez1.png")}
-                />
-                <Text style={styles.text}> Spanish (Ruy Lopez)</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7}>
-              <View style={styles.openingContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/openings/french1.png")}
-                />
-                <Text style={styles.text}> French Defence</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
 
-          <View style={styles.rowContainer}>
-            <TouchableOpacity activeOpacity={0.7}>
-              <View style={styles.openingContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/openings/ruylopez1.png")}
-                />
-                <Text style={styles.text}> Spanish (Ruy Lopez)</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7}>
-              <View style={styles.openingContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/openings/french1.png")}
-                />
-                <Text style={styles.text}> French Defence</Text>
-              </View>
-            </TouchableOpacity>
+      <View style={styles.bodyContainer}>
+      
+        <ScrollView showsVerticalScrollIndicator={false}>
+
+        <Text style={styles.header}> Opening Categories </Text>
+      
+
+{categoryNum.map(num => {
+return (
+<View>
+<Text style={styles.title}> {num.title}</Text>
+
+          <ScrollView horizontal key={num.id} showsHorizontalScrollIndicator={false}>
+          
+            <View style={styles.rowContainer}>
+              {summary
+                .filter(opening => opening.category === num.id)
+                .map(opening => {
+                  return (
+
+                    
+
+                    <OpeningGroup
+                      id={opening.id}
+                      imageName={opening.image}
+                      openingName={opening.name}
+                      moves={opening.moves}
+                    />
+                  );
+                })}
+            </View>
+          </ScrollView>
           </View>
-          <View style={styles.rowContainer}>
-            <TouchableOpacity activeOpacity={0.7}>
-              <View style={styles.openingContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/openings/ruylopez1.png")}
-                />
-                <Text style={styles.text}> Spanish (Ruy Lopez)</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7}>
-              <View style={styles.openingContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/openings/french1.png")}
-                />
-                <Text style={styles.text}> French Defence</Text>
-              </View>
-            </TouchableOpacity>
-          </View>
+)
+})}
         </ScrollView>
       </View>
     </View>
@@ -86,7 +70,7 @@ export default CategoriesScreen;
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    marginTop: 70,
+    marginTop: 50,
     paddingHorizontal: 10
   },
 
@@ -100,12 +84,12 @@ const styles = StyleSheet.create({
   header: {
     fontWeight: "bold",
     fontSize: 22,
-    marginBottom: 30,
-    marginLeft: 27
+    marginBottom: 25,
+    marginLeft: 0
   },
   rowContainer: {
     flexDirection: "row",
-    marginBottom: 20
+    marginBottom: 30
   },
   openingContainer: {
     flexDirection: "column"
@@ -117,5 +101,81 @@ const styles = StyleSheet.create({
   },
   bodyContainer: {
     alignItems: "center"
+  },
+  subText: {
+    fontSize: 9,
+    marginLeft: 5,
+    color: "grey"
+  },
+  title: {
+    fontSize: 17,
+    fontWeight: 'bold',
+    marginBottom: 15,
+    color: '#363636'
+  },
+  line: {
+    borderBottomWidth: 0.5,
+    marginBottom: 20
   }
 });
+
+/*
+
+
+            <OpeningGroup
+              imageName={Images.opening.ruy}
+              openingName="Ruy Lopez (Spanish)"
+              moves="e2e4 e7e5 g1f3 b8c6 f1b5 ..."
+            />
+          </View>
+
+          <View style={styles.rowContainer}>
+            <TouchableOpacity activeOpacity={0.7}>
+              <View style={styles.openingContainer}>
+                <Image
+                  style={styles.image}
+                  source={require("../../assets/openings/philidor.png")}
+                />
+                <Text style={styles.text}> Philidor Defence</Text>
+                <Text style={styles.subText}> e2e4 e7e5 g1f3 d7d6 ...</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7}>
+              <View style={styles.openingContainer}>
+                <Image
+                  style={styles.image}
+                  source={require("../../assets/openings/scotch.png")}
+                />
+                <Text style={styles.text}> Scotch Game</Text>
+                <Text style={styles.subText}>
+                  {" "}
+                  e2e4 e7e5 g1f3 b8c6 d2d4 ...
+                </Text>
+              </View>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.rowContainer}>
+            <TouchableOpacity
+              activeOpacity={0.7}
+              onPress={props.navigation.navigate("Chessboard")}
+            >
+              <View style={styles.openingContainer}>
+                <Image
+                  style={styles.image}
+                  source={require("../../assets/openings/ruylopez1.png")}
+                />
+                <Text style={styles.text}> Spanish (Ruy Lopez)</Text>
+                <Text style={styles.subText}> e4</Text>
+              </View>
+            </TouchableOpacity>
+            <TouchableOpacity activeOpacity={0.7}>
+              <View style={styles.openingContainer}>
+                <Image
+                  style={styles.image}
+                  source={require("../../assets/openings/french1.png")}
+                />
+                <Text style={styles.text}> French Defence</Text>
+              </View>
+            </TouchableOpacity>
+
+*/

@@ -1,4 +1,4 @@
-import Square from "../models/square";
+import Square from "../../models/square"
 
 const BOARDLAYOUT = [
   new Square("A1", "A", 1, "dark", "empty", 1),
