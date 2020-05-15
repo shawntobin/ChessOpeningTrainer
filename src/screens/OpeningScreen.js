@@ -54,9 +54,15 @@ const OpeningScreen = props => {
     const newData = OPENING_LINES.filter(line => {
       return (
         line.numMoves >= filteredMoves &&
-        (line.shortName.toLowerCase().indexOf(inputText.toLowerCase()) !== -1 ||
-          line.name.toLowerCase().indexOf(inputText.toLowerCase()) !== -1 ||
-          line.moves.toLowerCase().indexOf(inputText.toLowerCase()) !== -1 )
+        (line.shortName
+          .replace(/\W/g, "")
+          .toLowerCase()
+          .indexOf(inputText.replace(/\W/g, "").toLowerCase()) !== -1 ||
+          line.name
+            .replace(/\W/g, "")
+            .toLowerCase()
+            .indexOf(inputText.replace(/\W/g, "").toLowerCase()) !== -1 ||
+          line.moves.toLowerCase().indexOf(inputText.toLowerCase()) !== -1)
       );
     });
     setFilteredData(newData);
@@ -146,7 +152,7 @@ const OpeningScreen = props => {
           style={styles.loading}
           animating={isLoading}
         />
-        
+
         <OpeningContainer
           handleChooseOpening={handleChooseOpening}
           filteredData={filteredData}

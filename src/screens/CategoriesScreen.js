@@ -1,64 +1,69 @@
 import React from "react";
-import {
-  StyleSheet,
-  Text,
-  View,
-  Image,
-  ScrollView,
-  TouchableOpacity
-} from "react-native";
-import Images from "../utils/Images";
+import { StyleSheet, Text, View, ScrollView } from "react-native";
+
+import { useDispatch } from "react-redux";
+
+import { selectCategory } from "../store/actions/categories";
+
 import OpeningGroup from "../components/OpeningGroup";
 
 import summary from "../data/openings/summary";
 
 const categoryNum = [
-  {id: 1, title: "Flank Openings" },
-  {id: 2, title: "Semi-Open Games"},
-  {id: 3, title: "Open Games"},
-  {id: 4, title: "Closed and Semi-Closed Games"},
-  {id: 5, title: "Indian Defenses"} 
-]
+  { id: 1, title: "Flank Openings" },
+  { id: 2, title: "Semi-Open Games" },
+  { id: 3, title: "Open Games" },
+  { id: 4, title: "Closed and Semi-Closed Games" },
+  { id: 5, title: "Indian Defenses" }
+];
 
 const CategoriesScreen = props => {
+  const dispatch = useDispatch();
+
+  const handleSelectCategory = id => {
+    const category = summary.filter(opening => opening.id === id);
+
+    dispatch(selectCategory(category));
+
+    props.navigation.navigate("Category Lines");
+  };
+
   return (
     <View style={styles.container}>
-
       <View style={styles.bodyContainer}>
-      
         <ScrollView showsVerticalScrollIndicator={false}>
+          <Text style={styles.header}> Opening Categories </Text>
 
-        <Text style={styles.header}> Opening Categories </Text>
-      
+          {categoryNum.map(num => {
+            return (
+              <View key={num.id}>
+                <Text style={styles.title}> {num.title}</Text>
 
-{categoryNum.map(num => {
-return (
-<View>
-<Text style={styles.title}> {num.title}</Text>
-
-          <ScrollView horizontal key={num.id} showsHorizontalScrollIndicator={false}>
-          
-            <View style={styles.rowContainer}>
-              {summary
-                .filter(opening => opening.category === num.id)
-                .map(opening => {
-                  return (
-
-                    
-
-                    <OpeningGroup
-                      id={opening.id}
-                      imageName={opening.image}
-                      openingName={opening.name}
-                      moves={opening.moves}
-                    />
-                  );
-                })}
-            </View>
-          </ScrollView>
-          </View>
-)
-})}
+                <ScrollView
+                  horizontal
+                  key={num.id}
+                  showsHorizontalScrollIndicator={false}
+                >
+                  <View style={styles.rowContainer}>
+                    {summary
+                      .filter(opening => opening.category === num.id)
+                      .map(opening => {
+                        return (
+                          <OpeningGroup
+                            key={opening.id}
+                            id={opening.id}
+                            imageName={opening.image}
+                            openingName={opening.name}
+                            moves={opening.moves}
+                            onPress={id => handleSelectCategory(id)}
+                          />
+                        );
+                      })}
+                  </View>
+                </ScrollView>
+              </View>
+            );
+          })}
         </ScrollView>
       </View>
     </View>
@@ -109,9 +114,9 @@ const styles = StyleSheet.create({
   },
   title: {
     fontSize: 17,
-    fontWeight: 'bold',
+    fontWeight: "bold",
     marginBottom: 15,
-    color: '#363636'
+    color: "#363636"
   },
   line: {
     borderBottomWidth: 0.5,

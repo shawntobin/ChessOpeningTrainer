@@ -5,6 +5,7 @@ const OpeningGroup = props => {
   return (
     <TouchableOpacity
       activeOpacity={0.7}
+      onPress = {() => props.onPress(props.id)}
     >
       <View style={styles.openingContainer}>
         <Image

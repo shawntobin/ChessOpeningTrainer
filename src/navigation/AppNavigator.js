@@ -1,5 +1,6 @@
 import React from "react";
 import { createDrawerNavigator } from "@react-navigation/drawer";
+
 import { NavigationContainer } from "@react-navigation/native";
 import { Ionicons, FontAwesome5 } from "@expo/vector-icons";
 
@@ -8,6 +9,7 @@ import OpeningScreen from "../screens/OpeningScreen";
 import PlaylistScreen from "../screens/PlaylistScreen";
 import SettingsScreen from "../screens/SettingsScreen";
 import CategoriesScreen from "../screens/CategoriesScreen";
+import CategoryLinesScreen from "../screens/CategoryLinesScreen";
 
 const Drawer = createDrawerNavigator();
 
@@ -56,6 +58,14 @@ const AppNavigator = () => {
           component={SettingsScreen}
           options={{
             drawerIcon: config => <Ionicons name="md-settings" size={32} />
+          }}
+        />
+
+        <Drawer.Screen
+          name="Category Lines"
+          component={CategoryLinesScreen}
+          options={{
+            drawerLabel: () => null
           }}
         />
       </Drawer.Navigator>
