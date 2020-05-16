@@ -15,11 +15,13 @@ import {
   didCastle
 } from "../store/actions/pieces";
 
+import { selectOpening, selectVolume } from "../store/actions/opening";
+import { nextItemInQueue, resetQueueIndex } from "../store/actions/queue";
+
 let expectedMoveStart;
 let expectedMoveEnd;
 
 const ChessLogic = props => {
-
   const userColor = props.pieceColor;
   const openingBook = useSelector(state => state.opening.openingBook);
   const openingLine = useSelector(state => state.opening.selectedOpening);
@@ -31,6 +33,8 @@ const ChessLogic = props => {
   const selectedPiece = useSelector(state => state.board.selectedPiece);
   const moveNumber = useSelector(state => state.board.moveNumber);
   const notation = useSelector(state => state.settings.notationOverlay);
+  const queueList = useSelector(state => state.queue.queueList);
+  const queueIndex = useSelector(state => state.queue.queueIndex);
   const dispatch = useDispatch();
   const sound = props.sound;
   const moveSound = "moveSound";
@@ -44,9 +48,33 @@ const ChessLogic = props => {
 
   const lineFinished = () => {
     props.handleModalVisible();
+
+    if (_.isUndefined(queueList[0])) {
+      dispatch(resetPieces());
+      setUserMoveComplete(false);
+      setAllowUserMove(true);
+    } else {
+      nextLineInQueue();
+    }
+  };
+
+  const nextLineInQueue = () => {
+
+    let id;
+    if (queueList.length == queueIndex+1) {
+      id = queueList[0];
+      dispatch(resetQueueIndex());
+    } else {
+      id = queueList[queueIndex+1];
+      dispatch(nextItemInQueue());
+    }
+
+    dispatch(selectVolume(`VOLUME_${id.name.substring(0, 1)}`));
+    dispatch(selectOpening(id.volId));
     dispatch(resetPieces());
     setUserMoveComplete(false);
     setAllowUserMove(true);
+
   };
 
   useEffect(() => {
@@ -61,6 +89,7 @@ const ChessLogic = props => {
 
   useEffect(() => {
     dispatch(resetPieces());
+    dispatch(resetQueueIndex());
   }, []);
 
   useEffect(() => {
@@ -145,7 +174,7 @@ const ChessLogic = props => {
             }
           }, 1000);
         }
-      }, 10000);
+      }, 500);
     }
   };
 

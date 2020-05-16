@@ -25,6 +25,7 @@ export default function App() {
   const [isReady, setIsReady] = useState(false);
 
   const piecesPng = "./assets/piecesPNG/";
+  const openings = "./assets/openings/";
 
   const _cacheResourcesAsync = async () => {
     const images = [
@@ -39,7 +40,34 @@ export default function App() {
       require(`${piecesPng}bq.png`),
       require(`${piecesPng}br.png`),
       require(`${piecesPng}bb.png`),
-      require(`${piecesPng}bn.png`)
+      require(`${piecesPng}bn.png`),
+
+      require(`${openings}alekhine.png`),
+      require(`${openings}benoni.png`),
+      require(`${openings}bishops.png`),
+      require(`${openings}carokann.png`),
+      require(`${openings}catalan.png`),
+      require(`${openings}dutch.png`),
+      require(`${openings}english.png`),
+      require(`${openings}fourknights.png`),
+      require(`${openings}french1.png`),
+      require(`${openings}grunfeld.png`),
+      require(`${openings}italian.png`),
+      require(`${openings}kingsgambit.png`),
+      require(`${openings}kingsindian.png`),
+      require(`${openings}londonsystem.png`),
+      require(`${openings}nimzoindian.png`),
+      require(`${openings}philidor.png`),
+      require(`${openings}queensgambit.png`),
+      require(`${openings}russian.png`),
+      require(`${openings}ruylopez1.png`),
+      require(`${openings}scandinavian.png`),
+      require(`${openings}scotch.png`),
+      require(`${openings}semislav.png`),
+      require(`${openings}sicilian.png`),
+      require(`${openings}slav.png`),
+      require(`${openings}tarrasch.png`),
+      require(`${openings}vienna.png`)
     ];
     const cacheImages = images.map(image => {
       return Asset.fromModule(image).downloadAsync();

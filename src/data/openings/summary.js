@@ -54,8 +54,8 @@ const OPENING_SUMMARY = [
 
     new OpeningSummary ("B", 5, "Scandinavian Defense", "e2e4 d7d5 ...", 2, Images.opening.scandinavian, "scandinavian defense", 1 ),
     new OpeningSummary ("B", 6, "Alekhine Defense", "e2e4 g8f6 ...", 2, Images.opening.alekhine, "alekhine defense", 1 ),
-    new OpeningSummary ("B", 7, "Caro-Kann Defense", "e2e4 c7c6 ...", 2, Images.opening.carokann, "caro-kann", 1 ),
-    new OpeningSummary ("B", 8, "Sicilian Defense", "e2e4 c7c5 ...", 2, Images.opening.sicilian, "sicilian", 1 ),
+    new OpeningSummary ("B", 7, "Caro-Kann Defense", "e2e4 c7c6 ...", 2, Images.opening.carokann, "caro-kann defense", 1 ),
+    new OpeningSummary ("B", 8, "Sicilian Defense", "e2e4 c7c5 ...", 2, Images.opening.sicilian, "sicilian defense", 1 ),
 
     new OpeningSummary ("C", 9, "King's Gambit", "e2e4 e7e5 f2f4 ...", 3, Images.opening.kingsgambit, "king's indian", 1 ),
     new OpeningSummary ("C", 10, "Vienna Game", "e2e4 e7e5 b1c3 ...", 3, Images.opening.vienna, "vienna", 1 ),

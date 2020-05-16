@@ -1,8 +1,15 @@
-import React from "react";
-import { StyleSheet, Text, View, ScrollView } from "react-native";
+import React, { useState, useEffect } from "react";
+import {
+  StyleSheet,
+  Text,
+  View,
+  ScrollView,
+  ActivityIndicator,
+  TouchableOpacity
+} from "react-native";
 
 import { useDispatch } from "react-redux";
-
+import { Ionicons } from "@expo/vector-icons";
 import { selectCategory } from "../store/actions/categories";
 
 import OpeningGroup from "../components/OpeningGroup";
@@ -18,21 +25,40 @@ const categoryNum = [
 ];
 
 const CategoriesScreen = props => {
+  const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleSelectCategory = id => {
+  const handleSelectCategory = async id => {
+    setIsLoading(true);
+
     const category = summary.filter(opening => opening.id === id);
 
-    dispatch(selectCategory(category));
+    await dispatch(selectCategory(category));
 
-    props.navigation.navigate("Category Lines");
+    props.navigation.navigate("Category Lines", { title: category[0].name });
+    setIsLoading(false);
   };
+
+  useEffect(() => {
+    setIsLoading(false);
+  }, []);
 
   return (
     <View style={styles.container}>
       <View style={styles.bodyContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
-          <Text style={styles.header}> Opening Categories </Text>
+        <View style={styles.headerContainer}>
+          <Text style={styles.header}> Opening Explorer </Text>
+          <TouchableOpacity
+            activeOpacity={0.4}
+            onPress={() => {
+              props.navigation.navigate("Chessboard");
+            }}
+          >
+            <Ionicons name="ios-close-circle-outline" size={35} />
+          </TouchableOpacity>
+          </View>
+        
 
           {categoryNum.map(num => {
             return (
@@ -66,6 +92,11 @@ const CategoriesScreen = props => {
           })}
         </ScrollView>
       </View>
+      <ActivityIndicator
+        size="large"
+        style={styles.loading}
+        animating={isLoading}
+      />
     </View>
   );
 };
@@ -90,7 +121,8 @@ const styles = StyleSheet.create({
     fontWeight: "bold",
     fontSize: 22,
     marginBottom: 25,
-    marginLeft: 0
+    marginLeft: 0,
+    flex: 1
   },
   rowContainer: {
     flexDirection: "row",
@@ -121,66 +153,15 @@ const styles = StyleSheet.create({
   line: {
     borderBottomWidth: 0.5,
     marginBottom: 20
+  },
+  loading: {
+    position: "absolute",
+    top: "50%",
+    left: "50%"
+  },
+  headerContainer: {
+    flexDirection: "row",
+    marginVertical: 10,
+    paddingRight: 15
   }
 });
-
-/*
-
-
-            <OpeningGroup
-              imageName={Images.opening.ruy}
-              openingName="Ruy Lopez (Spanish)"
-              moves="e2e4 e7e5 g1f3 b8c6 f1b5 ..."
-            />
-          </View>
-
-          <View style={styles.rowContainer}>
-            <TouchableOpacity activeOpacity={0.7}>
-              <View style={styles.openingContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/openings/philidor.png")}
-                />
-                <Text style={styles.text}> Philidor Defence</Text>
-                <Text style={styles.subText}> e2e4 e7e5 g1f3 d7d6 ...</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7}>
-              <View style={styles.openingContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/openings/scotch.png")}
-                />
-                <Text style={styles.text}> Scotch Game</Text>
-                <Text style={styles.subText}>
-                  {" "}
-                  e2e4 e7e5 g1f3 b8c6 d2d4 ...
-                </Text>
-              </View>
-            </TouchableOpacity>
-          </View>
-          <View style={styles.rowContainer}>
-            <TouchableOpacity
-              activeOpacity={0.7}
-              onPress={props.navigation.navigate("Chessboard")}
-            >
-              <View style={styles.openingContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/openings/ruylopez1.png")}
-                />
-                <Text style={styles.text}> Spanish (Ruy Lopez)</Text>
-                <Text style={styles.subText}> e4</Text>
-              </View>
-            </TouchableOpacity>
-            <TouchableOpacity activeOpacity={0.7}>
-              <View style={styles.openingContainer}>
-                <Image
-                  style={styles.image}
-                  source={require("../../assets/openings/french1.png")}
-                />
-                <Text style={styles.text}> French Defence</Text>
-              </View>
-            </TouchableOpacity>
-
-*/

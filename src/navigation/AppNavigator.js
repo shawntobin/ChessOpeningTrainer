@@ -27,15 +27,15 @@ const AppNavigator = () => {
           name="Chessboard"
           component={MainBoardScreen}
           options={{
-            drawerIcon: config => <FontAwesome5 name="chess" size={30} />
+            drawerIcon: config => <FontAwesome5 name="chess-board" size={30} />
           }}
         />
         <Drawer.Screen
-          name="Popular Openings"
+          name="Opening Explorer"
           component={CategoriesScreen}
           options={{
             drawerIcon: config => (
-              <Ionicons name="ios-checkmark-circle" size={32} />
+              <Ionicons name="ios-list-box" size={32} />
             )
           }}
         />
@@ -43,7 +43,7 @@ const AppNavigator = () => {
           name="Opening Database"
           component={OpeningScreen}
           options={{
-            drawerIcon: config => <Ionicons name="ios-list-box" size={30} />
+            drawerIcon: config => <FontAwesome5 name="database" size={30} />
           }}
         />
         <Drawer.Screen

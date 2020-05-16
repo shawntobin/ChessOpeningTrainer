@@ -21,6 +21,7 @@ import OpeningContainer from "../components/OpeningContainer";
 import PopupModal from "../components/PopupModal";
 
 import { addOpening } from "../store/actions/playlist";
+import { addQueue, clearQueue } from "../store/actions/queue";
 
 const OpeningScreen = props => {
   const [modalVisible, setModalVisible] = useState(false);
@@ -69,7 +70,9 @@ const OpeningScreen = props => {
   };
 
   const handleChooseOpening = id => {
+    dispatch(clearQueue());
     dispatch(selectOpening(id.volId));
+
     dispatch(resetPieces());
     props.navigation.navigate("Chessboard");
   };
@@ -113,7 +116,7 @@ const OpeningScreen = props => {
           modalText="Added to favorites"
         />
 
-        <View style={styles.buttonContainer}></View>
+        
         <View style={styles.headerContainer}>
           <Text style={styles.header}>Opening Database</Text>
           <TouchableOpacity
