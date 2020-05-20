@@ -47,6 +47,7 @@ const ChessLogic = props => {
   }));
 
   const lineFinished = () => {
+    setAllowUserMove(false);
     props.handleModalVisible();
 
     if (_.isUndefined(queueList[0])) {
@@ -104,6 +105,7 @@ const ChessLogic = props => {
   }, [userMoveComplete]);
 
   const userPieceMove = squarePressed => {
+    if (!allowUserMove) return;
     expectedMoveStart = null;
     expectedMoveEnd = null;
     const startingSquare = notationLogic[moveNumber].start;
@@ -118,9 +120,8 @@ const ChessLogic = props => {
         return;
       }
 
-      // check if piece is user's, and that it's the user's turn
-      if (piece.substring(0, 1) !== userColor) return;
-      if (!allowUserMove) return;
+      // check if piece is user's color
+      if (piece.substring(0, 1) !== userColor) return;      
       dispatch(selectPiece(squarePressed));
       setMoveStart(false);
     } else {

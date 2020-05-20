@@ -6,6 +6,7 @@ import {
   Text,
   StyleSheet,
   TouchableOpacity,
+  Button,
   TextInput,
   ActivityIndicator,
   Keyboard,
@@ -122,7 +123,7 @@ const CategoryLinesScreen = props => {
           <TouchableOpacity
             activeOpacity={0.4}
             onPress={() => {
-              props.navigation.navigate("Chessboard");
+              props.navigation.navigate("Opening Explorer");
             }}
           >
             <Ionicons name="ios-close-circle-outline" size={35} />
@@ -145,11 +146,11 @@ const CategoryLinesScreen = props => {
         />
 
         <View style={styles.rowContainer}>
-          <TouchableOpacity activeOpacity={0.8} onPress={() => handlePlayAll()}>
-            <View style={styles.playButtonContainer}>
-              <Text style={styles.playButton}>Play All</Text>
-            </View>
-          </TouchableOpacity>
+          <Button
+            title="Play All"
+            onPress={() => handlePlayAll()}
+            disabled={filteredData.length === 0}
+          />
         </View>
 
         <View style={styles.line} />

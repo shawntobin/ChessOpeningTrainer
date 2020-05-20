@@ -28,15 +28,23 @@ const CategoriesScreen = props => {
   const [isLoading, setIsLoading] = useState(false);
   const dispatch = useDispatch();
 
-  const handleSelectCategory = async id => {
-    setIsLoading(true);
-
+  const handleGoToCategory = async id => {
     const category = summary.filter(opening => opening.id === id);
 
     await dispatch(selectCategory(category));
-
-    props.navigation.navigate("Category Lines", { title: category[0].name });
     setIsLoading(false);
+    props.navigation.navigate("Category Lines", { title: category[0].name });
+  };
+
+  const handleSelectCategory = id => {
+    setIsLoading(true);
+
+    // hacky solution but works - activity indicator otherwise 
+    // would not load despite brief delay for loading 
+
+    setTimeout(() => {
+      handleGoToCategory(id);
+    }, 100);
   };
 
   useEffect(() => {
@@ -47,18 +55,17 @@ const CategoriesScreen = props => {
     <View style={styles.container}>
       <View style={styles.bodyContainer}>
         <ScrollView showsVerticalScrollIndicator={false}>
-        <View style={styles.headerContainer}>
-          <Text style={styles.header}> Opening Explorer </Text>
-          <TouchableOpacity
-            activeOpacity={0.4}
-            onPress={() => {
-              props.navigation.navigate("Chessboard");
-            }}
-          >
-            <Ionicons name="ios-close-circle-outline" size={35} />
-          </TouchableOpacity>
+          <View style={styles.headerContainer}>
+            <Text style={styles.header}> Opening Explorer </Text>
+            <TouchableOpacity
+              activeOpacity={0.4}
+              onPress={() => {
+                props.navigation.navigate("Chessboard");
+              }}
+            >
+              <Ionicons name="ios-close-circle-outline" size={35} />
+            </TouchableOpacity>
           </View>
-        
 
           {categoryNum.map(num => {
             return (
@@ -81,7 +88,7 @@ const CategoriesScreen = props => {
                             imageName={opening.image}
                             openingName={opening.name}
                             moves={opening.moves}
-                            onPress={id => handleSelectCategory(id)}
+                            onPress={handleSelectCategory}
                           />
                         );
                       })}
