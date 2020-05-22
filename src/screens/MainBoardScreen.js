@@ -8,7 +8,6 @@ import {
 } from "react-native";
 
 import { useSelector, useDispatch } from "react-redux";
-import { Audio } from "expo-av";
 import _ from "lodash";
 import { Ionicons } from "@expo/vector-icons";
 import { resetPieces } from "../store/actions/pieces";
@@ -35,8 +34,6 @@ const MainBoardScreen = props => {
   )[0];
   const currentLineMoves = lineData.moves;
   const currentLineMovesArray = currentLineMoves.split(" ");
-
-  const sound = new Audio.Sound();
 
   const handlePieceColor = () => {
     setBlackOrWhite(state => {
@@ -101,7 +98,6 @@ const MainBoardScreen = props => {
         <ChessLogic
           handleModalVisible={handleLineFinish}
           pieceColor={blackOrWhite}
-          sound={sound}
         />
       </View>
 

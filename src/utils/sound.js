@@ -1,21 +1,23 @@
-const playSound = async (ref, sound) => {
+import { Audio } from "expo-av";
+
+const playSound = async sound => {
+  const soundFx = new Audio.Sound();
   try {
     if (sound === "moveSound") {
-      await ref.loadAsync(require("../../assets/sounds/Move.mp3"));
-      await ref.playAsync();
+      await soundFx.loadAsync(require("../../assets/sounds/Move.mp3"));
+      await soundFx.playAsync();
     }
     if (sound === "captureSound") {
-      await ref.loadAsync(require("../../assets/sounds/Capture.mp3"));
-      await ref.playAsync();
+      await soundFx.loadAsync(require("../../assets/sounds/Capture.mp3"));
+      await soundFx.playAsync();
     }
     if (sound === "wrongMoveSound") {
-      await ref.loadAsync(require("../../assets/sounds/Error.mp3"));
-      await ref.setVolumeAsync(0.5);
-      await ref.playAsync();
+      await soundFx.loadAsync(require("../../assets/sounds/Error.mp3"));
+      await soundFx.setVolumeAsync(0.5);
+      await soundFx.playAsync();
     }
   } catch (error) {
     console.log("audio loading failed");
-    // console.log(error)
   }
 };
 

@@ -1,5 +1,12 @@
 import React from "react";
-import { StyleSheet, Text, View, TouchableOpacity, Switch } from "react-native";
+import {
+  StyleSheet,
+  Text,
+  View,
+  TouchableOpacity,
+  Switch,
+  Button
+} from "react-native";
 import SquareColor from "../components/SquareColor";
 import { Ionicons } from "@expo/vector-icons";
 import { useDispatch, useSelector } from "react-redux";
@@ -22,15 +29,13 @@ const Settings = props => {
     <View style={styles.container}>
       <View style={styles.header}>
         <Text style={styles.title}>Settings</Text>
-        <TouchableOpacity
-          style={styles.hideModalButton}
-          activeOpacity={0.4}
-          onPress={() => {
-            props.navigation.navigate("Chessboard");
-          }}
-        >
-          <Ionicons name="ios-close-circle-outline" size={35} />
-        </TouchableOpacity>
+
+        <Button 
+        title="Back"
+        onPress={() => {
+          props.navigation.navigate("Chessboard");
+        }}
+        />
       </View>
       <View style={styles.itemContainer}>
         <Text style={styles.menuItem}>Theme:</Text>

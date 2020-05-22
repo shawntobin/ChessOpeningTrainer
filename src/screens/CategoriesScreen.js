@@ -5,7 +5,8 @@ import {
   View,
   ScrollView,
   ActivityIndicator,
-  TouchableOpacity
+  TouchableOpacity,
+  Button
 } from "react-native";
 
 import { useDispatch } from "react-redux";
@@ -57,14 +58,13 @@ const CategoriesScreen = props => {
         <ScrollView showsVerticalScrollIndicator={false}>
           <View style={styles.headerContainer}>
             <Text style={styles.header}> Opening Explorer </Text>
-            <TouchableOpacity
-              activeOpacity={0.4}
+
+            <Button
+              title="Back"
               onPress={() => {
                 props.navigation.navigate("Chessboard");
               }}
-            >
-              <Ionicons name="ios-close-circle-outline" size={35} />
-            </TouchableOpacity>
+            />
           </View>
 
           {categoryNum.map(num => {

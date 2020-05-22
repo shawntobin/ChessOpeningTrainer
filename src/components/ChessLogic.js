@@ -5,7 +5,8 @@ import _ from "lodash";
 import BOARDLAYOUT from "../data/board/boardLayout";
 import Chessboard from "../components/Chessboard";
 import { notationData } from "../utils/notationLogic";
-import playSound from "../utils/sound";
+import playSound from '../utils/sound'
+
 import { castleLogic, isCastle, isKingMove } from "../utils/helperFunctions";
 
 import {
@@ -26,6 +27,7 @@ let expectedMoveStart;
 let expectedMoveEnd;
 
 const ChessLogic = props => {
+
   const userColor = props.pieceColor;
   const openingBook = useSelector(state => state.opening.openingBook);
   const openingLine = useSelector(state => state.opening.selectedOpening);
@@ -40,7 +42,6 @@ const ChessLogic = props => {
   const queueList = useSelector(state => state.queue.queueList);
   const queueIndex = useSelector(state => state.queue.queueIndex);
   const dispatch = useDispatch();
-  const sound = props.sound;
   const moveSound = "moveSound";
   const captureSound = "captureSound";
   const wrongMoveSound = "wrongMoveSound";
@@ -142,7 +143,7 @@ const ChessLogic = props => {
         expectedMoveEnd = notationLogic[moveNumber].end;
 
         dispatch(selectPiece(null));
-        playSound(sound, wrongMoveSound);
+        playSound(wrongMoveSound);
 
         return;
       }
@@ -155,7 +156,7 @@ const ChessLogic = props => {
         currentPosition.filter(square => square.id === endingSquare)[0].piece
           .length === 2;
 
-      didCapture ? playSound(sound, captureSound) : playSound(sound, moveSound);
+      didCapture ? playSound(captureSound) : playSound(moveSound);
 
       dispatch(pieceMove(squarePressed));
 
@@ -188,7 +189,7 @@ const ChessLogic = props => {
       currentPosition.filter(square => square.id === id.end)[0].piece.length ===
       2;
 
-    didCapture ? playSound(sound, captureSound) : playSound(sound, moveSound);
+    didCapture ? playSound(captureSound) : playSound(moveSound);
     dispatch(selectPiece(id.start));
     dispatch(pieceMove(id.end));
 

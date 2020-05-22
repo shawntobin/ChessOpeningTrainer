@@ -30,7 +30,7 @@ const PlaylistScreen = props => {
     dispatch(selectOpening(id.volId));
     dispatch(resetPieces());
     props.navigation.navigate("Chessboard");
-    setIsLoading(false)
+    setIsLoading(false);
   };
 
   const handlePlayAll = () => {
@@ -57,14 +57,12 @@ const PlaylistScreen = props => {
       <View style={styles.headerContainer}>
         <Text style={styles.header}>Favorite Openings</Text>
 
-        <TouchableOpacity
-          activeOpacity={0.4}
+        <Button
+          title="Back"
           onPress={() => {
             props.navigation.navigate("Chessboard");
           }}
-        >
-          <Ionicons name="ios-close-circle-outline" size={35} />
-        </TouchableOpacity>
+        />
       </View>
       <View style={styles.rowContainer}>
         <Button

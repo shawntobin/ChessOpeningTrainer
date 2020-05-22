@@ -9,7 +9,8 @@ import {
   TextInput,
   ActivityIndicator,
   Keyboard,
-  TouchableWithoutFeedback
+  TouchableWithoutFeedback,
+  Button
 } from "react-native";
 import { Ionicons } from "@expo/vector-icons";
 
@@ -119,14 +120,13 @@ const OpeningScreen = props => {
         
         <View style={styles.headerContainer}>
           <Text style={styles.header}>Opening Database</Text>
-          <TouchableOpacity
-            activeOpacity={0.4}
-            onPress={() => {
-              props.navigation.navigate("Chessboard");
-            }}
-          >
-            <Ionicons name="ios-close-circle-outline" size={35} />
-          </TouchableOpacity>
+
+          <Button 
+          title="Back"
+          onPress={() => {
+            props.navigation.navigate("Chessboard");
+          }}
+          />
         </View>
 
         <BubbleContainer
