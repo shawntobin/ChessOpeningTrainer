@@ -16,7 +16,11 @@ import {
 } from "../store/actions/pieces";
 
 import { selectOpening, selectVolume } from "../store/actions/opening";
-import { nextItemInQueue, resetQueueIndex } from "../store/actions/queue";
+import {
+  nextItemInQueue,
+  resetQueueIndex,
+  clearQueue
+} from "../store/actions/queue";
 
 let expectedMoveStart;
 let expectedMoveEnd;
@@ -60,13 +64,14 @@ const ChessLogic = props => {
   };
 
   const nextLineInQueue = () => {
-
     let id;
-    if (queueList.length == queueIndex+1) {
+
+    // check if it's at the end of the queue
+    if (queueList.length === queueIndex + 1) {
       id = queueList[0];
       dispatch(resetQueueIndex());
     } else {
-      id = queueList[queueIndex+1];
+      id = queueList[queueIndex + 1];
       dispatch(nextItemInQueue());
     }
 
@@ -75,7 +80,6 @@ const ChessLogic = props => {
     dispatch(resetPieces());
     setUserMoveComplete(false);
     setAllowUserMove(true);
-
   };
 
   useEffect(() => {
@@ -90,7 +94,7 @@ const ChessLogic = props => {
 
   useEffect(() => {
     dispatch(resetPieces());
-    dispatch(resetQueueIndex());
+    dispatch(clearQueue());
   }, []);
 
   useEffect(() => {
@@ -121,7 +125,7 @@ const ChessLogic = props => {
       }
 
       // check if piece is user's color
-      if (piece.substring(0, 1) !== userColor) return;      
+      if (piece.substring(0, 1) !== userColor) return;
       dispatch(selectPiece(squarePressed));
       setMoveStart(false);
     } else {

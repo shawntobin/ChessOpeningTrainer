@@ -66,15 +66,16 @@ const CategoryLinesScreen = props => {
     setFilteredData(newData);
   };
 
-  const handlePlayAll = () => {
-    dispatch(clearQueue());
+  const handlePlayAll = async () => {
+     dispatch(clearQueue());
     const id = filteredData[0];
     dispatch(addQueue(filteredData));
     handleChooseOpening(id);
   };
 
-  const handleChooseOpening = id => {
+  const handleChooseOpening = async id => {
     if (_.isUndefined(id)) return;
+     dispatch(clearQueue());
     dispatch(selectVolume(`VOLUME_${id.name.substring(0, 1)}`));
     dispatch(selectOpening(id.volId));
     dispatch(resetPieces());

@@ -26,7 +26,7 @@ export default (state = initialState, action) => {
       return { ...state, queueIndex: 0 };
     }
     default: {
-      return state;
+      return state
     }
   }
 };

@@ -4,15 +4,21 @@ export const NEXT_ITEM_IN_QUEUE = "NEXT_ITEM_IN_QUEUE";
 export const RESET_QUEUE_INDEX = "RESET_QUEUE_INDEX";
 
 export const addQueue = id => {
-  return { type: ADD_QUEUE, id };
-};
+  return async dispatch => {
 
+    await clearQueue();
+
+    dispatch({ type: ADD_QUEUE, id });
+  };
+};
 export const nextItemInQueue = () => {
   return { type: NEXT_ITEM_IN_QUEUE };
 };
 
 export const clearQueue = () => {
-  return { type: CLEAR_QUEUE };
+  return async dispatch => {
+    dispatch({ type: CLEAR_QUEUE });
+  };
 };
 
 export const resetQueueIndex = () => {
