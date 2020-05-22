@@ -49,8 +49,6 @@ const OPENING_SUMMARY = [
     new OpeningSummary ("A", 1, "English Opening", "c2c4 ...", 1, Images.opening.english, "english opening", 1 ),
     new OpeningSummary ("A", 2, "Dutch Defense", "c2c4 f7f5 ...", 1, Images.opening.dutch, "dutch defense", 1 ),
     new OpeningSummary ("A", 3, "Benoni Defense", "d2d4 g8f6 c2c4 c7c5 d4d5 ...", 1, Images.opening.benoni, "benoni defense", 1 ),
-    new OpeningSummary ("A", 4, "London System", "d2d4 ... c1f4", 1, Images.opening.london, "london system", 1 ),
-
 
     new OpeningSummary ("B", 5, "Scandinavian Defense", "e2e4 d7d5 ...", 2, Images.opening.scandinavian, "scandinavian defense", 1 ),
     new OpeningSummary ("B", 6, "Alekhine Defense", "e2e4 g8f6 ...", 2, Images.opening.alekhine, "alekhine defense", 1 ),
@@ -69,7 +67,6 @@ const OPENING_SUMMARY = [
     new OpeningSummary ("C", 18, "Philidor", "e2e4 e7e5 g1f3 d7d6 ...", 3, Images.opening.philidor, "philidor", 1 ),
 
     new OpeningSummary ("D", 19, "Slav Defense", "d2d4 d7d5 c2c4 c7c6 ...", 4, Images.opening.slav, "slav defense", 1 ),
-    new OpeningSummary ("D", 20, "Semi-Slav Defense", "d2d4 d7d5 c2c4 c7c6 g1f3 g8f6 b1c3 e7e6 ...", 4, Images.opening.semislav, "semi-slav", 1 ),
     new OpeningSummary ("D", 21, "Grünfeld Defense", "d2d4 g8f6 c2c4 g7g6 b1c3 d7d5 ...", 4, Images.opening.grunfeld, "Grünfeld", 1  ),
     new OpeningSummary ("D", 22, "Queen's Gambit", "d2d4 d7d5 c2c4 ...", 4, Images.opening.queensgambit, "queen's gambit", 1 ),
     new OpeningSummary ("D", 23, "Tarrasch Defense", "d2d4 d7d5 c2c4 e7e6 b1c3 c7c5 ...", 4, Images.opening.tarrasch, "tarrasch", 1 ),
