@@ -5,11 +5,11 @@
     "platforms": [
       "ios"
     ],
-    "version": "1.0.0",
+    "version": "1.1.0",
     "orientation": "portrait",
     "icon": "./assets/redKnightIcon192.png",
     "splash": {
-      "image": "./assets/whiteKnightSplash1242.png",
+      "image": "./assets/circleSplash.png",
       "resizeMode": "contain",
       "backgroundColor": "#FFFFFF" 
     },
@@ -21,7 +21,7 @@
     ],
     "ios": {
       "bundleIdentifier": "com.shawntobin.openinglineschess",
-      "buildNumber": "1.0.0",
+      "buildNumber": "1.1.0",
       "supportsTablet": false
     }
   }
