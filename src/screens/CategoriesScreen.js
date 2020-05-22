@@ -39,8 +39,8 @@ const CategoriesScreen = props => {
   const handleSelectCategory = id => {
     setIsLoading(true);
 
-    // hacky solution but works - activity indicator otherwise 
-    // would not load despite brief delay for loading 
+    // hacky solution but works - activity indicator otherwise
+    // would not load despite brief delay for loading
 
     setTimeout(() => {
       handleGoToCategory(id);

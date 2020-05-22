@@ -22,14 +22,12 @@ const HeaderContainer = props => {
           >
             {props.lineData.name}
           </Text>
-          <Text numberOfLines={1} style={styles.lineText}>
+          <Text numberOfLines={1} style={styles.lineSubText}>
             {props.lineData.shortName}
           </Text>
         </TouchableOpacity>
       </View>
-      <View style={styles.playButtons}>
-
-      </View>
+      <View style={styles.playButtons}></View>
     </View>
   );
 };
@@ -51,6 +49,10 @@ const styles = StyleSheet.create({
   },
   lineText: {
     fontSize: 12,
+    width: 300
+  },
+  lineSubText: {
+    fontSize: 11,
     width: 300
   }
 });

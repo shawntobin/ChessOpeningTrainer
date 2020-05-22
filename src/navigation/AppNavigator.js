@@ -40,7 +40,7 @@ const AppNavigator = () => {
           }}
         />
         <Drawer.Screen
-          name="Opening Database"
+          name="All Openings Database"
           component={OpeningScreen}
           options={{
             drawerIcon: config => <FontAwesome5 name="database" size={30} />

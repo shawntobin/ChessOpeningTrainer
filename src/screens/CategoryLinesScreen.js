@@ -66,16 +66,19 @@ const CategoryLinesScreen = props => {
     setFilteredData(newData);
   };
 
-  const handlePlayAll = async () => {
-     dispatch(clearQueue());
-    const id = filteredData[0];
-    dispatch(addQueue(filteredData));
-    handleChooseOpening(id);
+  const handlePlayAll = () => {
+    setIsLoading(true);
+    setTimeout(() => {
+      dispatch(clearQueue());
+      const id = filteredData[0];
+      dispatch(addQueue(filteredData));
+      handleChooseOpening(id);
+    }, 100);
   };
 
-  const handleChooseOpening = async id => {
+  const handleChooseOpening = id => {
     if (_.isUndefined(id)) return;
-     dispatch(clearQueue());
+    dispatch(clearQueue());
     dispatch(selectVolume(`VOLUME_${id.name.substring(0, 1)}`));
     dispatch(selectOpening(id.volId));
     dispatch(resetPieces());
@@ -121,14 +124,14 @@ const CategoryLinesScreen = props => {
           <Text style={styles.header} numberOfLines={1}>
             {title}
           </Text>
-          <TouchableOpacity
-            activeOpacity={0.4}
-            onPress={() => {
-              props.navigation.navigate("Opening Explorer");
-            }}
-          >
-            <Ionicons name="ios-close-circle-outline" size={35} />
-          </TouchableOpacity>
+
+
+          <Button 
+          title="Back"
+          onPress={() => {
+            props.navigation.navigate("Opening Explorer");
+          }}
+          />
         </View>
 
         <View style={styles.inputContainer}>

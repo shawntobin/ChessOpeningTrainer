@@ -83,7 +83,7 @@ const OpeningContainer = props => {
           renderItem={renderItem}
           onEndReachedThreshold={0.7}
           keyExtractor={item => item.id.toString()}
-          removeClippedSubviews
+          removeClippedSubviews={false}
         />
       </View>
     </View>
